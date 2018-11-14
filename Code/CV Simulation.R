@@ -1,0 +1,177 @@
+##Generate some data for regression
+n <- 50
+
+
+##Data for True Regression Model
+p.True<- 4                   #Number of True regressors 
+x_1 <- rep(1,n)         #Intercept
+x_2 <- rnorm(n,2,1)
+x_3 <- rnorm(n,0,1)
+x_4 <- rnorm(n,5,2)
+
+eps <- rnorm(n,0,1)     #Errorterm
+
+
+##Generate some unecessary extra data 
+x_5 <- rnorm(n,4,1)
+x_6 <- rnorm(n,2,2)
+x_7 <- rnorm(n,1,3)
+x_8 <- rnorm(n,3,7)
+x_9 <- rnorm(n,0,1)
+x_10 <- rnorm(n,5,5)
+
+
+beta.vec <- c(1.5,0.5,3,2,rep(0,6)) 
+X <- cbind(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10)
+
+
+##Genereta dependent variables acording to the Above state Model
+y <- X%*%beta.vec + eps    #True Model
+
+##Number of Regressors
+p <- length(X[1,])
+
+##For the CV we need to compute the set A of all possible models 
+Index <- seq(1,p,1)    #Creats the set {1,...,p} from which we want to generate the Powerset
+
+col.A <- 0                                                 #Denotes the number of Possible Models out of {1,...,p}             
+for (i in 1:p) {
+  col.A <- col.A + choose(p,i)   
+}
+
+A <- matrix(0L,nrow = p, ncol = col.A)      #Denote A as Powerset of {1,...,p}
+k <- choose(p,1)
+l <- 1
+for (i in 1:length(beta.vec)) {
+  A[1:i,l:k] <- combn(Index,i)             #combn spits out all combinations of i elements in Index 
+  k <-k + choose(p,i+1)
+  l <- l + choose(p,i)
+}
+
+
+##Split A into two dijoint subsets, ie, the set of Category I Models and Category II Models 
+coln <- c()
+for (i in p.True:col.A) {
+  if(all(seq(1,p.True,1) %in% A[,i])){    
+    coln <- c(coln,i)
+  }
+}
+C1 <- A[,coln]           #Set of all Category I Models
+C2 <-A[,-coln]           #Set of all Category II Models
+
+
+##Leave one out Crossvalidation
+
+CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE ){  #n_v = #leaved out data points
+  #n_v          Number of leaved out data points
+  #y,X          Data for Regression
+  #Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
+  #             (By Default use all possible Models)
+  #MonteCarlo   Number of Subsets of {1,...,n} which is randomly drawn for a Monte Carlo CV
+  #             (By Default do K-Fold CV)
+  #Replacement  Replacement for Monte Carlo (Default False)
+  
+  ##Change some Variable names to keep the code shorter
+  A <- Alpha
+  b <- MonteCarlo
+  
+  ##Number of Possible Regressors
+  p <- length(X[1,])                          
+  
+  ##Set of possible Models
+  if(is.null(A)){
+    
+    Index <- seq(1,p,1)    #Creats the set {1,...,p} from which we want to generate the Powerset
+    
+    col.A <- 0                                  #Denotes the number of Possible Models out of {1,...,p}             
+    for (i in 1:p) {
+      col.A <- col.A + choose(p,i)   
+    }
+  
+    A <- matrix(0L,nrow = p, ncol = col.A)      #Denote A as Powerset of {1,...,p}
+    k <- choose(p,1)
+    l <- 1
+    for (i in 1:p) {
+      A[1:i,l:k] <- combn(Index,i)              #combn spits out all combinations of i elements in Index 
+      k <-k + choose(p,i+1)
+      l <- l + choose(p,i)
+    }
+  }
+  
+  
+  ##Number of Observations
+  n <- length(y)
+  
+  
+  ##Combinations of Sample partions for fitting the model
+  
+  ##For the Mone Carlo CV with b subsets of {1,...,n}
+  if(!is.null(b)){
+    
+    train <- matrix(ncol = b, nrow = n-n_v)
+    for (i in 1:b) {
+      train[,i] <- sample(seq(1,n,1),n-n_v,replace = Replacement)
+    }
+  }else{
+    
+    ##For the general case with all subsets of {1,...,n} 
+    train <- combn(seq(1,n,1),n-n_v)
+  }
+  
+  
+  #Compute Prediction Errors f??r all sets in A
+  MeanPred.Error <- c()
+  for (i in 1:length(A[1,])) {
+    
+    Pred.Error <- c()
+    for (j in 1:length(train[1,])) {
+      
+      train.j <- train[,j]                #To make the Code a bit shorter 
+      X.train <- X[train.j,A[,i]]         
+      Pred.Error[j] <- norm(as.matrix(y[-train.j]-X[-train.j,A[,i]]%*%solve(t(X.train)%*%X.train)%*%t(X.train)%*%y[train.j]),"2")^2
+    
+    }
+    MeanPred.Error[i] <- 1/length(train[1,])*sum(Pred.Error)
+  }
+  TheChosenOne <- which.min(MeanPred.Error)
+  return(A[,TheChosenOne])
+}
+
+CV(1,y,X,MonteCarlo = 50)
+
+
+
+
+##Balance Incomplete Set
+train <- matrix(ncol = b, nrow = n-n_v)
+for (i in 1:2) {
+  train[,i] <- sample(seq(1,n,1),n-n_v,replace = TRUE)
+}
+Counter.i <- rep(0,n)
+Counter.ij <-rep(0,choose(n,2))
+for (i in 1:n) {
+  Counter.i[i] <- sum(train[,1] == i) + sum(train[,2] == i)
+}
+Counter.i
+is.even <- function(x) x %% 2 == 0
+ispairs <- combn(n,2)
+for (i in 1:choose(n,2)) {
+  if(is.even(sum(train[,1] == pairs[,i]))){
+    Counter.ij[i] <- sum(train[,1] == pairs[,i])/2
+  }else{
+    Counter.ij[i] <- (sum(train[,1] == pairs[,i])-1)/2
+  }
+  
+  if(is.even(sum(train[,2] == pairs[,i]))){
+    Counter.ij[i] <- Counter.ij[i] + sum(train[,1] == pairs[,i])/2
+  }else{
+    Counter.ij[i] <- Counter.ij[i] + (sum(train[,1] == pairs[,i])-1)/2
+  }
+  
+}
+
+
+
+
+
+

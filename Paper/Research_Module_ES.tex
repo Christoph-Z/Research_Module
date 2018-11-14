@@ -1,0 +1,209 @@
+\documentclass[12pt,a4paper]{article}
+
+%Standarteinstellungen
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{lmodern}
+\usepackage{ngerman}
+
+%Mathtools
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%Graphiken/Tabellen
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{paralist}
+\usepackage{graphicx}
+\usepackage{braket}
+
+%Vordefinierte Umgebungen
+\newtheorem{defi}{Definition}[subsection]
+\newtheorem{satz}{Satz}[subsection]
+\newtheorem{koro}{Korollar}[subsection]
+\newtheorem{lemma}{Lemma}[subsection]
+\newtheorem{prop}{Proposition}[subsection] 
+
+%Subfiles
+\usepackage{subfiles}
+
+%BibTeX
+\usepackage{booktabs}              
+\usepackage[authoryear]{natbib}			
+\usepackage[nottoc]{tocbibind}			
+
+%Layout
+\usepackage[left=3.00cm, right=3.00cm, top=2.00cm, bottom=2.00cm]{geometry} 
+\usepackage{setspace}
+% anderthalbfacher Zeilenabstand 
+\onehalfspacing
+% kein Einrücken der ersten Zeile des Blocksatzes						
+\parindent 0pt	
+% keine Seitenzahl						
+\pagenumbering{gobble}	
+% für Punkte im Inhaltsverzeichnis 				
+\renewcommand\cftsecleader{\cftdotfill{\cftdotsep}} 
+%für römische Zahlen im Fließtext
+\newcommand{\RM}[1]{\MakeUppercase{\romannumeral #1{}}}
+%Für Programmcodes:
+%Definieren uns farbigen Quellcode
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\newcommand{\grayScale}{0.95} 
+\definecolor{codeBackground}{rgb}{\grayScale ,\grayScale ,\grayScale}
+\definecolor{forestGreen}{rgb}{0.13,0.55,0.13}
+%Damit wir Quellcode nutzen können.
+\usepackage{listings}
+\lstset{numbers=left,
+	backgroundcolor=\color{codeBackground},
+	frame=single,
+	numberstyle=\tiny,
+	numbersep=5pt,
+	breaklines=true,
+	rulecolor=\color{black},
+	showstringspaces=false,
+	xleftmargin=15pt,
+	xrightmargin=15pt,
+	basicstyle=\ttfamily\scriptsize,
+	stepnumber=1,
+	keywordstyle=\color{blue},         
+	commentstyle=\color{dkgreen},       
+	stringstyle=\color{mauve}         
+}
+%Sprache Festelegen
+\lstset{language=R}
+%Umlaute im Programmcode
+\lstset{literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+	{~}{{\textasciitilde}}1
+}
+
+
+
+\begin{document}
+\subfile{Titelpage.tex}
+	
+	
+%Inhaltsverzeichnis	
+%Unteren Befehl weglassen, dann ist es auf deutsch
+\renewcommand{\contentsname}{Table of Contents}
+\newpage 								
+\tableofcontents	
+					      
+
+
+
+%Hier startet der generelle Inhalt	
+\newpage
+% mit Arabischen ziffern
+\pagenumbering{arabic}
+
+\subfile{Introduction}		
+\subfile{Notation}
+\subfile{Einfuehrung_CV}
+
+
+	
+	
+
+\section{The Linear Setting}
+	
+
+\section{Zentrale Aussagen(Titel finden)}
+
+\subsection{Herleitung Formeln 2.3/2.4(Titel finden)}
+	
+\subsection{Theory of CV(1) (Titel finden)}
+			
+\subsection{Theory BICV   (Optional)(Titel finden)}
+
+\subsection{The Monte Carlo CV(Titel finden)}
+	
+
+	
+\section{Modelselection and Subclasses}
+
+
+
+\section{Simulations}
+
+\subsection{CV(1) and MCCV($n_{\nu}$)}
+
+	
+\subsection{Different $n_{\nu}$}
+	
+
+\subsection{Consistency}
+
+\subsection{Category \RM{1} - Simulation}
+
+\section{Real Data}
+
+\subsection{Comparison CV(1) and MCCV($n_{\nu}$): Prediction Error}
+
+
+\section{Conclusion}
+
+	
+%Anhang 
+\newpage
+\pagenumbering{Roman} 		      % röm.ziffern	
+\setcounter{page}{1}			  % ab ziffer 1
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+\subsection*{Appendix \RM{1}}
+
+\subsection*{Appendix \RM{2}}
+
+
+
+%Programmcode-Umgebung im Anhang%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Überschrift ohne Nummer 
+\begin{lstlisting}[title={Algorithmus:~$m+1=6$ und $n=200$}]
+
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Literaturverzeichnis
+\newpage 								 
+\medskip
+%den unteren befehl herausnehmen, dann ist es auf deutsch
+\renewcommand{\bibname}{References}
+%Literaturlisten-stil
+\bibliographystyle{myplainnat}
+%LiteraturlisteRM_ES.bib erstellt und greift drauf zu        
+\bibliography{LiteraturlisteRM_ES}   
+
+
+
+%Schriftliche Versicherung
+\newpage
+\section*{Written insurance}
+\addcontentsline{toc}{section}{Written insurance}
+
+
+\begin{tabular}{lp{2em}l}
+	%DATUM NOCHMAL PRÜFEN
+	Rheinbach, den 17.07.2017   && 
+	%UNTERSCHRIFT BEI PDF AKTIVIEREN
+	%\includegraphics[width=0.15\textwidth,height=40px]{unterschrift.jpg}
+	\\\cline{1-1}\cline{3-3}
+	Ort, Datum     && Unterschrift
+\end{tabular}
+
+
+\end{document}
