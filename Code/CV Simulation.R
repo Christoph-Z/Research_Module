@@ -25,16 +25,16 @@ beta.vec <- c(1.5,0.5,3,2,rep(0,6))
 X <- cbind(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10)
 
 
-##Genereta dependent variables acording to the Above state Model
+##Genereta dependent variables acording to the Above statet Model
 y <- X%*%beta.vec + eps    #True Model
 
 ##Number of Regressors
 p <- length(X[1,])
 
 ##For the CV we need to compute the set A of all possible models 
-Index <- seq(1,p,1)    #Creats the set {1,...,p} from which we want to generate the Powerset
+Index <- seq(1,p,1)                         #Creats the set {1,...,p} from which we want to generate the Powerset
 
-col.A <- 0                                                 #Denotes the number of Possible Models out of {1,...,p}             
+col.A <- 0                                  #Denotes the number of Possible Models out of {1,...,p} Regressors           
 for (i in 1:p) {
   col.A <- col.A + choose(p,i)   
 }
@@ -50,6 +50,7 @@ for (i in 1:length(beta.vec)) {
 
 
 ##Split A into two dijoint subsets, ie, the set of Category I Models and Category II Models 
+##We may need this sets later n for Simulation study's
 coln <- c()
 for (i in p.True:col.A) {
   if(all(seq(1,p.True,1) %in% A[,i])){    
