@@ -144,35 +144,70 @@ CV(1,y,X,MonteCarlo = 50)
 
 
 ##Balance Incomplete Set
-train <- matrix(ncol = b, nrow = n-n_v)
-for (i in 1:2) {
-  train[,i] <- sample(seq(1,n,1),n-n_v,replace = TRUE)
-}
-Counter.i <- rep(0,n)
-Counter.ij <-rep(0,choose(n,2))
-for (i in 1:n) {
-  Counter.i[i] <- sum(train[,1] == i) + sum(train[,2] == i)
-}
-Counter.i
-is.even <- function(x) x %% 2 == 0
-ispairs <- combn(n,2)
-for (i in 1:choose(n,2)) {
-  if(is.even(sum(train[,1] == pairs[,i]))){
-    Counter.ij[i] <- sum(train[,1] == pairs[,i])/2
-  }else{
-    Counter.ij[i] <- (sum(train[,1] == pairs[,i])-1)/2
+v <- 7        #lenght of Superstet , i.e, number of Observations
+b <- 7        #Number of Blocks, i.e, subsets
+k <- 3        #Number of elements in the blocks
+r <- 3        #Observation i apears in r different blocks
+lambda <- 1   #The pair i,j apears in lamda diffrent blocks
+
+A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
+
+##Defining the constraints a BIBD should fufill
+##Counts number of 1 and 0 in each row (Zeile), i.e, how often i occours (counts r)
+rho_1 <- function(A){
+  v <- length(A[,1])
+  rho_1 <- c()
+  for (i in 1:v) {
+    rho_1[i] <- sum(A[i,])
   }
-  
-  if(is.even(sum(train[,2] == pairs[,i]))){
-    Counter.ij[i] <- Counter.ij[i] + sum(train[,1] == pairs[,i])/2
-  }else{
-    Counter.ij[i] <- Counter.ij[i] + (sum(train[,1] == pairs[,i])-1)/2
-  }
-  
+  return(rho_1)
 }
 
+rho_0 <- function(A){
+  v <- length(A[,1])
+  b <- length(A[1,])
+  rho_0 <- rep(b,v)-rho_1(A)
+  return(rho_0)
+}
 
+##Count number of 1 and 0 in each column (Spale), i.e, how many elements are in each block (Counts 3)
+xi_1 <- function(A){
+  b <- length(A[1,])
+  xi_1 <- c()
+  for (i in 1:b) {
+    xi_1[i] <- sum(A[,i])
+  }
+  return(xi_1)
+}
 
+xi_0 <- function(A){
+  b <- length(A[1,])
+  v <- length(A[,1])
+  xi_0 <- rep(v,b)-xi_1(A)
+  return(xi_0)
+}
 
+##Scalar Product between each two rows, i.e , counts of often pairs ocoure
+pi_1 <- function(A){
+  v <- length(A[,1])
+  comb <- combn(v,2)
+  pi_1 <- c()
+  for (i in 1:length(comb[1,])) {
+    comb_ij <- comb[,i]
+    pi_1[i] <- A[comb_ij[1],]%*%A[comb_ij[2],]
+  }
+  return(pi_1)
+}
 
+pi_0 <- function(A){
+  pi_0 <- rep(length(A[1,]),choose(length(A[,1]),2)) - pi_1(A)
+  return(pi_0)
+}
+
+##Later on a BIBD should hold the following constraints
+# rho_1 <= r      rho_0 <= b-r
+# xi_1 <= k       xi_0 <= v-k
+# pi_1 <= lambda  pi_0 <= b-lambda
+
+##Constructing BIBD by forward checking the constraints
 
