@@ -211,3 +211,45 @@ pi_0 <- function(A){
 
 ##Constructing BIBD by forward checking the constraints
 
+A.vec <- c(A)
+
+##Run the following algorithm as long as all constraints are satisfied 
+while(
+  !(all(rho_1(A) <= r) & all(rho_0(A) <= b-r) & 
+  all(xi_1(A) <= k) & all(xi_0(A) <= v-k) & 
+  all(pi_1(A) <= lambda) & all(pi_0(A) <= b-lambda))
+  ){
+  
+  ##Change randome one entry in A
+  m <- sample(length(A.vec),1)
+  #Either Change a 1 to 0 
+  if(A.vec[m] == 1){
+    A.vec[m] <- 0
+    A <- matrix(A.vec, ncol = v, nrow = b)
+    #check wether or not the change will hurt a constraint. If this happens undo he change
+    if(!all(!rho_0(A)>b-r) | !all(!xi_0(A)>v-k) | !all(!pi_0(A)>b-lambda)){
+      A.vec[m] <- 1
+      A <- matrix(A.vec, ncol = v, nrow = b)
+    }else{}
+  #or change a 0 to 1
+  }else{
+    A.vec[m] <- 1
+    A <- matrix(A.vec, ncol = v, nrow = b)
+    #check wether or not the change will hurt a constraint. If this happens undo he change
+    if(!all(!rho_1(A)>r) | !all(!xi_1(A)>k) | !all(!pi_1(A)>lambda)){
+      A.vec[m] <- 0
+      A <- matrix(A.vec, ncol = v, nrow = b)
+    }else{}
+  }
+  A <- matrix(A.vec, ncol = v, nrow = b)
+}
+
+
+
+
+
+
+
+
+
+
