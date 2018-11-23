@@ -209,40 +209,47 @@ pi_0 <- function(A){
 # xi_1 <= k       xi_0 <= v-k
 # pi_1 <= lambda  pi_0 <= b-lambda
 
-##Constructing BIBD by forward checking the constraints
 
-A.vec <- c(A)
+##Constructing BIBD by backward checking the constraints
 
-##Run the following algorithm as long as all constraints are satisfied 
-while(
-  !(all(rho_1(A) <= r) & all(rho_0(A) <= b-r) & 
-  all(xi_1(A) <= k) & all(xi_0(A) <= v-k) & 
-  all(pi_1(A) <= lambda) & all(pi_0(A) <= b-lambda))
-  ){
-  
-  ##Change randome one entry in A
-  m <- sample(length(A.vec),1)
-  #Either Change a 1 to 0 
-  if(A.vec[m] == 1){
-    A.vec[m] <- 0
-    A <- matrix(A.vec, ncol = v, nrow = b)
-    #check wether or not the change will hurt a constraint. If this happens undo he change
-    if(!all(!rho_0(A)>b-r) | !all(!xi_0(A)>v-k) | !all(!pi_0(A)>b-lambda)){
-      A.vec[m] <- 1
-      A <- matrix(A.vec, ncol = v, nrow = b)
-    }else{}
-  #or change a 0 to 1
-  }else{
-    A.vec[m] <- 1
-    A <- matrix(A.vec, ncol = v, nrow = b)
-    #check wether or not the change will hurt a constraint. If this happens undo he change
-    if(!all(!rho_1(A)>r) | !all(!xi_1(A)>k) | !all(!pi_1(A)>lambda)){
-      A.vec[m] <- 0
-      A <- matrix(A.vec, ncol = v, nrow = b)
-    }else{}
+#Construction for given (v,b,r,k,lambda)
+BIBD_Back1 <- function(v,b,r,k,lambda){
+  A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
+  while (
+    !(all(rho_1(A) <= r) & all(rho_0(A) <= b-r) & 
+      all(pi_1(A) <= lambda) & all(pi_0(A) <= b-lambda))
+  ) {
+    #Creats a random matrix A which satisfies condition xi_1 and xi_0
+    for (i in 1:b) {
+      A[,i] <- sample(c(rep(1,k),rep(0,v-k)),v)
+    }
+    #If A satisfies acedencially also the ortehr condtions we are done :) if not: Repeat..
   }
-  A <- matrix(A.vec, ncol = v, nrow = b)
 }
+
+
+#construction for given (v,b,k) and arbitrary r,lambda
+BIBD_Back2 <- function(v,b,k){
+  A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
+  repeat {
+    #Creats a random matrix A which satisfies condition xi_1 and xi_0
+    for (i in 1:b) {
+      A[,i] <- sample(c(rep(1,k),rep(0,v-k)),v)
+    }
+    #If A satisfies acedencially also the ortehr condtions we are done :) if not: Repeat..
+    if (
+      all(rho_1(A) <= max(rho_1(A))) & all(rho_0(A) <= b-max(rho_1(A))) &   #we only require that: all elements apear in a qual size of Column 
+      all(pi_1(A) <= max(pi_1(A))) & all(pi_0(A) <= b-max(pi_1(A)))         #the scalarproduct between every two rows is equal
+    ){
+      break
+    }
+  }
+}
+
+
+
+
+
 
 
 
