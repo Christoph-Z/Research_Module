@@ -144,80 +144,58 @@ CV(1,y,X,MonteCarlo = 50)
 
 
 ##Balance Incomplete Set
-v <- 7        #lenght of Superstet , i.e, number of Observations
-b <- 7        #Number of Blocks, i.e, subsets
-k <- 3        #Number of elements in the blocks
-r <- 3        #Observation i apears in r different blocks
-lambda <- 1   #The pair i,j apears in lamda diffrent blocks
-
-A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
-
-##Defining the constraints a BIBD should fufill
-##Counts number of 1 and 0 in each row (Zeile), i.e, how often i occours (counts r)
-rho_1 <- function(A){
-  v <- length(A[,1])
-  rho_1 <- c()
-  for (i in 1:v) {
-    rho_1[i] <- sum(A[i,])
-  }
-  return(rho_1)
-}
-
-rho_0 <- function(A){
-  v <- length(A[,1])
-  b <- length(A[1,])
-  rho_0 <- rep(b,v)-rho_1(A)
-  return(rho_0)
-}
-
-##Count number of 1 and 0 in each column (Spale), i.e, how many elements are in each block (Counts 3)
-xi_1 <- function(A){
-  b <- length(A[1,])
-  xi_1 <- c()
-  for (i in 1:b) {
-    xi_1[i] <- sum(A[,i])
-  }
-  return(xi_1)
-}
-
-xi_0 <- function(A){
-  b <- length(A[1,])
-  v <- length(A[,1])
-  xi_0 <- rep(v,b)-xi_1(A)
-  return(xi_0)
-}
-
-##Scalar Product between each two rows, i.e , counts of often pairs ocoure
-pi_1 <- function(A){
-  v <- length(A[,1])
-  comb <- combn(v,2)
-  pi_1 <- c()
-  for (i in 1:length(comb[1,])) {
-    comb_ij <- comb[,i]
-    pi_1[i] <- A[comb_ij[1],]%*%A[comb_ij[2],]
-  }
-  return(pi_1)
-}
-
-pi_0 <- function(A){
-  pi_0 <- rep(length(A[1,]),choose(length(A[,1]),2)) - pi_1(A)
-  return(pi_0)
-}
-
-##Later on a BIBD should hold the following constraints
-# rho_1 <= r      rho_0 <= b-r
-# xi_1 <= k       xi_0 <= v-k
-# pi_1 <= lambda  pi_0 <= b-lambda
-
-
 ##Constructing BIBD by backward checking the constraints
+
+##Balance Incomplete Set
+#v         lenght of Superstet , i.e, number of Observations
+#b         Number of Blocks, i.e, subsets
+#k         Number of elements in the blocks
+#r         Observation i apears in r different blocks
+#lambda    The pair i,j apears in lamda diffrent blocks
+
+#Sample for which a BIBD exsist. Since now im not sure how we handel cases were BIBD not exist,
+#since there is only a necessary condition for existens but no sufficient
+#v <- 7        
+#b <- 7        
+#k <- 3        
+#r <- 3        
+#lambda <- 1   
+
 
 #Construction for given (v,b,r,k,lambda)
 BIBD_Back1 <- function(v,b,r,k,lambda){
+  
+  ##Defining the constraints a BIBD should fufill
+  ##Counts number of 1 and 0 in each row (Zeile), i.e, how often i occours (counts r)
+  rho_1 <- function(A){
+    v <- length(A[,1])
+    rho_1 <- c()
+    for (i in 1:v) {
+      rho_1[i] <- sum(A[i,])
+    }
+    return(rho_1)
+  }
+  
+  ##Scalar Product between each two rows, i.e , counts of often pairs ocoure
+  pi_1 <- function(A){
+    v <- length(A[,1])
+    comb <- combn(v,2)
+    pi_1 <- c()
+    for (i in 1:length(comb[1,])) {
+      comb_ij <- comb[,i]
+      pi_1[i] <- A[comb_ij[1],]%*%A[comb_ij[2],]
+    }
+    return(pi_1)
+  }
+  
+  #Later on a BIBD should hold the following constraints
+  # rho_1 = r    and    pi_1 = lambda  
+  
+  ##Constructing BIBD
   A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
   while (
-    !(all(rho_1(A) <= r) & all(rho_0(A) <= b-r) & 
-      all(pi_1(A) <= lambda) & all(pi_0(A) <= b-lambda))
+    !(all(rho_1(A) == r)  & 
+      all(pi_1(A) == lambda))
   ) {
     #Creats a random matrix A which satisfies condition xi_1 and xi_0
     for (i in 1:b) {
@@ -225,11 +203,40 @@ BIBD_Back1 <- function(v,b,r,k,lambda){
     }
     #If A satisfies acedencially also the ortehr condtions we are done :) if not: Repeat..
   }
+  return(A)
 }
 
 
 #construction for given (v,b,k) and arbitrary r,lambda
 BIBD_Back2 <- function(v,b,k){
+  
+  ##Defining the constraints a BIBD should fufill
+  ##Counts number of 1 and 0 in each row (Zeile), i.e, how often i occours (counts r)
+  rho_1 <- function(A){
+    v <- length(A[,1])
+    rho_1 <- c()
+    for (i in 1:v) {
+      rho_1[i] <- sum(A[i,])
+    }
+    return(rho_1)
+  }
+  
+  ##Scalar Product between each two rows, i.e , counts of often pairs ocoure
+  pi_1 <- function(A){
+    v <- length(A[,1])
+    comb <- combn(v,2)
+    pi_1 <- c()
+    for (i in 1:length(comb[1,])) {
+      comb_ij <- comb[,i]
+      pi_1[i] <- A[comb_ij[1],]%*%A[comb_ij[2],]
+    }
+    return(pi_1)
+  }
+  
+  #Later on a BIBD should hold the following constraints
+  # rho_1 = r    and    pi_1 = lambda  
+  
+  ##Constructing BIBD
   A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
   repeat {
     #Creats a random matrix A which satisfies condition xi_1 and xi_0
@@ -238,12 +245,13 @@ BIBD_Back2 <- function(v,b,k){
     }
     #If A satisfies acedencially also the ortehr condtions we are done :) if not: Repeat..
     if (
-      all(rho_1(A) <= max(rho_1(A))) & all(rho_0(A) <= b-max(rho_1(A))) &   #we only require that: all elements apear in a qual size of Column 
-      all(pi_1(A) <= max(pi_1(A))) & all(pi_0(A) <= b-max(pi_1(A)))         #the scalarproduct between every two rows is equal
+      all(rho_1(A) <= max(rho_1(A))) &   #we only require that: all elements apear in a qual size of Column 
+      all(pi_1(A) <= max(pi_1(A)))       #the scalarproduct between every two rows is equal
     ){
       break
     }
   }
+  return(A)
 }
 
 
