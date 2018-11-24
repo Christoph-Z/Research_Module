@@ -1,0 +1,79 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+	
+%--------------------Proof Uncobditional Expected Squared Error----------------------------
+
+\begin{proof}[Proof undconditional expected squared error] ~\\
+	Note that for randome variables $X$,$Z$ it holds true, that $E[E[Z|X,Z]|X]=E[Z|X]$
+	\begin{align*}
+		MSPE_{\alpha|X}=&E[MSPE_{\alpha|X,y}|X]\\
+		=&E\left[\sigma^2 + n^{-1}\sum_{i}^{}\left(x_i^\prime\beta - x_{\alpha,i}\hat{\beta}_\alpha\right)\right]\\
+		=&\sigma^2 +n^{-1}\sum_iE\left[\left(x_i^\prime\beta - x_{\alpha,i}^\prime\hat{\beta}_\alpha\right)^2\right]\\
+		=&\sigma^2+n^{-1}\sum_iE\left[\left(x_i^\prime\beta-x_{\alpha,i}^\prime\hat{\beta}_\alpha\right)^\prime \left(x_i^\prime\beta-x_{\alpha,i}^\prime\hat{\beta}_\alpha\right)\right]\\
+		=&\sigma^2 + n^{-1}\sum_iE\left[\beta^\prime x_ix_i^\prime\beta- \left(x_i^\prime\beta\right)^\prime x_{\alpha,i}^\prime\hat{\beta}_\alpha-\left(x_{\alpha,i}^\prime\hat{\beta}_\alpha \right)^\prime x_i^\prime\beta + \left(x_{\alpha,i}^\prime\hat{\beta}_\alpha\right)^\prime x_{\alpha,i}^\prime\hat{\beta}_\alpha \right]\\
+		=&\sigma + n^{-1} \sum_i E\left[\beta^\prime x_ix_i^\prime\beta-\beta^\prime x_i x_{\alpha,i}^\prime\hat{\beta}_\alpha -\hat{\beta}_\alpha^\prime x_{\alpha,i}x_i^\prime\beta+\hat{\beta}_\alpha^\prime x_{\alpha,i}x_i^\prime\hat{\beta}_\alpha \right]\\
+		=&\sigma^2+n^{-1}\sum_i\left\{ \beta^\prime x_ix_i^\prime\beta - E\left[ \beta^\prime x_i x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime y\right] \right. \\
+		&\left.- E\left[y^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1}x_{\alpha,i}x_i^\prime\beta\right] +E\left[y^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} x_{\alpha,i}x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime y\right] \right\}\\
+		=&\sigma^2 + n^{-1}\sum_i\left\{\beta^\prime x_ix_i^\prime\beta- \beta^\prime x_i x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X\beta -\beta^\prime X x_{\alpha,i} \left(X_\alpha^\prime X_\alpha\right)^{-1}x_{\alpha,i}x_i^\prime \beta \right.\\
+		&+\left. E\left[ \beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} x_{\alpha,i}x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime \left(X\beta +\epsilon\right)\right] \right.\\
+		&+\left. E\left[\epsilon^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1}x_{\alpha,i}x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime \left(X\beta +\epsilon\right) \right] \right\}\\
+		=&\sigma^2 + n^{-1}\sum_i\left\{\beta^\prime x_ix_i^\prime\beta- \beta^\prime x_i x_{\alpha,i}^\prime 		\left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X\beta -\beta^\prime X x_{\alpha,i} \left(X_\alpha^\prime X_\alpha\right)^{-1}x_{\alpha,i}x_i^\prime \beta \right.\\
+		&+\left.\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} x_{\alpha,i}x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X\beta \right.\\ &+\left. E\left[\epsilon^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime \epsilon^\prime \right]\right\}\\
+		=&\sigma^2+ n^{-1}\left[\beta^\prime X^\prime X\beta-\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X\beta \right]\\
+		&-n^{-1}\left[\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X\beta +\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X\beta\right]\\
+		&+n^{-1}E\left[\epsilon^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime \epsilon^\prime \right]\\
+		=&\sigma^2+\Delta_{\alpha,n}+n^{-1}E\left[\epsilon^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} x_{\alpha,i}^\prime \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime \epsilon^\prime \right]\\
+		=&\sigma^2+\Delta_{\alpha,n} + n^{-1}\sum_i\sum_j p_{\alpha,i,j}E\left[\epsilon_i\epsilon_j\right]\\
+		=&\sigma^2+\Delta_{\alpha,n} + n^{-1}\sum_i p_{\alpha,i,i}\sigma^2\\
+		=&\sigma^2+\Delta_{\alpha,n} + n^{-1}\text{tr}(P_\alpha)\sigma^2\\
+		=&\sigma^2+\Delta_{\alpha,n} + n^{-1}d_\alpha\sigma^2
+	\end{align*}
+	Hence $\text{tr}(P_\alpha)=\text{tr}\left(X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime\right)=\text{tr}(X_\alpha^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1})=\text{tr}(I_{d_\alpha})=d_\alpha $
+\end{proof}
+
+
+%-------------------------Proof for 2.5/2.5----------------------------------------
+
+\begin{lemma}
+	\label{Equation2.3-2.4}
+	It holds true that:
+	\begin{align*}
+	&&\Delta_{\alpha,n}>0 && \text{,for } \mathcal{M}\in\text{Cateogory I}&&\\
+	&&\Delta_{\alpha,n}=0 && \text{,for } \mathcal{M}\in\text{Cateogry II}&&
+	\end{align*}
+\end{lemma}
+\begin{proof}[Proof Lemma \ref{Equation2.3-2.4}]~\\
+	For the first part, assume $\mathcal{M}_\alpha\in$ Category I and note that we can rewrite $n\Delta_{\alpha,n}$ as follows
+	\begin{align}\nonumber
+	n\Delta_{\alpha,n}&= \beta^\prime X^\prime X\beta-\beta^\prime X^\prime P_\alpha X\beta\\\nonumber
+	&=||X\beta||^2-\beta^\prime X^\prime P_\alpha^\prime P_\alpha X\beta\\\nonumber
+	%\intertext{since $P_\alpha^\prime P_\alpha$=P_\alpha$}
+	&=||X\beta||^2-||P_\alpha X\beta||^2
+	\intertext{Since}\nonumber
+	||X\beta||^2&=||X\beta +P_\alpha X\beta -P_\alpha X\beta||^2\\\nonumber
+	&=||P_\alpha X\beta +X\beta\left(I_n-P_\alpha\right)||^2\\\nonumber
+	&=||P_\alpha X\beta||^2+<P_\alpha X\beta,(I_n-P_\alpha)X\beta>+||(I_n-P_\alpha)X\beta||^2\\\nonumber
+	&=||P_\alpha X\beta||^2+||\left(I_n-P_\alpha\right)X\beta||^2
+	\intertext{For $n\Delta_{\alpha,n}$ being strictly larger then zero it remains to show that,}\nonumber
+	||\left(I_n-P_\alpha\right)X\beta||^2&=||\left(I_n-P_\alpha\right)(X_\alpha\beta_\alpha+X_{\alpha^c}\beta_{\alpha^c})||^2\\
+	&=||\left(I_n-P_\alpha\right)X_{\alpha^c}\beta_{\alpha^c}||^2>0 \label{larger0}
+	\end{align}
+	Hence 
+	\[
+		(\mathcal{M}_\alpha\in \text{ Cat I } \wedge \text{ r}(X)=p) \Rightarrow(\exists\beta_i\in \alpha^c:\beta_i\neq0 \wedge X_{\alpha^c}\text{ r}(X)=p-d_\alpha)\Rightarrow X_{\alpha^c}\beta_{\alpha^c}\neq0
+	\]  
+	And since $(I_n-P_\alpha)$ is the Projection matrix onto span$\{x_{\alpha,1},\ldots,x_{\alpha,d_\alpha}\}$, it holds true that $(I_n-P_\alpha)X_{\alpha^c}\beta_{\alpha^c}\neq0$ and therefore (\ref{larger0}) must be strictly larger then zero. \\
+	\\
+	For the second part, assume $\mathcal{M}_\alpha\in$ Category II, then $X\beta=X_\alpha\beta_\alpha$. Thus
+	\begin{align*}
+		n\Delta_\alpha,n&=\beta^\prime X^\prime X\beta-\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1}X_\alpha^\prime X\beta\\
+		&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha -\beta_\alpha^\prime X_\alpha^\prime X_\alpha\left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X_\alpha\beta_\alpha\\
+		&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha - \beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha\\
+		&=0
+	\end{align*}
+	
+\end{proof}
+
+
+
+\end{document}
