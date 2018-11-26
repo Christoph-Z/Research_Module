@@ -192,7 +192,7 @@ BIBD_Back1 <- function(v,b,r,k,lambda){
   # rho_1 = r    and    pi_1 = lambda  
   
   ##Constructing BIBD
-  A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
+  A <- matrix(0L,ncol = b, nrow = v)    #matrix of all subsets 
   while (
     !(all(rho_1(A) == r)  & 
       all(pi_1(A) == lambda))
@@ -237,7 +237,7 @@ BIBD_Back2 <- function(v,b,k){
   # rho_1 = r    and    pi_1 = lambda  
   
   ##Constructing BIBD
-  A <- matrix(0L,ncol = v, nrow = b)    #matrix of all subsets 
+  A <- matrix(0L,ncol = b, nrow = v)    #matrix of all subsets 
   repeat {
     #Creats a random matrix A which satisfies condition xi_1 and xi_0
     for (i in 1:b) {
@@ -245,8 +245,8 @@ BIBD_Back2 <- function(v,b,k){
     }
     #If A satisfies acedencially also the ortehr condtions we are done :) if not: Repeat..
     if (
-      all(rho_1(A) <= max(rho_1(A))) &   #we only require that: all elements apear in a qual size of Column 
-      all(pi_1(A) <= max(pi_1(A)))       #the scalarproduct between every two rows is equal
+      all(rho_1(A) == rho_1(A)[1]) &   #we only require that: all elements apear in a qual size of Column 
+      all(pi_1(A) == pi_1(A)[1])       #the scalarproduct between every two rows is equal
     ){
       break
     }
