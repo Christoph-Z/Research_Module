@@ -246,6 +246,82 @@ while(
 
 
 
+##Akaike Information Criterion
+AIC <- function(y,X,Alpha = NULL, Criterion = "AIC"){
+  #Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
+  #             (By Default use all possible Models)
+  #Criterion    Decides if we want to use the Akaike or Bayesian information criterion
+  
+  ##Change some Variable names to keep the code shorter
+  A <- Alpha
+  
+  ##Number of Observations
+  n <- length(y)
+    
+  ##Set of possible Models
+  if(is.null(A)){
+    
+    ##Number of Possible Regressors
+    p <- length(X[1,])
+    
+    Index <- seq(1,p,1)    #Creats the set {1,...,p} from which we want to generate the Powerset
+    
+    col.A <- 0                                  #Denotes the number of Possible Models out of {1,...,p}             
+    for (i in 1:p) {
+      col.A <- col.A + choose(p,i)   
+    }
+    
+    A <- matrix(0L,nrow = p, ncol = col.A)      #Denote A as Powerset of {1,...,p}
+    k <- choose(p,1)
+    l <- 1
+    for (i in 1:p) {
+      A[1:i,l:k] <- combn(Index,i)              #combn spits out all combinations of i elements in Index 
+      k <-k + choose(p,i+1)
+      l <- l + choose(p,i)
+    }
+  }
+  
+  ##Vector of Likelihood values for different Models
+  InfoCriterion <- c()
+  for (i in 1:length(A[1,])) {
+    
+    ##Number of regressors
+    k <- sum(A[,i] != 0)
+    
+    ##Data for the choosen Model
+    X.model <- X[,A[,i]] 
+    
+    ##Expectation observation i
+    mu <- X.model%*%solve(t(X.model)%*%X.model)%*%t(X.model)%*%y
+    
+    error <- sum((y-mu)^2)
+    
+    ##Varianz
+    var <- 1/n*error
+    
+    ##Calculate Log Likelihood value
+    LogL <- -n/2*log(2*pi)-n/2*log(var)-1/(2*var)*error
+    
+    ##Calculate Information Criterion
+    
+    ##For AIC
+    if(Criterion == "AIC"){
+      InfoCriterion[i] <- 2*k-2*LogL
+    }
+    
+    ##For BIC
+    if(Criterion == "BIC"){
+      InfoCriterion[i] <- log(n)*k - 2*LogL
+    }
+    
+  }
+  
+  #Choose the Model which minimze the Information Criterion
+  TheChosenOne <- which.min(InfoCriterion)
+  return(A[,TheChosenOne])
+}
+
+
 
 
 
