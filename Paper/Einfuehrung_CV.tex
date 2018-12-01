@@ -10,17 +10,17 @@ We are interested in predicting a future value of $y$ for a given value of $x$. 
 \[
 	\{\hat{y}=\hat{y}(Y,X,x,\alpha)|\alpha\in\mathscr{A}\}
 \]
-where $\alpha$ is some set of unknown values, e.g an underlying parametric model or a tuning parameter.\\
+where $\alpha$ is some set of unknown values in some parameter space $\mathscr{A}$, e.g $\alpha$ can be an underlying parametric model or a tuning parameter.\\
 \\
 The idea of cross validation is to choose some $\alpha^\star$ to minimize the loss between our prediction $\hat{y}$ and a corresponding real value of $y$. More explicitly we want $\alpha^\star$ to solve
 \[
 	\alpha^\star=\arg\min_{\alpha\in\mathscr{A}}\{L_n(Y,X\alpha)\}
 \]
-where $L_n$ is some loss function.
+where $L_n$ is some loss function.\footnote{In statistics a loss function, is a function that maps estimation errors to the set of real numbers.  }
  
 Since \cite{larson1931shrinkage} claimed that training an algorithm and evaluating it's statistical performance on the same data yields an overoptimistic result, we need to decompose our observations in order to train and evaluating our predictor. \\
 \\
-Denote $P^{(N-n)}_i$ to be the $i$'th partition of $Y$ and $X$ into $N-n$ retained and $n$ omitted observations, with $0<n<M$ where is $M$ the largest integer s.t $\hat{y}$ can be calculated, i.e,
+Denote $P^{(N-n)}_i$ to be the $i$'th partition of $Y$ and $X$ into $N-n$ retained and $n$ omitted observations, with $0<n<M$ where $M$ is the largest integer s.t $\hat{y}$ can be calculated, i.e,
 \[
 	P^{(N-n)}_i=(Y_{i,r}^{(N-n)},X_{i,r}^{(N-n)},Y_{i,o}^{(N-n)},X_{i,o}^{(N-n)})
 \]
