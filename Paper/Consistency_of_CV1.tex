@@ -1,0 +1,181 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\subsection{Theory of CV(1) (Titel finden)}
+To compute the $CV(1)$ or \textit{leave one out cross validtation} estimate one deletes one observation of the data set and uses the remaining to construct the estimator of the model. Then one uses this model to predict the deleted observation. ... bla bla bla\
+
+$CV(1)$ is the computationally simplest cross validation estimator as only $n$ terms have to be estimated whereas in other $CV(n_v)$ estimators one has to compute $\binom{n}{n_v}$ terms.\
+
+We capture the asymptotic properties of $CV(1)$ in the following theorem, which we will prove in the appendix.
+
+\begin{satz}[Consistency of $CV(1)$]
+Under the conditions 
+\begin{enumerate}[(i)]
+\item $X'X = O(n) \quad \textrm{and} \quad (X'X)^{-1}=O(\frac{1}{n})$
+\item $ \lim_{n \to \infty} \max_{1\le i\le n} p_{ii\alpha} =0 \quad \forall \alpha \in \mathcal{A} $ 
+\end{enumerate}
+the following holds
+\begin{enumerate}[(I)]
+\item If $\mathcal{M}_\alpha$ is in Category I, then $\hat{\Gamma}_{\alpha,n}^{CV} = \Gamma_{\alpha,n} + o_P(1)$.
+\item If $\mathcal{M}_\alpha$ is in Category II, then $\hat{\Gamma}_{\alpha,n}^{CV} = \frac{1}{n}\varepsilon'\varepsilon + \frac{2}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon + o_P(n^{-1})$.
+\end{enumerate}
+If furthermore the following condition holds
+\begin{align*}
+\liminf_{n\to \infty} \Delta_{\alpha,n} > 0,
+\end{align*}
+then 
+\begin{enumerate}
+\item[(III)] $\lim_{n\to\infty} P(\mathcal{M}_{CV}\textrm{ is in Category I})=0$,
+\item[(IV)]If $\mathcal{M}_\ast$ is not of size $p$, then $\lim_{n\to\infty}P(\mathcal{M}_{CV}=\mathcal{M}_\ast) \neq 1$
+\end{enumerate}
+where $\mathcal{M}_{CV}$ denotes the model selected by using $CV(1)$.
+\end{satz}
+
+we provide the prove in the appendix.\
+
+Assertions $(I)$ and $(II)$ of the theorem state that $CV(1)$ consistently estimates the average squared prediction error. To see this in the case of $(II)$, note that $\frac{1}{n}\varepsilon'\varepsilon$ converges almost surely to $\sigma^2$ and that 
+$\frac{1}{n}\varepsilon'P_\alpha\varepsilon$ converges in probability to $\frac{1}{n}d_\alpha\sigma^2$.\
+
+However the second statement gives a more precise description of the behavior of the $CV(1)$ estimate for models in Category II. \
+
+But consistency isn't enough to ensure that $CV(1)$ will detect the true model. Indeed, for any model in Category II the average squared prediction error reduces to the variance of the error term and hence are asymptotically indestinguishable. This idea is made precise by the statement $(IV)$ that the there exists some positive probability that the true model isn't chosen. On the other hand Shao shows in statement $(III)$ that the selected model is with probability approaching one in Category II.\
+
+A heuristic explanation for this incorrectness is delivered by statement $(II)$. The model defining terms are $\frac{1}{n}d_\alpha\sigma^2$ and the difference $\frac{1}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon$. This difference has mean zero and is of the same order of magnitude as the first term. This gives an explanation why $CV(1)$ tends to select to large models.\
+
+The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the assumptotic invertibility of this matrix. If the $x_i$ are stochastic, it is fulfilled for example if the $x_i$ are iid and if the matrix $\mathrm{E}[x_ix_i']$ is invertible.\
+
+Under assumption $(i)$ one can show that the second assumption is equivalent to $\lim \max n^{-1}\lVert x_i\rVert^2=0$. That is, the observations are allowed to grow but not too fast. This condition is for example satisfied if the $x_i$ are bounded.\
+
+\textbf{Proof of $(I)$:} A first order Taylor expansion of $(1-x)^{-2}$ in $x$ around $0$ yields 
+\begin{align*}
+(1- x)^{-2} = 1+ 2 x + o(x^2) \quad \textrm{as} \quad x\to 0 .
+\end{align*}
+By condition $(ii)$ and as
+\begin{align*}
+2p_{ii\alpha} + o(p_{ii\alpha}^2) 
+\le 2 \max_{1\le i \le n} p_{ii\alpha} +  o(p_{ii\alpha}^2) 
+= O\bigl(\max _{1\le i \le n} p_{ii\alpha}\bigr)
+\end{align*}
+it holds that 
+\begin{align*}
+(1- p_{ii\alpha})^{-2} = 1+ O(\max _{1\le i \le n} p_{ii\alpha}) 
+= 1 +o(1) \quad \textrm{as} \quad n \to \infty. 
+\end{align*}
+
+Using this expression to rewrite $\hat{\Gamma}_{\alpha,n}^{CV}$ yields
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{CV} &= \frac{1}{n}\sum_{i=1}^n (1- p_{ii\alpha})^{-2}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2\\
+&= (1+o(1))\frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2\\
+&= (1+o(1))\frac{1}{n}\lVert (I_n-P_\alpha) y\rVert^2\\
+&= (1+o(1))\frac{1}{n}\lVert (I_n-P_\alpha) X_\alpha\beta_\alpha +(I_n-P_\alpha)\varepsilon \rVert^2\\
+&= (1+o(1))\biggl[\frac{1}{n}\lVert(I_n-P_\alpha)\varepsilon \rVert^2+ \underbrace{\frac{1}{n}\lVert (I_n-P_\alpha) X_\alpha\beta_\alpha\rVert^2}_{=\Delta_{\alpha,n}} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha\biggr]\\
+&= (1+o(1)) \biggl[\frac{\varepsilon'\varepsilon}{n} + \Delta_{\alpha,n} - \frac{\varepsilon'P_\alpha\varepsilon}{n} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha\biggr]. \quad (\ast)
+\end{align*}
+
+Since the $\varepsilon_i$ are iid with finite second moments it follows by the law of large numbers that
+$\frac{\varepsilon'\varepsilon}{n} = \sigma^2 + o_P(1)$.
+Furthermore for any positive $\delta$
+\begin{align*}
+P\biggl(\biggl|\frac{1}{n}\varepsilon'P_\alpha\varepsilon\biggr|>\delta\biggr) \le \frac{\mathrm{E}\bigl[|\varepsilon'P_\alpha\varepsilon|\bigr]}{n\delta}=\frac{\mathrm{E}\bigl[\lVert P_\alpha\varepsilon\rVert^2\bigr]}{n\delta}=\frac{d_\alpha \sigma^2}{n\delta} \to 0 \quad \textrm{as} \quad n\to \infty
+\end{align*}
+by the Markov inequality and hence $\frac{1}{n}\varepsilon'P_\alpha\varepsilon = o_P(1)$.\\
+Finally by the Cebysev inequality it holds for any positve $\delta$ that
+\begin{align*}
+P\biggl(&\biggl|\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha\biggr|>\delta\biggr) \le \frac{4\mathrm{E}\bigl[(\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha)^2\bigr]}{n^2\delta^2}\\
+&=\frac{4}{n^2\delta^2}\sum_{i,j}\mathrm{E}\bigl[\varepsilon_i[(I_n-P_\alpha)X_\alpha\beta_\alpha]_i\varepsilon_j[(I_n-P_\alpha)X_\alpha\beta_\alpha]_j\bigr]\\
+&=\frac{4}{n^2\delta^2}\sum_{i=1}^n\mathrm{E}\bigl[\varepsilon_i^2\bigr][(I_n-P_\alpha)X_\alpha\beta_\alpha]_i^2 \quad \textrm{by independence of the $\varepsilon_i$}\\
+&=\frac{4\sigma^2}{n^2\delta^2}\lVert(I_n-P_\alpha)X_\alpha\beta_\alpha\rVert^2 \\
+&\le \frac{4\sigma^2}{n^2\delta^2} \underbrace{\lVert I_n-P_\alpha \rVert_2}_{=1} \underbrace{\max_{z\in \mathbb{R}^{d_\alpha}\backslash 0}\frac{z'X'_\alpha X_\alpha z}{z'z}}_{=O(n)} \lVert \beta_\alpha \rVert^2
+=O(n^{-1})
+\end{align*}
+implying $\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha=o_P(1)$. 
+In the last inequality we used condition $(i)$ and that $I_n-P_\alpha$ is a projection matrix and hence $\lVert I_n-P_\alpha \rVert_2 = 1$.\\
+Combining $\frac{\varepsilon'\varepsilon}{n} = \sigma^2 + o_P(1)$, $\frac{1}{n}\varepsilon'P_\alpha\varepsilon = o_P(1)$ and $\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha=o_P(1)$ with $(\ast)$ yields $\hat{\Gamma}_{\alpha,n}^{CV} = \sigma^2 + \Delta_{\alpha,n} + o_P(1)$ which is asymptotically equivalent to $\Gamma_{\alpha,n}$.This proves the first assertion.\\
+
+\textbf{Proof of $(II)$:}To show the second statement, assume that $\mathcal{M}_\alpha$ is in Category II.
+Using the linearization of the proof of $(I)$ we get
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{CV} &= \frac{1}{n}\sum_{i=1}^n (1- p_{ii\alpha})^{-2}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2\\
+&= (1+o(1))\frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2 + \frac{2}{n}\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2. 
+\end{align*}
+Repeating the same calculations as in $(\ast)$ and using that for all $\alpha$ in Category II holds $\Delta_{\alpha,n}=0$ and $\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha =0$, yields
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{CV} &=\frac{\varepsilon'\varepsilon}{n} + \Delta_{\alpha,n} - \frac{\varepsilon'P_\alpha\varepsilon}{n} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha+ \frac{2}{n}\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2 +o(1)\\
+&= \frac{\varepsilon'\varepsilon}{n}- \frac{\varepsilon'P_\alpha\varepsilon}{n} + \frac{2}{n}\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2 +o(1).
+\end{align*}
+Thus it remains to show that $\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2= d_\alpha \sigma^2 + o_P(1)$.
+To establish this result we first show that $\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2= \sum_{i=1}^n p_{ii\alpha}\varepsilon_i^2 + o_P(1)$ and then we argue that $\sum_{i=1}^n p_{ii\alpha}\varepsilon_i^2=d_\alpha\sigma^2+o_P(1)$.\\
+
+(1.) One can rewrite 
+\begin{align*}
+\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2 &= (y-X_\alpha\hat{\beta}_\alpha)'\mathrm{diag}(p_{ii\alpha})(y-X_\alpha\hat{\beta}_\alpha) 
+= \varepsilon'(I-P_\alpha)\mathrm{diag}(p_{ii\alpha})(I-P_\alpha)\varepsilon\\
+&= \varepsilon'\mathrm{diag}(p_{ii\alpha})\varepsilon-2\varepsilon'\mathrm{diag}(p_{ii\alpha})P_\alpha\varepsilon+\varepsilon'P_\alpha\mathrm{diag}(p_{ii\alpha})P_\alpha \varepsilon. \quad (\Delta)
+\end{align*}
+$\varepsilon'\mathrm{diag}(p_{ii\alpha})P_\alpha\varepsilon$ vanishes in probability as
+\begin{align*}
+\varepsilon'\mathrm{diag}(p_{ii\alpha})P_\alpha\varepsilon= \sum_{i=1}^n\sum_{j=1}^np_{ii\alpha}p_{ij\alpha}\varepsilon_i\varepsilon_j
+=\sum_{i}p_{ii\alpha}^2\varepsilon_i^2 + \sum_{i}\sum_{j\neq i}p_{ii\alpha}p_{ij\alpha}\varepsilon_i\varepsilon_j=o_P(1).
+\end{align*}
+The first part converges to zero by Markov inequality 
+\begin{align*}
+P\biggl(\biggl|\sum_{i}p_{ii\alpha}^2\varepsilon_i^2\biggr|>\delta\biggr)
+\le \frac{1}{\delta}\sum_{i}p_{ii\alpha}^2\mathrm{E}\bigl[\varepsilon_i^2\bigr]
+\le \frac{\sigma^2}{\delta}\biggl(\max_{1\le i\le n}p_{ii\alpha}\biggr) \sum_{i}p_{ii\alpha} 
+= \frac{d_\alpha\sigma^2}{\delta}\max_{1\le i\le n}p_{ii\alpha} \to 0 
+\end{align*}
+and the second part similarly 
+\begin{align*}
+P\biggl(\biggl|\sum_{i}&\sum_{j\neq i}p_{ii\alpha}p_{ij\alpha}\varepsilon_i\varepsilon_j\biggr|>\delta\biggr)\le\frac{1}{\delta^2}\sum_{i}\sum_{j\neq i}p_{ii\alpha}^2p_{ij\alpha}^2\mathrm{E}\bigl[\varepsilon_i^2\varepsilon_j^2\bigr]
+= \frac{\sigma^4}{\delta^2}\sum_{i}p_{ii\alpha}^2\sum_{j\neq i}p_{ij\alpha}^2\\
+&\le \frac{\sigma^4}{\delta^2}\sum_{i}p_{ii\alpha}^3 \le \frac{d_\alpha\sigma^4}{\delta^2}\biggl(\max_{1\le i\le n}p_{ii\alpha}\biggr)^2 \to 0.
+\end{align*}
+Where we used that for the projection matrix $P_\alpha$ holds that $\sum_{j}p_{ij\alpha}^2=p_{ii\alpha}$.\\
+
+The last part in $(\Delta)$ is asymptotically negligible as well since
+\begin{align*}
+\varepsilon'P_\alpha\mathrm{diag}(p_{ii\alpha})P_\alpha \varepsilon = \sum_i\sum_j\sum_k p_{ii\alpha}p_{ij\alpha}p_{ik\alpha}\varepsilon_j\varepsilon_k\\
+=\sum_i p_{ii\alpha}^3 \varepsilon_i^2 +2\sum_i\sum_{j\neq i}p_{ii\alpha}^2p_{ij\alpha}\varepsilon_i\varepsilon_j + 
+\sum_i\sum_{j\neq i}\sum_{k\neq i}p_{ii\alpha}p_{ij\alpha}p_{ik\alpha}\varepsilon_j\varepsilon_k=o_P(1).
+\end{align*}
+Its first term vanishes as $0\le \sum_i p_{ii\alpha}^3 \varepsilon_i^2 \le \sum_i p_{ii\alpha}^2 \varepsilon_i^2 = o_P(1)$.
+For the second term holds
+\begin{align*}
+P\biggl(\biggl|\sum_{i}&\sum_{j\neq i}p_{ii\alpha}^2p_{ij\alpha}\varepsilon_i\varepsilon_j\biggr|>\delta\biggr)\le\frac{1}{\delta^2}\sum_{i}\sum_{j\neq i}p_{ii\alpha}^4p_{ij\alpha}^2\mathrm{E}\bigl[\varepsilon_i^2\varepsilon_j^2\bigr]
+= \frac{\sigma^4}{\delta^2}\sum_{i}p_{ii\alpha}^4\sum_{j\neq i}p_{ij\alpha}^2\\
+&\le \frac{\sigma^4}{\delta^2}\sum_{i}p_{ii\alpha}^5 \le \frac{d_\alpha\sigma^4}{\delta^2}\biggl(\max_{1\le i\le n}p_{ii\alpha}\biggr)^4 \to 0.
+\end{align*}
+Third term
+\begin{align*}
+P\biggl(\biggl|\sum_i&\sum_{j\neq i}\sum_{k\neq i}p_{ii\alpha}p_{ij\alpha}p_{ik\alpha}\varepsilon_j\varepsilon_k\biggr|>\delta\biggr)\le\frac{1}{\delta^2}\sum_i\sum_{j\neq i}\sum_{k\neq i}p_{ii\alpha}^2p_{ij\alpha}^2p_{ik\alpha}^2\mathrm{E}\bigl[\varepsilon_j^2\varepsilon_k^2\bigr]\\
+&\le \frac{\sigma^4}{\delta^2} \sum_i p_{ii\alpha}^4 \le \frac{d_\alpha\sigma^4}{\delta^2}\biggl(\max_{1\le i\le n}p_{ii\alpha}\biggr)^3 \to 0.
+\end{align*}
+Hence we have shown that $(\ast)$ is 
+\begin{align*}
+\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}\hat{\beta}_\alpha)^2 = \varepsilon'\mathrm{diag}(p_{ii\alpha})\varepsilon + o_P(1).
+\end{align*}
+
+(2.)To show that $\varepsilon'\mathrm{diag}(p_{ii\alpha})\varepsilon=d_\alpha \sigma^2+o_P(1)$ we use the following truncation technique:\\
+Let $\delta>0$ and $C_n=O((\max p_{ii\alpha})^{-0.5})$, then 
+\begin{align*}
+P\biggl(\biggl|\sum_{i=1}^n p_{ii\alpha} (\varepsilon_i^2-\sigma^2)\biggr|>\delta\biggr)&\le
+ P\biggl(\biggl|\sum_{i=1}^n p_{ii\alpha}(\varepsilon_i^2-\sigma^2)I(|(\varepsilon_i^2-\sigma^2)|\le C_n)\biggr|>\frac{\delta}{2}\biggr)\\
+&+  P\biggl(\biggl|\sum_{i=1}^n p_{ii\alpha}(\varepsilon_i^2-\sigma^2)I(|(\varepsilon_i^2-\sigma^2)|> C_n)\biggr|>\frac{\delta}{2}\biggr).
+\end{align*}
+By Cebysev's inequality and using that the $\varepsilon_i$ are iid, we can bound the first probability on the right hand side by
+\begin{align*}
+P\biggl(\biggl|\sum_{i=1}^n &p_{ii\alpha}(\varepsilon_i^2-\sigma^2)I\bigl(|(\varepsilon_i^2-\sigma^2)|\le C_n\bigr)\biggr|>\frac{\delta}{2}\biggr)\le \frac{4}{\delta^2}\sum_{i=1}^n p_{ii\alpha}^2\mathrm{E}\bigl[|\varepsilon_i^2-\sigma^2|^2I\bigl(|(\varepsilon_i^2-\sigma^2)|\le C_n\bigr)\bigr]\\
+&\le \frac{4}{\delta^2}\bigl(\max_{1\le i\le n}p_{ii\alpha}\bigr)\sum_{i=1}^n p_{ii\alpha}\mathrm{E}\bigl[|\varepsilon_i^2-\sigma^2|^2I\bigl(|(\varepsilon_i^2-\sigma^2)|\le C_n\bigr)\bigr]\\
+&= \frac{4}{\delta^2}\bigl(\max_{1\le i\le n}p_{ii\alpha}\bigr)\underbrace{\mathrm{E}\bigl[|\varepsilon_1^2-\sigma^2|^2I\bigl(|(\varepsilon_1^2-\sigma^2)|\le C_n\bigr)\bigr]}_{\le C_n\mathrm{E}[|\varepsilon_1^2-\sigma^2|]}\sum_{i=1}^n p_{ii\alpha}\\
+&\le \frac{4}{\delta^2}\bigl(\max_{1\le i\le n}p_{ii\alpha}\bigr)C_n\mathrm{E}\bigl[|\varepsilon_1^2-\sigma^2|\bigr]d_\alpha\\
+&\le \frac{8d_\alpha\sigma^2}{\delta^2}\bigl(\max_{1\le i\le n}p_{ii\alpha}\bigr)C_n = O\bigl(\sqrt{\max_{1\le i\le n}p_{ii\alpha}}\bigr).
+\end{align*}
+To see that the second probability on the right hand side vanishes, note that $|\varepsilon_1^2-\sigma^2|I\bigl(|(\varepsilon_1^2-\sigma^2)|> C_n\bigr)\to 0$ and $|\varepsilon_1^2-\sigma^2|I\bigl(|(\varepsilon_1^2-\sigma^2)|> C_n\bigr)\le |\varepsilon_1^2-\sigma^2|$. Hence by the dominated convergence theorem it holds that $\mathrm{E}\bigl[|\varepsilon_1^2-\sigma^2|I\bigl(|(\varepsilon_1^2-\sigma^2)|> C_n\bigr)\bigr] \to 0$. Applying the Markov inequality at the second probability yields
+\begin{align*}
+P\biggl(\biggl|\sum_{i=1}^n &p_{ii\alpha}(\varepsilon_i^2-\sigma^2)I(|(\varepsilon_i^2-\sigma^2)|> C_n)\biggr|>\frac{\delta}{2}\biggr) \le \frac{2}{\delta}\sum_{i=1}^n p_{ii\alpha}\mathrm{E}\bigl[|\varepsilon_i^2-\sigma^2|I\bigl(|(\varepsilon_i^2-\sigma^2)|\le C_n\bigr)\bigr]\\
+&\le  \frac{2}{\delta}\mathrm{E}\bigl[|\varepsilon_1^2-\sigma^2|I\bigl(|(\varepsilon_1^2-\sigma^2)|\le C_n\bigr)\bigr]\sum_{i=1}^n p_{ii\alpha} \\
+&=  \frac{2d_\alpha}{\delta}\mathrm{E}\bigl[|\varepsilon_1^2-\sigma^2|I\bigl(|(\varepsilon_1^2-\sigma^2)|\le C_n\bigr)\bigr] \to 0
+\end{align*}
+establishing that $\sum_{i=1}^n p_{ii\alpha}\varepsilon_i^2= d_\alpha \sigma^2 + o_P(1)$.
+Combining the results from (1.) and (2.) we obtain $\hat{\Gamma}_{\alpha,n}^{CV} =\frac{1}{n}\varepsilon'\varepsilon- \frac{1}{n}\varepsilon'P_\alpha\varepsilon + \frac{2}{n}d_\alpha\sigma^2 +o_P(n^{-1})$
+proving the second claim.$\quad\square$
+\end{document}
