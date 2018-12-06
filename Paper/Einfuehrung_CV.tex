@@ -31,12 +31,24 @@ and let $\Gamma=\Gamma_{N-n}$ be the set of all relevant partitions of $N-n$ ret
 where $P^{-1}$ denotes the number of elements in $\Gamma$.\\
 \\
 The name cross validation refers to the way of splitting up the observations into several partition. The same procedure with just one partition of observations is called hold out or validation. Thus cross validation yields an averaging of several hold-out estimators.
+% Das ist das Kapitel, das für die Motivation unserer Fragestellungen vorgesehen war.(Wie groß muss K gewählt werden, ist CV konsistent...?). Ich hab mir jetzt einfach mal nen "Working titel" ausgedacht...
+\subsection{Dependency between the number of omitted data points and the  parameter choice of Cross Validation}
+A natural question is: How many data points should be omitted in order to evaluate our prediction of $\alpha$ and in which way does this influences the prediction properties of the Cross Validation procedure.\\
+\\
+The in practice most often used variant of Cross Validation is the so called {\itshape leave one out Cross Validation} with $n_\nu=1$ omitted data points. The reason for the popularity of this type of Cross Validation is it's low computational complexity.\footnote{The computational complexity of CV depends strongly on the number of possible partition in $\Gamma$, which increases as $n_\nu$ increases.}\\
+\\
+Throughout this paper we want to study both, the asymptotic and small sample properties of different methods of Cross Validation in the Framework of Model selection. Especially we will show that {\itshape leave one out Cross Validation} is asymptotically incorrect and chooses too conservative conservative models.\\
+\\
+Moreover we will use simulation studies to find a rough rule of thumb of choosing $n_\nu$ for a given sample and model selecting problem.
 
 
 
 
 
+<<<<<<< HEAD
 
 
 \subsection{Motivation unserer Fragestellungen (Wie groß muss K gewählt werden, ist CV konsistent...)(Titel finden)}
+=======
+>>>>>>> master
 \end{document}
