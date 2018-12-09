@@ -1,0 +1,63 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\subsection{The Monte Carlo CV($n_\nu$)}
+\begin{align*}
+\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}
+\end{align*}
+\textbf{Claim:} Let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}$. Then for any function $a:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
+\begin{enumerate}
+\item $\mathrm{E}_\mathcal{R} \bigl[ b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr] = \binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s)$
+\item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$.
+\end{enumerate}
+\textbf{Proof:}
+(1.) The probability that subset $s \in \mathcal{R}^\ast$ is selected, is given by
+\begin{align*}
+P(s\in \mathcal{R})= \frac{1}{\# \mathcal{R}^\ast} = \binom{n}{n_v}^{-1}.
+\end{align*}
+As the choice of sets $s\in \mathcal{R}$ is iid it follows
+\begin{align*}
+\mathrm{E}_\mathcal{R} \biggl[ \frac{1}{b}\sum_{s\in \mathcal{R}}a(s)\biggr] 
+= \frac{1}{b}\underbrace{\mathrm{E}_\mathcal{R} \biggl[\sum_{s\in \mathcal{R}}a(s)\biggr]}_{=b\mathrm{E}_\mathcal{R}[a(s)]}
+= \sum_{s\in \mathcal{R}^\ast}a(s)P(s\in \mathcal{R}^\ast).
+\end{align*}
+(2.) Since the choice of sets $s\in \mathcal{R}$ is iid
+\begin{align*}
+V_\mathcal{R} \biggl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\biggr)&=\mathrm{E}_\mathcal{R} \biggl[\biggl(\frac{1}{b}\sum_{s\in \mathcal{R}} a(s)\biggr)^2\biggr]-\mathrm{E}_\mathcal{R} \biggl[\frac{1}{b}\sum_{s\in \mathcal{R}} a(s)\biggr]^2
+\le \mathrm{E}_\mathcal{R} \biggl[\biggl(\frac{1}{b}\sum_{s\in \mathcal{R}} a(s)\biggr)^2\biggr]\\
+&= \frac{1}{b^2} \mathrm{E}_\mathcal{R} \biggl[\biggl(\sum_{s\in \mathcal{R}} a(s)\biggr)^2\biggr]
+=\frac{1}{b^2}\underbrace{\mathrm{E}_\mathcal{R} \biggl[\sum_{s\in \mathcal{R}} a(s)^2\biggr]}_{=b\mathrm{E}_\mathcal{R}[a(s)^2]}. \quad \square
+\end{align*}
+
+
+\begin{satz}[Consistency of $MCCV(n_v)$]
+Under the conditions of Theorem XY and
+\begin{align*}
+\max_{s\in \mathcal{R}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =o_P(1)
+\end{align*}
+where $\mathcal{R}$ contains $b$ subsets selected randomly with $b$ satisfying
+\begin{align*}
+\frac{n^2}{b(n-n_v)^2}\to 0.
+\end{align*}
+Suppose furthermore that $n_v$ is selected such that
+\begin{align*}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
+\end{align*}
+Then the following holds
+\begin{enumerate}[(I)]
+\item If $\mathcal{M}_\alpha$ is in Category I, then there exists $R_n \ge 0$ such that $\hat{\Gamma}_{\alpha,n}^{MCCV} = \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s + \Delta_{\alpha,n} + R_n + o_P(1)$.
+\item If $\mathcal{M}_\alpha$ is in Category II, then $\hat{\Gamma}_{\alpha,n}^{MCCV} = \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s + \frac{1}{n-n_v}d_\alpha\sigma^2  + o_P((n-n_v)^{-1})$.
+\item $\lim_{n\to\infty}P(\mathcal{M}_{MCCV}=\mathcal{M}_\ast) = 1$
+\end{enumerate}
+where $\mathcal{M}_{MCCV}$ denotes the model selected by using $MCCV(n_v)$.
+\end{satz}
+\textbf{Proof of $(I)$:} 
+Shao doesn't proof this assertion in his paper but gives a guideline which we follow.
+\\
+\textbf{Proof of $(II)$:}
+To proof the second statement, Shao uses a more refined decomposition as in the proof of theorem XY. 
+\\
+\textbf{Proof of $(III)$:} 
+The proof is similar to that of the corresponding statement for $BICV(n_v)$. 
+
+
+\end{document}
