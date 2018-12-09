@@ -1,0 +1,177 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\subsection{Consistency of $BICV(n_v)$ (Titel finden)}
+
+Let $\mathcal{B}$ be a collection of $b$ subsets of $\{ 1,\dots,n\}$ that have size $n_v$ so that the following two conditions hold:
+\begin{enumerate}
+\item[(a)] every $i$, $1\le i \le n$, appears in the same number of subsets of $\mathcal{B}$
+\item[(b)] every pair $(i,j)$, $1\le i < j \le n$, appears in the same number of subsets of $\mathcal{B}$
+\end{enumerate}
+
+\textbf{Claim:} $(I) \#\{s\in \mathcal{B}| i\in s\} = \frac{n_v}{n} b$ \\
+$(II)\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}=n_vb\frac{n_v-1}{n(n-1)}$ \\
+\textbf{Proof of $(I)$:} 
+$\mathcal{B}$ can be represented as a $n\times b$ matrix containing only zeros and ones. Then one interprets each column as a subset of $\{ 1,\dots,n\}$. Since these subsets have size $n_v$, it follows that $\sum_i^n \mathcal{B}_{i,j}=n_v$ for any $j= 1, \dots ,b$, where $\mathcal{B}_{i,j}$ denotes the $(i,j)$ element of $\mathcal{B}$. Hence
+\begin{align*}
+\sum_{j=1}^b\underbrace{\sum_{i=1}^n \mathcal{B}_{i,j}}_{=n_v} = bn_v.
+\end{align*}
+Furthermore, by condition $(a)$: $\sum_j^b \mathcal{B}_{i,j} = \#\{s\in \mathcal{B}| i\in s\}$ is independent of $i$. Thus 
+\begin{align*}
+bn_v = \sum_{i=1}^n\underbrace{\sum_{j=1}^b \mathcal{B}_{i,j}}_{=\#\{s\in \mathcal{B}| i\in s\}} \quad
+\iff \quad \#\{s\in \mathcal{B}| i\in s\} = \frac{n_v}{n}b. \quad \square
+\end{align*} 
+\textbf{Proof of $(II)$:}
+As $\mathcal{B}$ only consists of zeros and ones, one can count the subsets $s$ for which this condition is true by calculating the inner product of the $i$th and $j$th row, i.e.
+\begin{align*}
+\#\{s\in\mathcal{B}|(i,j)\in s, j>i\} = \sum_{k=1}^b\mathcal{B}_{i,k}\mathcal{B}_{j,k}.
+\end{align*}
+As any subset $s \in \mathcal{B}$ contains $n_v$ elements, it holds that
+\begin{align*}
+\sum_{k=1}^b\sum_{i=1}^n\sum_{j=1}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k}= \sum_{k=1}^b\underbrace{\sum_{i=1}^n\mathcal{B}_{i,k}}_{=n_v}\underbrace{\sum_{j=1}^n\mathcal{B}_{j,k}}_{=n_v}=bn_v^2
+\end{align*}
+and as $\mathcal{B}_{i,k}^2=\mathcal{B}_{i,k}$
+\begin{align*}
+\sum_{k=1}^b\sum_{i=1}^n\sum_{j=1}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k} &= \sum_{k=1}^b\underbrace{\sum_{i=1}^n\mathcal{B}_{i,k}^2}_{=n_v} +\sum_{k=1}^b\sum_{i=1}^n\sum_{j\neq i}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k}\\
+\Rightarrow \quad \sum_{k=1}^b\sum_{i=1}^n\sum_{j\neq i}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k} &= bn_v(n_v-1).
+\end{align*}
+Finally, by the balance property $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}$ is independent of $i$ and $j$ and therefore it holds that
+\begin{align*}
+bn_v(n_v-1) = \sum_{i=1}^n\sum_{j\neq i}^n\underbrace{\sum_{k=1}^b\mathcal{B}_{i,k}\mathcal{B}_{j,k}}_{\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}}&=\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}\underbrace{\sum_{i=1}^n\sum_{j\neq i}^n}_{n(n-1)}\\
+\iff \#\{s\in\mathcal{B}|(i,j)\in s, j>i\}&=n_vb\frac{n_v-1}{n(n-1)}.\quad \square
+\end{align*}
+
+
+\begin{satz}[Consistency of $BICV(n_v)$]
+Under the conditions of Theorem XY and
+\begin{align*}
+\lim_{n\to\infty} \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =0.
+\end{align*}
+Suppose furthermore that $n_v$ is selected such that
+\begin{align*}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
+\end{align*}
+Then the following holds
+\begin{enumerate}[(I)]
+\item If $\mathcal{M}_\alpha$ is in Category I, then there exists $R_n \ge 0$ such that $\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{1}{n}\varepsilon'\varepsilon + \Delta_{\alpha,n} + R_n + o_P(1)$.
+\item If $\mathcal{M}_\alpha$ is in Category II, then $\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{1}{n}\varepsilon'\varepsilon + \frac{1}{n-n_v}d_\alpha\sigma^2  + o_P((n-n_v)^{-1})$.
+\item $\lim_{n\to\infty}P(\mathcal{M}_{BICV}=\mathcal{M}_\ast) = 1$
+\end{enumerate}
+where $\mathcal{M}_{BICV}$ denotes the model selected by using $BICV(n_v)$.
+\end{satz}
+
+\textbf{Proof of $(I)$:} From XY and the balance property of $\mathcal{B}$,
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (I_{n_v}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 \ge \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 = \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2.
+\end{align*}
+Why does the inequality hold?
+\begin{align*}
+\min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z 
+\le \min_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
+= \min_{z\in \mathbb{R}^n_v : \lVert z\rVert=1}z'Q_{\alpha,s}z
+\end{align*}
+Hence the maximal eigenvalue of $I_{n_v}-Q_{\alpha,s}$ is below or equal to one or equivalently 
+\begin{align*}
+\lVert (I_{n_v}-Q_{\alpha,s})^{-1}a\rVert ^2 \ge \lVert a\rVert ^2 \quad \forall a\in \mathbb{R}^{n_v}.
+\end{align*}
+And by the proof of statement $(I)$ in theorem XY this is equivalent to
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{BICV} \ge \frac{1}{n}\varepsilon'\varepsilon + \Delta_{\alpha,n} + o_P(1).
+\end{align*}
+Now define $R_n = \hat{\Gamma}_{\alpha,n}^{BICV} - n^{-1}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2$. This proves the first assertion.
+\\
+
+\textbf{Proof of $(II)$:} 
+We conduct the proof of the second statement in three steps. First we decompose $\hat{\Gamma}_{\alpha,n}^{BICV} = A_\alpha + B_\alpha$. In the second step we show that $A_\alpha=\frac{1}{n}\varepsilon'\varepsilon + \frac{1}{n-n_v}d_\alpha\sigma^2 + o_P((n-n_v)^{-1})$ and in the last step we prove $B_\alpha = o_P((n-n_v)^{-1})$. \\
+(1.) Decompose $\hat{\Gamma}_{\alpha,n}^{BICV} = A_\alpha + B_\alpha$, where
+\begin{align*}
+A_\alpha=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}U_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}e_s,\\
+B_\alpha=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s
+\end{align*}
+and
+\begin{align*}
+U_{\alpha,s} = (I_{n_v}-Q_{\alpha,s})(I_{n_v}+c_n P_{\alpha,s})(I_{n_v}-Q_{\alpha,s})\\
+c_n = \frac{n_v(2n-n_v)}{(n-n_v)^2}\\
+P_{\alpha,s}= X_{\alpha,s}(X_{\alpha,s}'X_{\alpha,s})^{-1}X_{\alpha,s}'
+\end{align*}
+(2.)
+\begin{align*}
+A_\alpha&= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-Q_{\alpha,s})(I_{n_v}+c_n P_{\alpha,s})(I_{n_v}-Q_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s\\
+&=  \underbrace{\frac{1}{n_vb}\sum_{s\in \mathcal{B}} e_s'e_s}_{=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2} + \frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}\lVert P_{\alpha,s}e_s\rVert^2
+\end{align*}
+Under the conditions of the theorem and as $X_\alpha'X_\alpha =X_{\alpha,s}'X_{\alpha,s}+X_{\alpha,s^c}'X_{\alpha,s^c}$,it holds for any $s\in \mathcal{B}$ that
+\begin{align*}
+\frac{1}{n}X_\alpha'X_\alpha - \frac{1}{n_v}X_{\alpha,s}'X_{\alpha,s}
+&=\frac{1}{n}X_{\alpha,s^c}'X_{\alpha,s^c}-\frac{n-n_v}{n_vn}X_{\alpha,s}'X_{\alpha,s}\\
+&= \frac{n-n_v}{n}\biggl[\frac{1}{n-n_v}X_{\alpha,s^c}'X_{\alpha,s^c}-\frac{1}{n_v}X_{\alpha,s}'X_{\alpha,s}\biggr] 
+= o\biggl(\frac{n-n_v}{n}\biggr).
+\end{align*}
+together with $(X'X)^{-1}=O(n^{-1})\Rightarrow (X_\alpha'X_\alpha)^{-1}=O(n^{-1})$ 
+\begin{align*}
+(X_{\alpha,s}'X_{\alpha,s})^{-1}-\frac{n}{n_v}\underbrace{(X_{\alpha}'X_{\alpha})^{-1}}_{=O(n^{-1})} = \biggl[1-\frac{n}{n_vn}O(1)\biggr](X_{\alpha,s}'X_{\alpha,s})^{-1} \\
+= o\biggl(\frac{n-n_v}{n}\biggr)(X_{\alpha,s}'X_{\alpha,s})^{-1}\\
+\Rightarrow P_{\alpha,s}=\frac{n}{n_v}Q_{\alpha,s}+o\biggl(\frac{n-n_v}{n}\biggr)P_{\alpha,s}\\
+\iff Q_{\alpha,s} = \biggl[\frac{n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\underbrace{\frac{n_v}{n}}_{\to 1}\biggr]P_{\alpha,s}
+=\biggl[\frac{n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]P_{\alpha,s}
+\end{align*}
+\begin{align*}
+\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s
+ = \frac{1}{n_vb}\sum_{s\in \mathcal{B}} \sum_{i\in s}\sum_{j\in s}p_{i,j,\alpha}e_ie_j\\
+=\frac{1}{n_vb}\underbrace{\sum_{s\in \mathcal{B}} \sum_{i\in s}}_{\frac{bn_v}{n}\sum_{i=1}^n} p_{i,i,\alpha}e_i^2 + 2\frac{1}{n_vb}\underbrace{\sum_{s\in \mathcal{B}} \sum_{i\in s}\sum_{j\in s, j>i }}_{n_vb\frac{n_v-1}{n(n-1)}\sum_{i=1}^n\sum_{j>1}^n} p_{i,j,\alpha}e_ie_j
+\end{align*}
+As
+\begin{align*}
+2\sum_{i=1}^n\sum_{j>1}^np_{i,j,\alpha}e_ie_j= \sum_{i=1}^n\sum_{j\neq i}^np_{i,j,\alpha}e_ie_j \\
+= \sum_{i=1}^n\sum_{j=1}^np_{i,j,\alpha}e_ie_j - \sum_{i=1}^np_{i,i,\alpha}e_i^2
+\end{align*}
+we obtain
+\begin{align*}
+\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s=\biggl[\frac{1}{n}-\frac{n_v-1}{n(n-1)}\biggr] \sum_{i=1}^np_{i,i,\alpha}e_i^2
+\end{align*}
+Putting things together
+\begin{align*}
+\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}\lVert P_{\alpha,s}e_s\rVert^2
+&= \biggl[\frac{n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^{-1}\underbrace{\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}}_{c_n\frac{n-n_v}{n(n-1)}\sum_{i=1}^n}e_s'Q_{\alpha,s}e_s\\ 
+&=  \biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]\frac{n}{n_v}\frac{n_v(2n-n_v)}{n(n-n_v)(n-1)} \sum_{i=1}^np_{i,i,\alpha}e_i^2\\
+&=\biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]\frac{2n-n_v}{(n-n_v)(n-1)} \sum_{i=1}^np_{i,i,\alpha}e_i^2
+\end{align*}
+Hence we have shown that
+\begin{align*}
+A_\alpha&= \frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]\frac{2n-n_v}{(n-n_v)(n-1)} \underbrace{\sum_{i=1}^np_{i,i,\alpha}e_i^2}_{d_\alpha\sigma^2+o_P(1)}\\
+&= \frac{\varepsilon'(I_n-P_\alpha)\varepsilon}{n} +\underbrace{\biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]}_{=1+o(1)}\underbrace{\frac{2n-n_v}{(n-n_v)(n-1)}}_{=\frac{1}{n-n_v}(1+o(1))} [d_\alpha\sigma^2+o_P(1)]\\
+&=\frac{\varepsilon'\varepsilon }{n}- \underbrace{\frac{\varepsilon'P_\alpha\varepsilon}{n}}_{=\frac{d_\alpha\sigma^2}{n}+o_P(\frac{1}{n})} + \frac{d_\alpha\sigma^2}{n-n_v}+o_P\biggl(\frac{1}{n-n_v}\biggr)\\
+&=\frac{\varepsilon'\varepsilon }{n}+\frac{d_\alpha\sigma^2}{n-n_v}+o_P\biggl(\frac{1}{n-n_v}\biggr)
+\end{align*}
+
+(3.) It remains to show that $B_\alpha = o_P((n-n_v)^{-1})$.
+\begin{align*}
+\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=[1-\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}} P_{\alpha,s}\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=[1-\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}} =\biggl[\frac{n-n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2 P_{\alpha,s}.
+\end{align*}
+Hence for any $s\in \mathcal{B}$ and $n$ sufficiently large
+\begin{align*}
+\biggl(\frac{n}{n-n_v}\biggr)^2 (I_{n_v}-Q_{\alpha,s})P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})=[1+o(1)]^2P_{\alpha,s}\ge \frac{1}{2}P_{\alpha,s}.
+\end{align*}
+And after rearrangement
+\begin{align*}
+(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}\le 2 \biggl(\frac{n}{n-n_v}\biggr)^2P_{\alpha,s}.
+\end{align*}
+\begin{align*}
+U_{\alpha,s} = \underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}\\
+=\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)(I_{n_v}+c_n P_{\alpha,s})\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)
++\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s} \\
++ 2o\biggl(\frac{n-n_v}{n}\biggr)\biggl(1-\frac{n_v}{n}\biggr)(1+c_n)P_{\alpha,s}\\
+=\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)^2+\underbrace{c_n\biggl(1-\frac{n_v}{n}\biggr)^2}_{=\frac{n_v}{n}(2-\frac{n_v}{n})}P_{\alpha,s}+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}\\
+=I_{n_v} +\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}
+\end{align*}
+\begin{align*}
+(I_{n_v}-Q_{\alpha,s})^{-1}\underbrace{(I_{n_v}-U_{\alpha,s})}_{=[o(\frac{n-n_v}{n})]^2(1+c_n)P_{\alpha,s}}(I_{n_v}-Q_{\alpha,s})^{-1}\\
+=\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}}_{\le 2(\frac{n}{n-n_v})^2P_{\alpha,s}}\\
+\le o(1)(1+c_n)P_{\alpha,s}
+\end{align*}
+\begin{align*}
+B_\alpha \le o(1)\underbrace{(1+c_n)\biggl(\frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert P_{\alpha,s}e_s\rVert^2\biggr)}_{=O_P(\frac{1}{n-n_v})}=o_P\biggl(\frac{1}{n-n_v}\biggr).
+\end{align*}
+this proves statement $(II)$.\\
+
+\textbf{Proof of $(III)$:} 
+
+\end{document}
