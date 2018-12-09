@@ -1,0 +1,84 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\section{The Leave-$n_\nu$-Out Cross-Validation}
+%NOCH keine eigenen Worte (aus shao)
+
+\begin{lemma}
+	\label{Equation3.1}
+	The average squared prediction error of split $s$ is given by
+	\begin{align*}
+		ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel_2^2\\
+		&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel_2^2
+	\end{align*}
+\end{lemma}
+
+\begin{proof}[Proof of Lemma \ref{Equation3.1}]~\\
+	Given by construction, we have
+	\begin{align*}
+		X_\alpha=\Big(\begin{matrix}
+		X_{\alpha,s}\\ X_{\alpha,s^c}
+		\end{matrix}\Big)
+		\text{~~~consisting of the two submatrices~} X_{\alpha,s}\in\mathbb{R}^{n_\nu\times d_\alpha} \text{~and~} X_{\alpha,s^c}\in\mathbb{R}^{(n-n_\nu)\times d_\alpha}
+	\end{align*}
+	and 
+	\begin{align*}
+		y=\Big(\begin{matrix}
+		y_{s}\\ y_{s^c}
+		\end{matrix}\Big),~~\hat{\beta}_\alpha=\Big(\begin{matrix}
+		\hat{\beta}_{\alpha,s}\\ \hat{\beta}_{\alpha,s^c}
+		\end{matrix}\Big)
+	\end{align*}
+	With the help of the following decompositions
+	\begin{align*}
+		X_\alpha^\prime y&=X_{\alpha,s}^\prime y_s+X_{\alpha,s^c}^\prime y_{s^c}\\
+		X_\alpha^\prime X_\alpha&=X_{\alpha,s}^\prime X_{\alpha,s}+X_{\alpha,s^c}^\prime X_{\alpha,s^c}\\
+		X_{\alpha,s} \hat{\beta}_{\alpha,s}&=P_{\alpha,s}y_s=I_{n_\nu}y_s=y_s
+	\end{align*}
+	Because $P_{\alpha,s}=P_{\alpha,s}^\prime P_{\alpha,s}=P_{\alpha,s}^{-1} P_{\alpha,s}=I_{n_\nu}$ is symmetric, idempotent and orthogonal. Thus now 
+	we can rewrite $\hat{\beta}_\alpha$ as
+	\begin{align}
+		\hat{\beta}_\alpha&=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y   \nonumber\\
+		&=(X_\alpha^\prime X_\alpha)^{-1}[X_{\alpha,s}^\prime y_s+X_{\alpha,s^c}^\prime y_{s^c}]  \nonumber \\
+		&=(X_\alpha^\prime X_\alpha)^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s}) \hat{\beta}_{\alpha,s}+(X_{\alpha,s^c}^\prime X_{\alpha,s^c})\hat{\beta}_{\alpha,s^c}]
+		\label{beta_alpha_hat_decomposition}
+	\end{align}
+	The Average squared prediction error for split $s$ satisfies
+	\begin{align*}
+	ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel_2^2\\
+	&=\frac{1}{n_\nu}\parallel y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}\parallel_2^2\\
+	&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(I_{n_\nu}-Q_{\alpha,s})(y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c})\parallel_2^2
+	\end{align*}
+	Thus it is enough to show that $(I_{n_\nu}-Q_{\alpha,s})(y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c})=y_s-X_{\alpha,s}\hat{\beta}_\alpha$ holds 
+	\begin{align*}
+		&-Q_{\alpha,s}y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}+Q_{\alpha,s}X_{\alpha,s}\hat{\beta}_{\alpha,s^c}=-X_{\alpha,s}\hat{\beta}_\alpha\\
+		\Leftrightarrow&-X_{\alpha,s}(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime y_s- X_{\alpha,s}\hat{\beta}_{\alpha,s^c}+X_{\alpha,s}(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime X_{\alpha,s}\hat{\beta}_{\alpha,s^c}=-X_{\alpha,s}\hat{\beta}_{\alpha}\\
+		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime y_s+ \hat{\beta}_{\alpha,s^c}-(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime X_{\alpha,s}\hat{\beta}_{\alpha,s^c}=\hat{\beta}_{\alpha}\\
+		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}(X_{\alpha,s}^\prime X_{\alpha,s})\hat{\beta}_{\alpha,s}+ \hat{\beta}_{\alpha,s^c}-(X_{\alpha}^\prime X_{\alpha})^{-1}(X_{\alpha,s}^\prime X_{\alpha,s})\hat{\beta}_{\alpha,s^c}=\hat{\beta}_{\alpha}\\
+		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s})(\hat{\beta}_{\alpha,s}-\hat{\beta}_{\alpha,s^c})+(X_{\alpha}^\prime X_{\alpha})\hat{\beta}_{\alpha,s^c}]=\hat{\beta}_{\alpha}\\
+		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s})(\hat{\beta}_{\alpha,s}-\hat{\beta}_{\alpha,s^c})+[X_{\alpha,s}^\prime X_{\alpha,s}+X_{\alpha,s^c}^\prime X_{\alpha,s^c}]\hat{\beta}_{\alpha,s^c}]=\hat{\beta}_{\alpha}\\
+		\Leftrightarrow&(X_\alpha^\prime X_\alpha)^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s}) \hat{\beta}_{\alpha,s}+(X_{\alpha,s^c}^\prime X_{\alpha,s^c})\hat{\beta}_{\alpha,s^c}]=\hat{\beta}_{\alpha}
+	\end{align*}
+Which is exactly the decomposition of $\hat{\beta}_{\alpha}$ in   (\ref{beta_alpha_hat_decomposition}).\\
+\end{proof}
+
+
+
+\subsection{Theory of CV(1) (Titel finden)}
+
+\subsection{The Balanced Incomplete CV($n_\nu$)}
+
+\subsection{The Monte Carlo CV($n_\nu$)}
+
+\subsection{The Analytic Approximate CV($n_\nu$)}
+
+\subsection{General Extension of CV($n_\nu$)}
+A very helpful tool is the general extended version of the CV($n_\nu$) for different and more complicated types of initial models denoted as before by $\mathcal{M}_\alpha$. The general version under $\mathcal{M}_\alpha$ of this method of \cite{shao} does model selection by 
+\begin{align*}
+	GECV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{GECV}
+\end{align*}
+by the uncomplicate usage of the $GECV$-estimator for $\Gamma_{\alpha,n}$, denoted by
+\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{GECV}=\frac{1}{n_\nu b}\sum_{s\in\mathcal{L}}L_n(y_s,\hat{y}_{\alpha,s^c})
+\end{align*} 
+with $\mathcal{L}=\mathcal{B}$ for the $BICV(n_\nu)$ method and $\mathcal{L}=\mathcal{R}$ for the $MCCV(n_\nu)$ method. While $L_n(\cdot,\cdot)$ is the suitable loss function. As before, the data is splitted $b$ times, multiplied with the \textit{average squared prediction error} under $\mathcal{M}_\alpha$ for all splits $s\in\mathcal{L}$.
+\end{document}

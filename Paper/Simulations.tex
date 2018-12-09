@@ -1,0 +1,52 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\section{Simulations}
+
+\subsection{CV(1) and MCCV($n_{\nu}$)}
+%BEISPIELTABELLE habe mal ein paar willkürliche sachen in der ersten zeile eingegeben, die wir später einfach nur ersetzen müssen, die letzten zeilen hab ich jetzt nicht weiter mit beispielzahlen gefüllt (ist noch eine alte tabelle von mir)
+\begin{table}[htb]
+	\begin{tabular}{lcccccc}
+		\toprule
+		\midrule
+		\textbf{\scriptsize Initial $\beta$}
+		&\textbf{\scriptsize Model $\mathcal{M}_\alpha$}&\textbf{\scriptsize Category}
+		&\textbf{\scriptsize CV(1)}
+		&\textbf{\scriptsize MCCV($n_\nu$)}
+		&\textbf{\scriptsize APCV($n_\nu$)}
+		&\textbf{\scriptsize BICV($n_\nu$)}\\
+		$~$ &\textbf{\scriptsize $\alpha=\{...\}$} 
+		\\\midrule\midrule
+		
+		{\scriptsize $\beta=(1,2,3,4,5,6)^\prime$}& \scriptsize alpha-werte & \scriptsize eins-oder-zwei &\scriptsize WertSpalte1 & \scriptsize WertSpalte2 &\scriptsize WertSpalte3 & \scriptsize WertSpalte4\\
+		
+		~& \scriptsize alpha-werte & \scriptsize eins-oder-zwei &\scriptsize WertSpalte1 & \scriptsize WertSpalte2 &\scriptsize WertSpalte3 & \scriptsize WertSpalte4\\
+		
+		~& \scriptsize alpha-werte &\scriptsize eins-oder-zwei & \scriptsize WertSpalte1 &\scriptsize WertSpalte2 & \scriptsize WertSpalte3 &\scriptsize WertSpalte4\\
+		& & & & & &\\
+		
+		%ALTE tabelle
+		{\scriptsize Initialset $\{X_{1},X_{2},X_{3},X_{4}\}$}\\
+		{\scriptsize I-Score vor der Verwerfung}& \scriptsize 3,6896 & \scriptsize 7,1186 &\scriptsize 13,1224 & \scriptsize 14,2844 & & \\
+		\scriptsize Verworfene Variable& \scriptsize $X_{3}$ &\scriptsize $X_{1}$ & \scriptsize $X_{2}$ &\scriptsize $X_{4}$ & & \\
+		& & & & & &\\
+		{\scriptsize Initialset $\{X_{1},X_{2},X_{3},X_{6}\}$}\\
+		{\scriptsize I-Score vor der Verwerfung}& \scriptsize 2,0536 & \scriptsize 2,7195 &\scriptsize 3,9136 & \scriptsize 6,9534 & & \\
+		\scriptsize Verworfene Variable& \scriptsize $X_{3}$ &\scriptsize $X_{6}$ & \scriptsize $X_{1}$ &\scriptsize $X_{2}$ & & \\
+		& & & & & &\\
+		{\scriptsize Initialset $\{X_{1},X_{3},X_{6}\}$}\\
+		{\scriptsize I-Score vor der Verwerfung}& \scriptsize 0,8767 & \scriptsize 0,8681 &\scriptsize 0,1324 & & & \\
+		\scriptsize Verworfene Variable& \scriptsize $X_{1}$ &\scriptsize $X_{6}$ & \scriptsize $X_{3}$ & & & \\
+		\bottomrule
+	\end{tabular}
+	\caption{Verwerfungsprozess für vier Fälle}
+\end{table}
+
+\subsection{Different $n_{\nu}$}
+
+
+\subsection{Consistency}
+
+\subsection{Category \RM{1} - Simulation}
+
+
+\end{document}

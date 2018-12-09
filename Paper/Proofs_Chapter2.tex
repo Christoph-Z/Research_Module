@@ -38,8 +38,8 @@
 	\label{Equation2.3-2.4}
 	It holds true that:
 	\begin{align*}
-	&&\Delta_{\alpha,n}>0 && \text{,for } \mathcal{M}\in\text{Cateogory I}&&\\
-	&&\Delta_{\alpha,n}=0 && \text{,for } \mathcal{M}\in\text{Cateogry II}&&
+	&&\Delta_{\alpha,n}>0 && \text{,for } \mathcal{M}_\alpha\in\text{Category I}&&\\
+	&&\Delta_{\alpha,n}=0 && \text{,for } \mathcal{M}_\alpha\in\text{Category II}&&
 	\end{align*}
 \end{lemma}
 \begin{proof}[Proof Lemma \ref{Equation2.3-2.4}]~\\
@@ -59,10 +59,16 @@
 	&=||\left(I_n-P_\alpha\right)X_{\alpha^c}\beta_{\alpha^c}||^2>0 \label{larger0}
 	\end{align}
 	Hence 
-	\[
-		(\mathcal{M}_\alpha\in \text{ Cat I } \wedge \text{ r}(X)=p) \Rightarrow(\exists\beta_i\in \alpha^c:\beta_i\neq0 \wedge X_{\alpha^c}\text{ r}(X)=p-d_\alpha)\Rightarrow X_{\alpha^c}\beta_{\alpha^c}\neq0
-	\]  
-	And since $(I_n-P_\alpha)$ is the Projection matrix onto span$\{x_{\alpha,1},\ldots,x_{\alpha,d_\alpha}\}$, it holds true that $(I_n-P_\alpha)X_{\alpha^c}\beta_{\alpha^c}\neq0$ and therefore (\ref{larger0}) must be strictly larger then zero. \\
+	%\[
+		%(\mathcal{M}_\alpha\in \text{ Cat I } \wedge \text{ r}(X)=p) \Rightarrow(\exists\beta_i\in \alpha^c:\beta_i\neq0 \wedge X_{\alpha^c}\text{ r}(X_{\alpha^c})=p-d_\alpha)\Rightarrow X_{\alpha^c}\beta_{\alpha^c}\neq0
+	%\]
+	$\mathcal{M}_\alpha\in$ Category I, it must exist at least one none zero component in $\beta_{\alpha^c}$. Together with $X$ having full rank, we can conclude that $X_{\alpha^c}\beta_{\alpha^c}$ is always unequal to zero.\\ 
+	Note further, that $(I_n-P_\alpha)$ is the Projection matrix onto the orthogonal complement of span$\{x_{\alpha,1},\ldots,x_{\alpha,d_\alpha}\}$. Since
+	\begin{align*}
+		X_{\alpha^c}\beta_{\alpha^c}&\neq 0\\
+		X_{\alpha^c}\beta_{\alpha^c}\not\perp (&I_n-P_\alpha)
+	\end{align*}
+	it holds that $(I_n-P_\alpha) X_{\alpha^c}\beta_{\alpha^c}\neq 0$ and therefore (\ref{larger0}) remains true.\\
 	\\
 	For the second part, assume $\mathcal{M}_\alpha\in$ Category II, then $X\beta=X_\alpha\beta_\alpha$. Thus
 	\begin{align*}

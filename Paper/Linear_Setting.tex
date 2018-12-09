@@ -9,18 +9,25 @@ y_i=x_i^\prime\beta+\varepsilon_i
 \end{align*}
 with $x_i\in\mathbb{R}^p$ as the vector of covariates, $\beta\in\mathbb{R}^p$ as the true parameter vector and the residual $\varepsilon_i$ for the obseravtion $i$.
 %WEIß nicht ob man das so sagen kann:
-W.l.o.g. we assume that $E[\varepsilon_i|x_i]=0$ and $E[\varepsilon_i^2|x_i]=\sigma^2$.
+W.l.o.g. we assume that the residuals are independent and identically distributed and $E[\varepsilon_i|x_i]=0$ such as $E[\varepsilon_i^2|x_i]=\sigma^2$. Now we can write the linear regression model in matrix notation as
+\begin{align*}
+	y=X\beta+\varepsilon
+\end{align*}
+with $X=[x_1,...,x_n]^\prime\in\mathbb{R}^{n\times p}$ as our adequate matrix, $y\in\mathbb{R}^{n}$ and $\varepsilon\in\mathbb{R}^{n}$.
 \\\\
-For the application of CV($n_\nu$) we use the notation of the so called \textit{Compact model} as in \cite{shao}. \\\\
-%NOCH einbasteln
-$\mathcal{A}=\{\alpha|\alpha\subseteq\{1,...,p\},\alpha\neq\emptyset\}$\\
-$\alpha=index set$\\
-$d_\alpha=|\alpha|~~~~~~~~~~~~$ (number of predictors)\\
-$\mathcal{M}_\alpha=\{y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i|\alpha\in\mathcal{A}\}$\\
-$y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i~~~~~~~~~~~$ (compact model)\\\\
-with $x_{i,\alpha}\in\mathbb{R}^{d_\alpha}$ and $\beta_\alpha\in\mathbb{R}^{d_\alpha}$.
+For the application of CV($n_\nu$) we have to describe the so called \textit{Compact model} of \cite{shao}, by using nearly the same notation. The idea behind this model is, that some $\beta_i's$ of the given model might be $0$ and we use a set $\alpha$ consisting of some integers from $1,...,p$ that indexed some of the $\beta_i's$ to get a more compact version of our initial linear regression model. A more detailed explanation of the indexing is given in chapter \ref{chapter_compact_model}. Therefore let 
+$\mathcal{A}=\{\alpha|\alpha\subseteq\{1,...,p\},\alpha\neq\emptyset\}$ be a collection of all indexsets $\alpha$, with 
+$|\alpha|\equiv d_\alpha\leq p$. Where $d_\alpha$ is the number of predictors in the compact model. Thus for any $\alpha\in\mathcal{A}$ and observation $i=1,...,n$ it is given by
+\begin{align*}
+	y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i
+\end{align*}
+which will be more easily denoted for observation $i$ as
+\begin{align*}
+	\mathcal{M}_\alpha=\{y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i|\alpha\in\mathcal{A}\}
+\end{align*}
+with $dim(\mathcal{M}_\alpha)=d_\alpha$. Because $x_{i,\alpha}\in\mathbb{R}^{d_\alpha}$ and $\beta_\alpha\in\mathbb{R}^{d_\alpha}$ are both vectors which include all the components of the initial model which where indexed by $\alpha$. Thus there are $2^p-1$ different $\alpha's$ possible and therefore $2^p-1$ different forms of $\mathcal{M}_\alpha$ for one observation $i$.
 
-\subsection{Compact Model Categories}
+\subsection{Compact Model Categories} \label{chapter_compact_model}
 %KANN man das so machen?/Keine eigenen worte, alles aus shao
 For the following model selection problem, we have to introduce two possible types of $\mathcal{M}_\alpha$.We define
 \begin{align*}
@@ -29,15 +36,60 @@ Category~\RM{1}:& At least one $\beta_i\neq 0$ is \textit{not} in $\beta_\alpha$
 Category~\RM{2}:& $\beta_\alpha$ contains \textit{all} $\beta_i\neq 0$
 \end{tabular}
 \end{align*}
-Where Category~\RM{1} contains all the incorrect models and Category~\RM{2} contains all models which may be inefficient.\\\\
-%VERBESSERUNG machen
-The optimal Model will be 
+Where Category~\RM{1} contains all the incorrect models and Category~\RM{2} contains all models which may be inefficient. If the components of $\beta$ in the initial model are acquainted, then $\mathcal{M}_\alpha$ can be assigned to one of these two categories.\\\\
+%VERBESSERUNG machen 
+The optimal model will be
 \begin{align*}
-\mathcal{M}_\star=\{\mathcal{M}_\alpha|\mathcal{M}_\alpha\in \text{Category~\RM{2}~and smallest dimension} \}
+\mathcal{M}_\star=\{\mathcal{M}_{\alpha_\star}|\mathcal{M}_{\alpha_\star}\in \text{Cat.~\RM{2}~and~} dim(\mathcal{M}_{\alpha_\star})<dim(\mathcal{M}_{\alpha})\text{~for~any~}\mathcal{M}_{\alpha}\in \text{Cat.~\RM{2}} \}
 \end{align*}
 
 \subsection{Ordinary Least Squares Estimator under $\mathcal{M}_\alpha$}
 %KEINE eigenen Worte (alles aus shao)
+For the following chapters should we mention briefly the ordinary least squares estimator under $\mathcal{M}_\alpha$. Recall that our compact model for any $\alpha\in\mathcal{A}$ for observation $i=1,...,n$ was
+\begin{align*}
+	y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i
+\end{align*}
+Written in matrix notation we get that
+\begin{align}
+	y=X_\alpha \beta_\alpha+\varepsilon  \label{CM_model_matrix}
+\end{align}
+Where $\beta_\alpha\in\mathbb{R}^{d_\alpha}$ is the true parameter vector indexed by $\alpha$. For the suitable matrix we have $X_\alpha=[x_{1,\alpha},...,x_{n,\alpha}]^\prime \in\mathbb{R}^{n\times d_\alpha}$ with the assumption
+%HIER vielleicht aho zitieren
+of full rank, furthermore $y=(y_1,...,y_n)^\prime\in\mathbb{R}^n$ and $\varepsilon=(\varepsilon_1,...,\varepsilon_n)^\prime\in\mathbb{R}^n$. Thus the unique %STimmte das? 
+ordinary least squares estimator under $\mathcal{M}_\alpha$ is given by 
+\begin{align}
+	\hat{\beta}_\alpha=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y
+	\label{OLS}
+\end{align}
+If $\alpha=\{1,...,p\}$, then we have $d_\alpha=|\alpha|=p$ exactly when $X_\alpha=X$. But we have to be careful. It does not hold for $X\beta=X_\alpha\beta_\alpha$ that it follows that $d_\alpha=p$.
+
+
+
+\begin{proof}[Proof of (\ref{OLS})]~\\
+	The minimization problem of a least squares estimator is given by
+	\begin{align*}
+	\min_{b_\alpha}(y-X_\alpha b_\alpha)^\prime(y-X_\alpha b_\alpha)
+	\end{align*}
+	By using the subsequent rules for matrix diferentation:\\\\
+	\textit{For vectors $a,\beta$ with adequate dimensions and a symmetric matrix A with adequate dimension, it holds:}
+	\begin{align*}
+	1)&~ \frac{\partial}{\partial \beta}(\beta^\prime a)=a\\
+	2)&~\frac{\partial}{\partial \beta}(\beta^\prime A\beta)=2A\beta
+	\end{align*}
+	The first order conditions yields
+	\begin{align*}
+		& \frac{\partial}{\partial b_\alpha}(y-X_\alpha b_\alpha)^\prime(y-X_\alpha b_\alpha)\stackrel{!}{=}0\\
+	\Leftrightarrow & \frac{\partial}{\partial b_\alpha}(y^\prime y-b_\alpha^\prime X_\alpha^\prime y-y^\prime X_\alpha b_\alpha+b_\alpha^\prime X_\alpha^\prime X_\alpha b_\alpha)=0\\
+	\Leftrightarrow & \frac{\partial}{\partial b_\alpha}(y^\prime y-2b_\alpha^\prime X_\alpha^\prime y+b_\alpha^\prime X_\alpha^\prime X_\alpha b_\alpha)=0\\
+	\Leftrightarrow & -2X_\alpha^\prime y +2 X_\alpha^\prime X_\alpha b_\alpha=0\\
+	\Leftrightarrow & X_\alpha^\prime X_\alpha b_\alpha=X_\alpha^\prime y
+	\end{align*}
+	And under the assumption that $rank(X_\alpha)=rank(X_\alpha^\prime X_\alpha)=d_\alpha$ is full, we know that $X_\alpha^\prime X_\alpha$ is invertible, thus 
+	\begin{align*}
+		 \hat{\beta}_\alpha=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y
+	\end{align*}
+\end{proof}
+
 
 
 \subsection{Prediction Error (anderer Titel?)}
@@ -163,13 +215,13 @@ $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 %Lemma 2.5
 \begin{lemma}
 	\label{Equation2.5}
-	Under the assumption that $p$ doesn't change for any $n$ (while $n$ is large) and the following condition holds:
+	Under the assumption that $p$ doesn't change for any $n$ (while $n$ is large) and the following condition:
 	\begin{align}
 		\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}>0 \text{~~~for~}\mathcal{M}_\alpha\in\text{Category}~\RM{1} \label{liminf_condition}
 	\end{align}
-	Then for any $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\alpha\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$ it holds that:
+	Then for any $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\gamma\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$ it holds that:
 	\begin{align*}
-		\liminf_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}>1
+		\liminf_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}>1~~~\Leftrightarrow~~~\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}>0
 	\end{align*}
 \end{lemma}
 
@@ -181,7 +233,7 @@ $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 	$\Gamma_{\gamma,n}$&$=\sigma^2+n^{-1}d_\gamma\sigma^2~~~~~~~~~~~~~~~~$with $\Delta_{\gamma,n}=0$
 	\end{tabular}
 	\end{align*}
-	Assuming that condition (\ref{liminf_condition}) for $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ holds. Then:
+	Then:
 	\begin{align*}
 	\liminf_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}&=\liminf_{n\rightarrow\infty}\frac{\sigma^2+n^{-1}d_\alpha\sigma^2+\Delta_{\alpha,n}}{\sigma^2+n^{-1}d_\gamma\sigma^2}	\\
 	&=\liminf_{n\rightarrow\infty}\Big[\frac{\sigma^2+n^{-1}d_\alpha\sigma^2}{\sigma^2+n^{-1}d_\alpha\sigma^2}+\frac{\Delta_{\alpha,n}}{\sigma^2+n^{-1}d_\alpha\sigma^2}\Big]\\
@@ -191,6 +243,7 @@ $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 	&=1+\frac{\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}}{\sigma^2}\\
 	&>1
 	\end{align*}
+	Exactly when condition (\ref{liminf_condition}) for $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ holds.
 \end{proof}
 
 \begin{lemma}
