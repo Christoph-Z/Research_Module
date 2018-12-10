@@ -1,65 +1,92 @@
+set.seed(100)
 ##Generate some data for regression
 n <- 50
 
+##Function that Generates Data
+#The only purpose of this function is to save some lines of code. Hence that the function
+#is not very general
+DataGen <- function(n,p,p.True){
+  ##Data for True Regression Model
+  #Intercept
+  x_1 <- rep(1,n)         
+  x_2 <- rnorm(n,2,1)
+  x_3 <- rnorm(n,0,1)
+  x_4 <- rnorm(n,5,2)
+  
+  eps <- rnorm(n,0,1)     #Errorterm
+  
+  ##Generate some unecessary extra data 
+  x_5 <- rnorm(n,4,1)
+  x_6 <- rnorm(n,2,2)
+  x_7 <- rnorm(n,1,3)
+  x_8 <- rnorm(n,3,7)
+  x_9 <- rnorm(n,0,1)
+  x_10 <- rnorm(n,5,5)
+  
+  ##Possible values for Beta and X
+  beta.pos <- c(1.5,3,2,5,3,7,4,6,5,7)
+  X.pos <- cbind(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10)
+  
+  beta.vec <- c(beta.pos[1:p.True],rep(0,p-p.True)) 
+  X<- X.pos[,1:p]
+  
+  
+  ##Genereta dependent variables acording to the Above statet Model
+  y <- X%*%beta.vec + eps    #True Model
+  return(cbind(y,X))
+}
 
-##Data for True Regression Model
-p.True<- 4                   #Number of True regressors 
-x_1 <- rep(1,n)         #Intercept
-x_2 <- rnorm(n,2,1)
-x_3 <- rnorm(n,0,1)
-x_4 <- rnorm(n,5,2)
-
-eps <- rnorm(n,0,1)     #Errorterm
-
-
-##Generate some unecessary extra data 
-x_5 <- rnorm(n,4,1)
-x_6 <- rnorm(n,2,2)
-x_7 <- rnorm(n,1,3)
-x_8 <- rnorm(n,3,7)
-x_9 <- rnorm(n,0,1)
-x_10 <- rnorm(n,5,5)
-
-
-beta.vec <- c(1.5,0.5,3,2,rep(0,6)) 
-X <- cbind(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10)
-
-
-##Genereta dependent variables acording to the Above statet Model
-y <- X%*%beta.vec + eps    #True Model
+#Number of True regressors 
+p.True<- 2
 
 ##Number of Regressors
-p <- length(X[1,])
+p <- 5
 
-##For the CV we need to compute the set A of all possible models 
-Index <- seq(1,p,1)                         #Creats the set {1,...,p} from which we want to generate the Powerset
+#Data
+Data <- DataGen(n,p,p.True)
+y <- Data[,1]
+X <- Data[,-1]
 
-col.A <- 0                                  #Denotes the number of Possible Models out of {1,...,p} Regressors           
-for (i in 1:p) {
-  col.A <- col.A + choose(p,i)   
-}
-
-A <- matrix(0L,nrow = p, ncol = col.A)      #Denote A as Powerset of {1,...,p}
-k <- choose(p,1)
-l <- 1
-for (i in 1:length(beta.vec)) {
-  A[1:i,l:k] <- combn(Index,i)             #combn spits out all combinations of i elements in Index 
-  k <-k + choose(p,i+1)
-  l <- l + choose(p,i)
-}
-
-
-##Split A into two dijoint subsets, ie, the set of Category I Models and Category II Models 
-##We may need this sets later n for Simulation study's
-coln <- c()
-for (i in p.True:col.A) {
-  if(all(seq(1,p.True,1) %in% A[,i])){    
-    coln <- c(coln,i)
+Partion <- function(p.True,p){
+  ##For the CV we need to compute the set A of all possible models 
+  #Creats the set {1,...,p} from which we want to generate the Powerset
+  Index <- seq(1,p,1)                        
+  
+  #Denotes the number of Possible Models out of {1,...,p} Regressors 
+  col.A <- 0                                           
+  for (i in 1:p) {
+    col.A <- col.A + choose(p,i)   
   }
+  
+  #Denote A as Powerset of {1,...,p}
+  A <- matrix(0L,nrow = p, ncol = col.A)      
+  k <- choose(p,1)
+  l <- 1
+  for (i in 1:p) {
+    #combn spits out all combinations of i elements in Index
+    A[1:i,l:k] <- combn(Index,i)             
+    k <-k + choose(p,i+1)
+    l <- l + choose(p,i)
+  }
+  
+  
+  ##Split A into two dijoint subsets, ie, the set of Category I Models and Category II Models 
+  ##
+  ##To Compute the Set of CI and CII we assume a certain strurcture on the Data. We need X to be s.t all
+  ##"TRUE" regrossers are in the first column of the X Matrix, i.e, if we have P "true" regressors, they
+  ##are given throght X[1],...,X[P]. And evrey X[P+] is trash...
+  ##
+  ##We may need this sets later n for Simulation study's
+  coln <- c()
+  for (i in p.True:col.A) {
+    if(all(seq(1,p.True,1) %in% A[,i])){    
+      coln <- c(coln,i)
+    }
+  }
+  C2 <- A[,coln]           #Set of all Category II Models
+  C1 <-A[,-coln]           #Set of all Category I Models
+  return(C2)
 }
-C1 <- A[,coln]           #Set of all Category I Models
-C2 <-A[,-coln]           #Set of all Category II Models
-
 
 ##Leave one out Crossvalidation
 
@@ -82,18 +109,21 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE )
   ##Set of possible Models
   if(is.null(A)){
     
-    Index <- seq(1,p,1)    #Creats the set {1,...,p} from which we want to generate the Powerset
+    #Creats the set {1,...,p} from which we want to generate the Powerset
+    Index <- seq(1,p,1)    
     
-    col.A <- 0                                  #Denotes the number of Possible Models out of {1,...,p}             
+    #Denotes the number of Possible Models out of {1,...,p}
+    col.A <- 0                                               
     for (i in 1:p) {
       col.A <- col.A + choose(p,i)   
     }
-  
-    A <- matrix(0L,nrow = p, ncol = col.A)      #Denote A as Powerset of {1,...,p}
+    #Denote A as Powerset of {1,...,p}
+    A <- matrix(0L,nrow = p, ncol = col.A)      
     k <- choose(p,1)
     l <- 1
     for (i in 1:p) {
-      A[1:i,l:k] <- combn(Index,i)              #combn spits out all combinations of i elements in Index 
+      #combn spits out all combinations of i elements in Index 
+      A[1:i,l:k] <- combn(Index,i)             
       k <-k + choose(p,i+1)
       l <- l + choose(p,i)
     }
@@ -120,15 +150,15 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE )
   }
   
   
-  #Compute Prediction Errors f??r all sets in A
+  #Compute Prediction Errors for all sets in A
   MeanPred.Error <- c()
   for (i in 1:length(A[1,])) {
-    
     Pred.Error <- c()
     for (j in 1:length(train[1,])) {
-      
-      train.j <- train[,j]                #To make the Code a bit shorter 
-      X.train <- X[train.j,A[,i]]         
+      #To make the Code a bit shorter
+      train.j <- train[,j]                 
+      X.train <- X[train.j,A[,i]]    
+      #Prediction Error for a given alpha and a given subset
       Pred.Error[j] <- norm(as.matrix(y[-train.j]-X[-train.j,A[,i]]%*%solve(t(X.train)%*%X.train)%*%t(X.train)%*%y[train.j]),"2")^2
     
     }
@@ -246,8 +276,8 @@ while(
 
 
 
-##Akaike Information Criterion
-AIC <- function(y,X,Alpha = NULL, Criterion = "AIC"){
+##Akaike and Schwarz Information Criterion
+InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
   #Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
   #             (By Default use all possible Models)
   #Criterion    Decides if we want to use the Akaike or Bayesian information criterion
@@ -322,10 +352,81 @@ AIC <- function(y,X,Alpha = NULL, Criterion = "AIC"){
 }
 
 
+####################SIMULATION STUDIES#####################
+
+##Simulation I of P(M_CV is in Cat II) 
+
+#Number of True regressors 
+p.True<- 2
+
+##Number of Regressors
+p <- 5
+
+#Vector of diffrent Sample sizes
+N <- seq(15,200,2)
+
+#Number of Repetitions of the Experiment
+m <- 800
+
+#Vector of probabilties of frequencys of choosing a Cat II Model for each samplezize by m repetations 
+BIC <- rep(0,length(N))
+AIC <- rep(0,length(N))
+CV1 <- rep(0,length(N))
+
+for (i in 1:length(N)) {
+  n <- N[i]
+  
+  for (j in 1:m) {
+    #Generating Data
+    Data <- DataGen(n,p,p.True)
+    y <- Data[,1]
+    X <- Data[,-1]
+    
+    #Counting how many times a Cat II Model is picked for n= N[i] in m interations
+    BIC[i] <- BIC[i] + (sum( InfoCrit(y,X,Criterion = "BIC") < 5 & InfoCrit(y,X,Criterion = "BIC") >0) == 4)
+    AIC[i] <- AIC[i] + (sum( InfoCrit(y,X) < 5 & InfoCrit(y,X) > 0) == 4)
+    CV1[i] <- CV1[i] + (sum( CV(1,y,X) < 5 & CV(1,y,X) > 0) == 4)
+  }
+  
+}
 
 
+##Simulation II based on the Simulations in Shao
 
+#Samplesize
+n <- 500
 
+#Number of Repetitions of the Experiment
+m <- 1000
 
+#Number of True regressors 
+p.True<- 2
 
+##Number of Regressors
+p <- 5
 
+##Calculate the set of Category II Models
+C2 <- Partion(p.True,p)
+
+#Gives the Dimenson of the choosen Model for each iteration
+BIC <- c()
+AIC <- c()
+CV1 <- c()
+
+for (i in 1:m) {
+  #Generating Data
+  Data <- DataGen(n,p,p.True)
+  y <- Data[,1]
+  X <- Data[,-1]
+  
+  BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
+  AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
+  CV1[i] <- sum( CV(1,y,X,C2) != 0)
+}
+
+##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
+Probabilities <- matrix(0L,3,p-p.True)
+for(i in 0:(p-p.True)){
+  Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) )/m
+}
+return(Probabilities)
