@@ -2,10 +2,11 @@
 \begin{document}
 \subsection{The Monte Carlo CV($n_\nu$)}
 
-\begin{lemma} Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}$. Then for any function $a:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
+\begin{lemma} Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}$. Then for any functions $a,b:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
 \begin{enumerate}
 \item $\mathrm{E}_\mathcal{R} \bigl[ b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr] = \binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s)$
-\item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$.
+\item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$
+\item $V_\mathcal{R}\bigl(a(s)+b(s)\bigr) \le 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(b(s)\bigr)\bigr]$
 \end{enumerate}
 \end{lemma}
 \textbf{Proof:}
@@ -28,7 +29,14 @@ As the choice of sets $s\in \mathcal{R}$ is iid it follows that the random varia
 \begin{align*}
 V_\mathcal{R} \biggl(\frac{1}{b}\sum_{s\in \mathcal{R}}a(s)\biggr)
 = \frac{1}{b^2}\underbrace{\sum_{s\in \mathcal{R}}V_\mathcal{R} [a(s)]}_{=bV_\mathcal{R} [a(s)]}
-\le \frac{1}{b}\mathrm{E}_\mathcal{R}\bigl[a(s)^2\bigr]. \quad \square
+\le \frac{1}{b}\mathrm{E}_\mathcal{R}\bigl[a(s)^2\bigr].
+\end{align*}
+(3.) Using that for any two real numbers $a,b$ it holds that $(a+b)^2\le 2(a^2+b^2$ yields
+\begin{align*}
+V_\mathcal{R}\bigl(a(s)+b(s)\bigr) 
+&= \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] + b(s) - \mathrm{E}_\mathcal{R}[b(s)]\bigr)^2\bigr]\\
+&\le 2 \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] \bigr)^2+\bigl(b(s) - \mathrm{E}_\mathcal{R}[b(s)]\bigr)^2\bigr]\\
+&= 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(b(s)\bigr)\bigr]. \quad \square
 \end{align*}
 
 
@@ -69,21 +77,142 @@ As $\mathcal{R}^\ast$ is a balanced incomplete block design it holds that
 = \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\sum_{i\in s}(y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2
 = \frac{1}{n}\sum_{i\in s}(y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2
 \end{align*}
-And finally, by the strong law of large numbers 
-we can establish that $\hat{\Gamma}_{\alpha,n}^{MCCV} = \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2 + o_P(1)$. The remaining proof of statement $(I)$ is the same as in the case of $BICV(n_v)$.
+And by the strong law of large numbers 
+we can establish that $\hat{\Gamma}_{\alpha,n}^{MCCV} = \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2 + o_P(1)$.Finally let
+\begin{align*}
+R_n= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-\hat{y}_{\alpha,s^c}\rVert^2- \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2 \ge 0
+\end{align*} 
+and the remaining proof of statement $(I)$ is the same as in the case of $BICV(n_v)$.
 
 \textbf{Proof of $(II)$:}
 To proof the second statement, Shao uses a more refined decomposition as in the proof of theorem XY. 
 \begin{enumerate}
 \item  $\hat{\Gamma}_{n,\alpha}^{MCCV} = \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s+ A_{\alpha1}-A_{\alpha2}+a_{\alpha3}+B_\alpha$
 \item $A_{\alpha1} = B_{\alpha1}+ B_{\alpha2}$
-\item $ A_{\alpha1}-A_{\alpha2}+a_{\alpha3} = \frac{1}{n-n_v}d_\alpha\sigma^2 + o_P((n-n_v)^{-1})$
+\item $ B_{\alpha1}-A_{\alpha2}+A_{\alpha3} = \frac{1}{n-n_v}d_\alpha\sigma^2 + o_P((n-n_v)^{-1})$
 \item $B_{\alpha2} = o_P((n-n_v)^{-1})$
 \item $B_{\alpha} = o_P((n-n_v)^{-1})$
 \end{enumerate}
+(1.) 
+\begin{align*}
+\hat{\Gamma}_{n,\alpha}^{MCCV} 
+= &\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s 
++ \underbrace{\frac{c_n}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'P_{\alpha,s}\varepsilon_s}_{=:A_{\alpha1}}
+- \underbrace{\frac{2(1+c_n)}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)}_{=:A_{\alpha2}}\\
+&+ \underbrace{\frac{1+c_n}{n_vb}\sum_{s\in \mathcal{R}}(\hat{\beta}_\alpha-\beta_\alpha)'X_{\alpha,s}'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)}_{=:A_{\alpha3}}\\
+&+ \underbrace{\frac{1}{n_vb}\sum_{s\in\mathcal{R}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s}_{=:B_{\alpha}}
+\end{align*}
+
+(2.)
+By the same arguments as in the proof for the $BICV(n_v)$ case and replacing limits with probability limits, one can show that
+\begin{align*}
+P_{\alpha,s}=\frac{n}{n_v}Q_{\alpha,s}+o_P\biggl(\frac{n-n_v}{n}\biggr)\frac{n}{n_v}P_{\alpha,s}
+\end{align*}
+and hence we can further decompose $A_{\alpha1}$ to
+\begin{align*}
+A_{\alpha1}= \underbrace{\frac{c_n}{n_vb}\sum_{s\in\mathcal{R}}\frac{n}{n_v}\varepsilon_s'Q_{\alpha,s}\varepsilon_s}_{=:B_{\alpha1}}
++ \underbrace{o_P\biggl(\frac{n-n_v}{n}\biggr)\frac{c_n}{n_vb}\sum_{s\in\mathcal{R}}\frac{n}{n_v}\varepsilon_s'P_{\alpha,s}\varepsilon_s}_{=:B_{\alpha2}}.
+\end{align*}
+(3.)
+The expectation of $B_{\alpha1}$ with respect to the random sampling satisfies
+\begin{align*}
+\mathrm{E}_\mathcal{R}[B_{\alpha1}]= \mathrm{E}_\mathcal{R}\biggl[ \frac{c_n}{n_vb}\sum_{s\in\mathcal{R}}\frac{n}{n_v}\varepsilon_s'Q_{\alpha,s}\varepsilon_s\biggr]
+=\frac{c_n}{n_v} \frac{n}{n_v} \mathrm{E}_\mathcal{R}\bigl[\varepsilon_s'Q_{\alpha,s}\varepsilon_s\bigr]
+= \frac{c_n}{n_v} \frac{n}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\varepsilon_s'Q_{\alpha,s}\varepsilon_s.
+\end{align*}
+Similar calculations as for XY and using that $\mathcal{R}^\ast$ is a balanced incomplete block design yields 
+\begin{align*}
+\frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\varepsilon_s'Q_{\alpha,s}\varepsilon_s 
+&= \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast} \sum_{i\in s} p_{i,i,\alpha}\varepsilon_i^2 
++ 2\frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast} \sum_{i\in s} \sum_{j\in s, j>i} p_{i,j,\alpha}\varepsilon_i\varepsilon_j \\
+&= \frac{1}{n}\sum_{i=1}^n p_{i,i,\alpha}\varepsilon_i^2 + \frac{n_v-1}{n(n-1)}\varepsilon'P_\alpha\varepsilon - \frac{n_v-1}{n(n-1)}\sum_{i=1}^n p_{i,i,\alpha}\varepsilon_i^2\\
+&=\frac{n-n_v}{n(n-1)}\sum_{i=1}^n p_{i,i,\alpha}\varepsilon_i^2
++\frac{n_v-1}{n(n-1)}\varepsilon'P_\alpha\varepsilon
+\end{align*}
+and hence
+\begin{align*}
+\mathrm{E}_\mathcal{R}[B_{\alpha1}]
+&=\frac{c_nn}{n_v}\biggl[\frac{n-n_v}{n(n-1)}\sum_{i=1}^n p_{i,i,\alpha}\varepsilon_i^2
++\frac{n_v-1}{n(n-1)}\varepsilon'P_\alpha\varepsilon\biggr]\\
+&=\frac{c_nn}{n_v}\biggl[\frac{n-n_v}{n^2}d_\alpha\sigma^2
++\frac{n_v-1}{n^2}\varepsilon'P_\alpha\varepsilon + o_P\biggl(\frac{n-n_v}{n^2}\biggr)\biggr].
+\end{align*}
+
+For the expectation of $A_{\alpha2}$ with respect to the random sampling it holds that
+\begin{align*}
+\mathrm{E}_\mathcal{R}[A_{\alpha2}] 
+&=\mathrm{E}_\mathcal{R}\biggl[ \frac{2(1+c_n)}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\underbrace{X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)}_{=X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon}\biggr]\\
+&= \frac{2(1+c_n)}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}\sum_{i\in s}\varepsilon_i'x_{\alpha,i}'(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon\\
+&= \frac{2(1+c_n)}{n} \sum_{i=1}^n\varepsilon_ix_{\alpha,i}'(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon
+= \frac{2(1+c_n)}{n} \varepsilon'P_\alpha\varepsilon.
+\end{align*}
+
+At last, the expectation of $A_{\alpha3}$ with respect to the random sampling satisfies
+\begin{align*}
+\mathrm{E}_\mathcal{R}[A_{\alpha3}] 
+&=\mathrm{E}_\mathcal{R}\biggl[ \frac{1+c_n}{n_vb}\sum_{s\in \mathcal{R}}(\hat{\beta}_\alpha-\beta_\alpha)'X_{\alpha,s}'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)\biggr]\\
+&= \frac{1+c_n}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}\sum_{i\in s}\varepsilon'X_{\alpha}(X_{\alpha}'X_{\alpha})^{-1}x_{\alpha,i}x_{\alpha,i}'(X_{\alpha}'X_{\alpha})^{-1}X_{\alpha}'\varepsilon\\
+&= \frac{1+c_n}{n}\sum_{i=1}^n\varepsilon'X_{\alpha}(X_{\alpha}'X_{\alpha})^{-1}x_{\alpha,i}x_{\alpha,i}'(X_{\alpha}'X_{\alpha})^{-1}X_{\alpha}'\varepsilon
+= \frac{1+c_n}{n}\varepsilon'P_\alpha\varepsilon.
+\end{align*}
+
+Putting these results together, we obtain
+\begin{align*}
+\mathrm{E}_\mathcal{R}&[B_{\alpha1}-A_{\alpha2}+A_{\alpha3}]\\
+&= \frac{c_nn}{n_v}\biggl[\frac{n-n_v}{n^2}d_\alpha\sigma^2
++\frac{n_v-1}{n^2}\varepsilon'P_\alpha\varepsilon + o_P\biggl(\frac{n-n_v}{n^2}\biggr)\biggr]
+-\frac{2(1+c_n)}{n} \varepsilon'P_\alpha\varepsilon
++\frac{1+c_n}{n}\varepsilon'P_\alpha\varepsilon\\
+&= \frac{c_nn}{n_v}\biggl[\frac{n-n_v}{n^2}d_\alpha\sigma^2
++\frac{n_v-1}{n^2}\varepsilon'P_\alpha\varepsilon + o_P\biggl(\frac{n-n_v}{n^2}\biggr)\biggr]
+-\frac{1+c_n}{n} \varepsilon'P_\alpha\varepsilon\\
+&=\frac{d_\alpha\sigma^2}{n-n_v}+ o_P\biggl(\frac{1}{n-n_v}\biggr).
+\end{align*}
+
+Letting $t_n=O[n^2/((n-n_v)^2b)]$ corresponding variances satisfy
+\begin{align*}
+V_\mathcal{R}\bigl[(n-n_v)B_{\alpha1}\bigr]\le \underbrace{\frac{c_n^2(n-n_v)^2}{n_v^2b}\frac{n^2}{n_v^2}}_{=t_n} \mathrm{E}_\mathcal{R}\biggl[ (\varepsilon_s'Q_{\alpha,s}\varepsilon_s)^2\biggr]
+\end{align*}
+using that for any two real numbers $a$ and $b$ it holds $(a+b)^2\le 2(a^2+b^2)$ yields
+\begin{align*}
+V_\mathcal{R}\bigl[(n-n_v)B_{\alpha1}\bigr]
+&\le 2t_n\mathrm{E}_\mathcal{R}\biggl[\biggl(\sum_{i\in s} p_{i,i,\alpha}\varepsilon_i^2\biggr)^2 + \biggl(\sum_{i\in s}\sum_{j\in s,j\neq i} p_{i,j,\alpha}\varepsilon_i\varepsilon_j\biggr)^2\biggr]\\
+&\le 2t_n \biggl[\biggl(\sum_{i=1}^n p_{i,i,\alpha}\varepsilon_i^2\biggr)^2 + \binom{n}{n_v}\sum_{s\in \mathcal{R}^\ast}\biggl(\sum_{i\in s}\sum_{j\in s,j\neq i} p_{i,j,\alpha}\varepsilon_i\varepsilon_j\biggr)^2\biggr]\\
+&= 2t_n [O_P(1)+O_P(1)]=O_P(t_n).
+\end{align*}
+And 
+\begin{align*}
+V_\mathcal{R}\bigl[(n-n_v)A_{\alpha2}\bigr]
+&\le \underbrace{\frac{4(1+c_n)^2(n-n_v)^2}{n_v^2b}}_{=t_n}\mathrm{E}_\mathcal{R}\bigl[ \bigl(\varepsilon_s'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)\bigr)^2\bigr]\\
+&= t_n (\hat{\beta}_\alpha-\beta_\alpha)'\mathrm{E}_\mathcal{R}\bigl[X_{\alpha,s}'\varepsilon_s \varepsilon_s'X_{\alpha,s}\bigr](\hat{\beta}_\alpha-\beta_\alpha) = O_P(t_n)
+\end{align*}
+where in the last equality we used that $\mathrm{E}\mathrm{E}_\mathcal{R}[X_{\alpha,s}'\varepsilon_s \varepsilon_s'X_{\alpha,s}]\le \sigma^2 X_\alpha'X_\alpha=O(n)$ and $\hat{\beta}_\alpha-\beta_\alpha=O_P(n^{-0.5})$.\
+
+Furthermore
+\begin{align*}
+V_\mathcal{R}\bigl[(n-n_v)A_{\alpha3}\bigr]
+&\le \underbrace{\frac{(1+c_n)^2(n-n_v)^2}{n_v^2b}}_{=t_n}\mathrm{E}_\mathcal{R}\bigl[(\hat{\beta}_\alpha-\beta_\alpha)'X_{\alpha,s}'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)\bigr]^2\\
+&\le t_n \bigl[(\hat{\beta}_\alpha-\beta_\alpha)'X_{\alpha,s}'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)\bigr]^2\\
+&= t_n \bigl[O_P(n^{-0.5})O(n)O_P(n^{-0.5})\bigr]^2=O_P(t_n).
+\end{align*}
+
+Finally by using the third result in the Lemma above, we obtain
+\begin{align*}
+V_\mathcal{R}\bigl[B_{\alpha1}-A_{\alpha2}+A_{\alpha3}\bigr] \le 2\bigl(V_\mathcal{R}\bigl[B_{\alpha1}\bigr]+V_\mathcal{R}\bigl[A_{\alpha2}\bigr]+V_\mathcal{R}\bigl[A_{\alpha3}\bigr]\bigr) = O_P(t_n)=o_P(1)
+\end{align*}
+and hence,
+\begin{align*}
+B_{\alpha1}-A_{\alpha2}+A_{\alpha3} = \frac{d_\alpha\sigma^2 }{n-n_v}+ o_P\biggl(\frac{1}{n-n_v}\biggr).
+\end{align*}
+
+(4.)
+
+
+(5.)
+$B_{\alpha} = o_P((n-n_v)^{-1})$ can be established by the same arguments as in the corresponding proof for $BICV(n_v)$.
 
 \textbf{Proof of $(III)$:} 
-The proof is essentially the same as that of the corresponding statement for $BICV(n_v)$. One just has to replace $\frac{1}{n}\varepsilon'\varepsilon$ with $frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s$. Anyway these two terms are asymptocially closely related as
+The proof is essentially the same as that of the corresponding statement for $BICV(n_v)$. One just has to replace $\frac{1}{n}\varepsilon'\varepsilon$ with $\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s$. Anyway these two terms are asymptocially closely related as
 \begin{align*}
 \mathrm{E}_\mathcal{R} \biggl[ \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s\biggr] 
 =\frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\varepsilon_s'\varepsilon_s
