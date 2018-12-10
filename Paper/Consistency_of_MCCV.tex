@@ -1,31 +1,34 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \subsection{The Monte Carlo CV($n_\nu$)}
-\begin{align*}
-\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}
-\end{align*}
-\textbf{Claim:} Let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}$. Then for any function $a:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
+
+\begin{lemma} Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}$. Then for any function $a:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
 \begin{enumerate}
 \item $\mathrm{E}_\mathcal{R} \bigl[ b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr] = \binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s)$
 \item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$.
 \end{enumerate}
+\end{lemma}
 \textbf{Proof:}
-(1.) The probability that subset $s \in \mathcal{R}^\ast$ is selected, is given by
+(1.)Denote by $s_i$ the $i$th selected subset in $\mathcal{R}$. Then the probability that subset $s \in \mathcal{R}^\ast$ is selected at the $i$th selection step, i.e. $s_i=s$, is given by
 \begin{align*}
-P(s\in \mathcal{R})= \frac{1}{\# \mathcal{R}^\ast} = \binom{n}{n_v}^{-1}.
+P(s_i=s)= \frac{1}{\# \mathcal{R}^\ast} = \binom{n}{n_v}^{-1}.
 \end{align*}
-As the choice of sets $s\in \mathcal{R}$ is iid it follows
+Furthermore the selected subsets at step $i$ and $j\neq i$ are independent and identically distributed, i.e for any $s,s'\in \mathcal{R}^\ast$ it holds
+\begin{align*}
+P(s_i=s,s_j=s')=P(s_i=s)P(s_j=s')=\binom{n}{n_v}^{-2}.
+\end{align*}
+As the choice of sets $s\in \mathcal{R}$ is iid it follows that the random variables $(a(s_i))_{i=1}^b$ are iid as well. Hence, 
 \begin{align*}
 \mathrm{E}_\mathcal{R} \biggl[ \frac{1}{b}\sum_{s\in \mathcal{R}}a(s)\biggr] 
-= \frac{1}{b}\underbrace{\mathrm{E}_\mathcal{R} \biggl[\sum_{s\in \mathcal{R}}a(s)\biggr]}_{=b\mathrm{E}_\mathcal{R}[a(s)]}
-= \sum_{s\in \mathcal{R}^\ast}a(s)P(s\in \mathcal{R}^\ast).
+= \frac{1}{b}\underbrace{\sum_{s\in \mathcal{R}}\mathrm{E}_\mathcal{R} [a(s)]}_{=b\mathrm{E}_\mathcal{R}[a(s)]}
+= \sum_{s\in \mathcal{R}^\ast}a(s)P(s_i = s)
+=\binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s).
 \end{align*}
-(2.) Since the choice of sets $s\in \mathcal{R}$ is iid
+(2.) Since the choice of sets $s\in \mathcal{R}$ and the random variables $(a(s_i))_{i=1}^b$ are iid
 \begin{align*}
-V_\mathcal{R} \biggl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\biggr)&=\mathrm{E}_\mathcal{R} \biggl[\biggl(\frac{1}{b}\sum_{s\in \mathcal{R}} a(s)\biggr)^2\biggr]-\mathrm{E}_\mathcal{R} \biggl[\frac{1}{b}\sum_{s\in \mathcal{R}} a(s)\biggr]^2
-\le \mathrm{E}_\mathcal{R} \biggl[\biggl(\frac{1}{b}\sum_{s\in \mathcal{R}} a(s)\biggr)^2\biggr]\\
-&= \frac{1}{b^2} \mathrm{E}_\mathcal{R} \biggl[\biggl(\sum_{s\in \mathcal{R}} a(s)\biggr)^2\biggr]
-=\frac{1}{b^2}\underbrace{\mathrm{E}_\mathcal{R} \biggl[\sum_{s\in \mathcal{R}} a(s)^2\biggr]}_{=b\mathrm{E}_\mathcal{R}[a(s)^2]}. \quad \square
+V_\mathcal{R} \biggl(\frac{1}{b}\sum_{s\in \mathcal{R}}a(s)\biggr)
+= \frac{1}{b^2}\underbrace{\sum_{s\in \mathcal{R}}V_\mathcal{R} [a(s)]}_{=bV_\mathcal{R} [a(s)]}
+\le \frac{1}{b}\mathrm{E}_\mathcal{R}\bigl[a(s)^2\bigr]. \quad \square
 \end{align*}
 
 
