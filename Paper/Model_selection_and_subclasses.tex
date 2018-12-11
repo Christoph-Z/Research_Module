@@ -7,4 +7,27 @@ Let $\mathcal{C}$ be the collection of all possible models for one observation $
 	\mathcal{C}=\{M_\alpha|\alpha\in\mathcal{A}\}
 \end{align*}
 
+\begin{itemize}
+\item Shao lets CV select among all submodels.
+\item might not be computationally feasible as there are $2^p-1$ models
+\item But what model will be selected if we maximize over a subset $\mathcal{C}_1\subset\mathcal{C}$?
+\begin{itemize}
+\item What if $\mathcal{M}_\ast \not\in \mathcal{C}_1$?
+\item What if $\forall \mathcal{M}_\alpha \in \mathcal{C}_1 : \mathcal{M}_\alpha\in$ Category I?
+\end{itemize}
+\item What if the "true" model isn't contained in $\mathcal{C}$?
+\begin{itemize}
+\item e.g. omitting some important unobserved (or unoberservable) predictors
+\item Shao states that CV then chooses the \" best" model within $\mathcal{C}$.
+\item Akaike(73): Wenn wir unser problem im Maximum Likelihood Setting interpretieren, dann ist die Zielfunktion asymptotisch aequivalent zu einem durch die Fisher Information definierten Skalarprodukt. Wir schaetzen dann die Projektion des "true" models auf $\mathcal{C}$ bzgl des Fisher Informations Skalarproduktes - zumindest asymptotisch.
+\item man kann den gedankengang auch recht anschaulich an folgendem beispiel verdeutlichen (dadurch wird auch der zusammenhang zum omitted variable bias klar):
+\begin{itemize}
+\item angenommen das wahre model waere $y_i = b_0 + b_1 x_i + b_2 z_i + \varepsilon_i$ mit Cov($x_i$,$z_i$)$=a\neq 0$, $b_0,b_1,b_2\neq 0$.
+\item die $z_i$ werden von uns aber nicht beobachtet. Es gibt also kein Modell in $\mathcal{C}$, welches $z_i$ beinhaltet.
+\item das beste Modell in $\mathcal{C}$ ist $y_i=b_0+\tilde{b}_1 x_i + \eta_i$, wobei $\tilde{b}_1=b_1+ab_2 (V(x_i))^{-1}$
+\end{itemize}
+\item Hastie, Tibshirani etc Figure 7.2 anpassen, waere eine schoene illustration von akaikes gedankengang (bzw. kullback)
+\end{itemize}
+\end{itemize}
+
 \end{document}
