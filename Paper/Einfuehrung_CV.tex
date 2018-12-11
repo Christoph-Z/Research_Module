@@ -4,31 +4,31 @@
 \section{Cross Validation: General Framework}
 The general Framework of cross validation was first described by \cite{stone1974cross} and  \cite{geisser1975predictive} as follows: \\
 
-Suppose, we have data $Y=(y_1,\ldots,y_N)$ where each data point $y_i$ is associated with some $x_i$, i.e, $X=(x_1,\ldots,x_n)$. Note that $x$ and $y$ can be quite general.\\
+Suppose, we have data $Y=(y_1,\ldots,y_N)$ where each data point $y_i$ is associated with some $x_i$, i.e, $X=(x_1,\ldots,x_N)$. Note that $x$ and $y$ can be quite general.\\
 \\
 We are interested in predicting a future value of $y$ for a given value of $x$. Suppose we have a class of possible predictors 
 \[
 	\{\hat{y}=\hat{y}(Y,X,x,\alpha)|\alpha\in\mathscr{A}\}
 \]
-where $\alpha$ is some set of unknown values, e.g an underlying parametric model or a tuning parameter.\\
+where $\alpha$ is some set of unknown values in some parameter space $\mathscr{A}$, e.g $\alpha$ can be an underlying parametric model or a tuning parameter.\\
 \\
 The idea of cross validation is to choose some $\alpha^\star$ to minimize the loss between our prediction $\hat{y}$ and a corresponding real value of $y$. More explicitly we want $\alpha^\star$ to solve
 \[
-	\alpha^\star=\arg\min_{\alpha\in\mathscr{A}}\{L_n(Y,X\alpha)\}
+	\alpha^\star=\arg\min_{\alpha\in\mathscr{A}}\{L_{n_\nu}(Y,X\alpha)\}
 \]
-where $L_n$ is some loss function.
+where $L_{n_\nu}$ is some loss function.\footnote{In statistics a loss function, is a function that maps estimation errors to the set of real numbers.  }
  
 Since \cite{larson1931shrinkage} claimed that training an algorithm and evaluating it's statistical performance on the same data yields an overoptimistic result, we need to decompose our observations in order to train and evaluating our predictor. \\
 \\
-Denote $P^{(N-n)}_i$ to be the $i$'th partition of $Y$ and $X$ into $N-n$ retained and $n$ omitted observations, with $0<n<M$ where is $M$ the largest integer s.t $\hat{y}$ can be calculated, i.e,
+Denote $P^{(N-n_\nu)}_i$ to be the $i$'th partition of $Y$ and $X$ into $N-n_\nu$ retained and $n_\nu$ omitted observations, with $0<n_\nu<M$ where $M$ is the largest integer s.t $\hat{y}$ can be calculated, i.e,
 \[
-	P^{(N-n)}_i=(Y_{i,r}^{(N-n)},X_{i,r}^{(N-n)},Y_{i,o}^{(N-n)},X_{i,o}^{(N-n)})
+	P^{(N-n_\nu)}_i=(Y_{i,r}^{(N-n_\nu)},X_{i,r}^{(N-n_\nu)},Y_{i,o}^{(N-n_\nu)},X_{i,o}^{(N-n_\nu)})
 \]
-and let $\Gamma=\Gamma_{N-n}$ be the set of all relevant partitions of $N-n$ retained and $n$ omitted observations. Cross validation chooses $\alpha$ to minimize the average loss over the partitions in $\Gamma$ 
+and let $\Gamma=\Gamma_{N-n_\nu}$ be the set of all relevant partitions of $N-n_\nu$ retained and $n_\nu$ omitted observations. Cross validation chooses $\alpha$ to minimize the average loss over the partitions in $\Gamma$ 
 \[
-	L_{N,n}^{CV}(\alpha)=P^{-1}n^{-1}\sum_{i\in\Gamma}L_n(Y_{i,o},\hat{Y})
+	L_{N,n_\nu}^{CV}(\alpha)=P^{-1}n_\nu^{-1}\sum_{i\in\Gamma}L_{n_\nu}(Y_{i,o},\hat{Y})
 \]
-where $P^{-1}$ denotes the number of elements in $\Gamma$.\\
+where $P$ denotes the number of elements in $\Gamma$.\\
 \\
 The name cross validation refers to the way of splitting up the observations into several partition. The same procedure with just one partition of observations is called hold out or validation. Thus cross validation yields an averaging of several hold-out estimators.
 % Das ist das Kapitel, das für die Motivation unserer Fragestellungen vorgesehen war.(Wie groß muss K gewählt werden, ist CV konsistent...?). Ich hab mir jetzt einfach mal nen "Working titel" ausgedacht...
@@ -42,13 +42,4 @@ Throughout this paper we want to study both, the asymptotic and small sample pro
 Moreover we will use simulation studies to find a rough rule of thumb of choosing $n_\nu$ for a given sample and model selecting problem.
 
 
-
-
-
-<<<<<<< HEAD
-
-
-\subsection{Motivation unserer Fragestellungen (Wie groß muss K gewählt werden, ist CV konsistent...)(Titel finden)}
-=======
->>>>>>> master
 \end{document}

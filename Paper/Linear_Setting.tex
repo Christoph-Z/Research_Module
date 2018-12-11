@@ -92,12 +92,12 @@ If $\alpha=\{1,...,p\}$, then we have $d_\alpha=|\alpha|=p$ exactly when $X_\alp
 
 
 
-\subsection{Prediction Error (anderer Titel?)}
+\subsection{Prediction Errors}
 %EINBASTELN (aus shao)
 The \textit{Average Squared Prediction Error} under $\mathcal{M}_\alpha$ is given by
-\begin{align*}
-ASPE(\mathcal{M}_\alpha)=\frac{1}{n}\sum_{i=1}^{n}(z_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2
-\end{align*}
+\begin{align}
+ASPE(\mathcal{M}_\alpha)=\frac{1}{n}\sum_{i=1}^{n}(z_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2 \label{ASPE}
+\end{align}
 The \textit{Conditional Expected Squared Prediction Error} under $\mathcal{M}_\alpha$ is given by
 \begin{align*}
 CESPE(\mathcal{M}_\alpha)=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2
