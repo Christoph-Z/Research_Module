@@ -93,14 +93,28 @@ To proof the second statement, Shao uses a more refined decomposition as in the 
 \item $B_{\alpha2} = o_P((n-n_v)^{-1})$
 \item $B_{\alpha} = o_P((n-n_v)^{-1})$
 \end{enumerate}
-(1.) 
+(1.)
+First we decompose $\hat{\Gamma}_{n,\alpha}^{MCCV}$ as in the case for $BICV(n_v)$, i.e.
+\begin{align*}
+\hat{\Gamma}_{n,\alpha}^{MCCV} &= \frac{1}{n_vb}\sum_{s\in\mathcal{R}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}U_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}e_s\\
+&+\underbrace{\frac{1}{n_vb}\sum_{s\in\mathcal{R}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s}_{=:B_{\alpha}}\\
+&= \frac{1}{n_vb}\sum_{s\in\mathcal{R}}e_s'(I_{n_v}+c_nP_{\alpha,s})e_s + B_\alpha.
+\end{align*}
+If one multiplies $e_s'(I_{n_v}+c_nP_{\alpha,s})e_s$ out, while using that $e_s = \varepsilon_s - X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon$ one gets
+\begin{align*}
+e_s'&(I_{n_v}+c_nP_{\alpha,s})e_s \\
+&= (\varepsilon_s - X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon)'(I_{n_v}+c_nP_{\alpha,s})(\varepsilon_s - X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon)\\
+&= (\varepsilon_s - X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon)'(\varepsilon_s - X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon + c_nP_{\alpha,s}\varepsilon_s - c_n\underbrace{P_{\alpha,s}X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'}_{=X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'}\varepsilon)\\
+&= (\varepsilon_s - X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon)'(\varepsilon_s + c_nP_{\alpha,s}\varepsilon_s -(1+c_n) X_{\alpha,s}(X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon)  \\
+&= \varepsilon_s'\varepsilon_s + c_n \varepsilon_s'P_{\alpha,s}\varepsilon_s -2(1+c_n)\varepsilon_s' X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha) + (1+c_n)(\hat{\beta}_\alpha-\beta_\alpha)'X_{\alpha,s}'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)
+\end{align*}
+where we used in the last line that $\hat{\beta}_\alpha = \beta_\alpha + (X_\alpha'X_\alpha)^{-1}X_\alpha'\varepsilon$. Inserting this in $\hat{\Gamma}_{n,\alpha}^{MCCV}$ yields 
 \begin{align*}
 \hat{\Gamma}_{n,\alpha}^{MCCV} 
 = &\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s 
 + \underbrace{\frac{c_n}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'P_{\alpha,s}\varepsilon_s}_{=:A_{\alpha1}}
 - \underbrace{\frac{2(1+c_n)}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)}_{=:A_{\alpha2}}\\
-&+ \underbrace{\frac{1+c_n}{n_vb}\sum_{s\in \mathcal{R}}(\hat{\beta}_\alpha-\beta_\alpha)'X_{\alpha,s}'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)}_{=:A_{\alpha3}}\\
-&+ \underbrace{\frac{1}{n_vb}\sum_{s\in\mathcal{R}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s}_{=:B_{\alpha}}
+&+ \underbrace{\frac{1+c_n}{n_vb}\sum_{s\in \mathcal{R}}(\hat{\beta}_\alpha-\beta_\alpha)'X_{\alpha,s}'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)}_{=:A_{\alpha3}} + B_{\alpha}.
 \end{align*}
 
 (2.)
@@ -113,6 +127,7 @@ and hence we can further decompose $A_{\alpha1}$ to
 A_{\alpha1}= \underbrace{\frac{c_n}{n_vb}\sum_{s\in\mathcal{R}}\frac{n}{n_v}\varepsilon_s'Q_{\alpha,s}\varepsilon_s}_{=:B_{\alpha1}}
 + \underbrace{o_P\biggl(\frac{n-n_v}{n}\biggr)\frac{c_n}{n_vb}\sum_{s\in\mathcal{R}}\frac{n}{n_v}\varepsilon_s'P_{\alpha,s}\varepsilon_s}_{=:B_{\alpha2}}.
 \end{align*}
+
 (3.)
 The expectation of $B_{\alpha1}$ with respect to the random sampling satisfies
 \begin{align*}
@@ -205,8 +220,34 @@ and hence,
 B_{\alpha1}-A_{\alpha2}+A_{\alpha3} = \frac{d_\alpha\sigma^2 }{n-n_v}+ o_P\biggl(\frac{1}{n-n_v}\biggr).
 \end{align*}
 
-(4.)
-
+(4.) Next we show that $B_{\alpha2} = o_P((n-n_v)^{-1})$.
+\begin{align*}
+B_{\alpha2} = o_P\biggl(\frac{n-n_v}{n}\biggr)\frac{c_n}{n_vb}\sum_{s\in\mathcal{R}}\frac{n}{n_v}\varepsilon_s'P_{\alpha,s}\varepsilon_s
+\end{align*}
+For any $s\in \mathcal{R}^\ast$
+\begin{align*}
+\varepsilon_s'P_{\alpha,s}\varepsilon_s = \sum_{i\in s} p_{ii,\alpha,s} \varepsilon_i^2 + \sum_{i \in s}\sum_{j\in s, j\neq i}  p_{ij,\alpha,s} \varepsilon_i\varepsilon_j.
+\end{align*}
+By the same truncation technique as in the proof of theorem CYX, one can show that $\sum_{i\in s} p_{ii,\alpha,s} \varepsilon_i^2 = d_\alpha\sigma^2 + o_P(1)$. Since the second term on the right hand side has mean zero and variance
+\begin{align*}
+V\biggl( \sum_{i \in s}\sum_{j\in s, j\neq i}  p_{ij,\alpha,s} \varepsilon_i\varepsilon_j\biggr) =  \sum_{i \in s}
+\underbrace{\sum_{j\in s, j\neq i}  p_{ij,\alpha,s}^2}_{\le p_{ii,\alpha,s}} \sigma^4 \le d_\alpha \sigma^4,
+\end{align*}
+it is bounded in probability.\
+To bound the variance, we used that by idempotency and symmetry of $P_{\alpha,s}$ it holds that
+\begin{align*}
+(P_{\alpha,s}P_{\alpha,s})_{ii} = &\sum_{j \in s} p_{ij,\alpha,s} p_{ji,\alpha,s} = \sum_{j \in s} p_{ij,\alpha,s}^2 = p_{ii,\alpha,s} \\
+\Rightarrow &\sum_{j \in s, j\neq i}p_{ij,\alpha,s}^2 \le p_{ii,\alpha,s}
+\end{align*}
+as any $p_{ii,\alpha,s} \ge 0$. Hence, 
+\begin{align*}
+\varepsilon_s'P_{\alpha,s}\varepsilon_s = d_\alpha\sigma^2 + o_P(1) + O_P(1) = O_P(1)
+\end{align*}
+and therefore $B_{\alpha2}$ satisfies
+\begin{align*}
+B_{\alpha2} &= o_P\biggl(\frac{n-n_v}{n}\biggr)\frac{c_n}{n_vb}\sum_{s\in\mathcal{R}}\underbrace{\frac{n}{n_v}}_{=O(1)}O_P(1)\\
+&= o_P\biggl(\frac{n-n_v}{n}\biggr)\frac{c_n}{n_v} = o_P\biggl(\frac{1}{n-n_v}\biggr)\frac{2n-n_v}{n} = o_P\biggl(\frac{1}{n-n_v}\biggr).
+\end{align*}
 
 (5.)
 $B_{\alpha} = o_P((n-n_v)^{-1})$ can be established by the same arguments as in the corresponding proof for $BICV(n_v)$.
