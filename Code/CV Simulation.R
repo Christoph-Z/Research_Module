@@ -53,10 +53,7 @@ Partion <- function(p.True,p){
   Index <- seq(1,p,1)                        
   
   #Denotes the number of Possible Models out of {1,...,p} Regressors 
-  col.A <- 0                                           
-  for (i in 1:p) {
-    col.A <- col.A + choose(p,i)   
-  }
+  col.A <- 2^p-1                                           
   
   #Denote A as Powerset of {1,...,p}
   A <- matrix(0L,nrow = p, ncol = col.A)      
@@ -90,6 +87,7 @@ Partion <- function(p.True,p){
 
 ##Leave one out Crossvalidation
 
+#Spits out a vector of Integers, i.e, alpha
 CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE ){  #n_v = #leaved out data points
   #n_v          Number of leaved out data points
   #y,X          Data for Regression
@@ -113,10 +111,7 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE )
     Index <- seq(1,p,1)    
     
     #Denotes the number of Possible Models out of {1,...,p}
-    col.A <- 0                                               
-    for (i in 1:p) {
-      col.A <- col.A + choose(p,i)   
-    }
+    col.A <- 2^p-1
     #Denote A as Powerset of {1,...,p}
     A <- matrix(0L,nrow = p, ncol = col.A)      
     k <- choose(p,1)
@@ -294,18 +289,19 @@ InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
     ##Number of Possible Regressors
     p <- length(X[1,])
     
-    Index <- seq(1,p,1)    #Creats the set {1,...,p} from which we want to generate the Powerset
+    ##Creats the set {1,...,p} from which we want to generate the Powerset
+    Index <- seq(1,p,1)    
     
-    col.A <- 0                                  #Denotes the number of Possible Models out of {1,...,p}             
-    for (i in 1:p) {
-      col.A <- col.A + choose(p,i)   
-    }
+    ##Denotes the number of Possible Models out of {1,...,p} 
+    col.A <- 2^p-1     
     
-    A <- matrix(0L,nrow = p, ncol = col.A)      #Denote A as Powerset of {1,...,p}
+    ##Denote A as Powerset of {1,...,p}
+    A <- matrix(0L,nrow = p, ncol = col.A)      
     k <- choose(p,1)
     l <- 1
     for (i in 1:p) {
-      A[1:i,l:k] <- combn(Index,i)              #combn spits out all combinations of i elements in Index 
+      ##combn spits out all combinations of i elements in Index
+      A[1:i,l:k] <- combn(Index,i)               
       k <-k + choose(p,i+1)
       l <- l + choose(p,i)
     }
@@ -354,21 +350,22 @@ InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
 
 ####################SIMULATION STUDIES#####################
 
-##Simulation I of P(M_CV is in Cat II) 
+##Simulation I
+##Simulation of P(M_CV is in Cat II) 
 
-#Number of True regressors 
+##Number of True regressors 
 p.True<- 2
 
 ##Number of Regressors
 p <- 5
 
-#Vector of diffrent Sample sizes
+##Vector of diffrent Sample sizes
 N <- seq(15,200,2)
 
-#Number of Repetitions of the Experiment
+##Number of Repetitions of the Experiment
 m <- 800
 
-#Vector of probabilties of frequencys of choosing a Cat II Model for each samplezize by m repetations 
+##Vector of probabilties of frequencys of choosing a Cat II Model for each samplezize by m repetations 
 BIC <- rep(0,length(N))
 AIC <- rep(0,length(N))
 CV1 <- rep(0,length(N))
@@ -377,29 +374,30 @@ for (i in 1:length(N)) {
   n <- N[i]
   
   for (j in 1:m) {
-    #Generating Data
+    ##Generating Data
     Data <- DataGen(n,p,p.True)
     y <- Data[,1]
     X <- Data[,-1]
     
-    #Counting how many times a Cat II Model is picked for n= N[i] in m interations
-    BIC[i] <- BIC[i] + (sum( InfoCrit(y,X,Criterion = "BIC") < 5 & InfoCrit(y,X,Criterion = "BIC") >0) == 4)
-    AIC[i] <- AIC[i] + (sum( InfoCrit(y,X) < 5 & InfoCrit(y,X) > 0) == 4)
-    CV1[i] <- CV1[i] + (sum( CV(1,y,X) < 5 & CV(1,y,X) > 0) == 4)
+    ##Counting how many times a Cat II Model is picked for n= N[i] in m interations
+    BIC[i] <- BIC[i] + (sum( InfoCrit(y,X,Criterion = "BIC") < (p.True+1) & InfoCrit(y,X,Criterion = "BIC") >0) == p.True)
+    AIC[i] <- AIC[i] + (sum( InfoCrit(y,X) < (p.True+1) & InfoCrit(y,X) > 0) == p.True)
+    CV1[i] <- CV1[i] + (sum( CV(1,y,X) < (p.True+1) & CV(1,y,X) > 0) == p.True)
   }
   
 }
 
 
-##Simulation II based on the Simulations in Shao
+##Simulation II 
+##based on the Simulations in Shao
 
-#Samplesize
+##Samplesize
 n <- 500
 
-#Number of Repetitions of the Experiment
-m <- 1000
+##Number of Repetitions of the Experiment
+m <- 2000
 
-#Number of True regressors 
+##Number of True regressors 
 p.True<- 2
 
 ##Number of Regressors
@@ -408,13 +406,13 @@ p <- 5
 ##Calculate the set of Category II Models
 C2 <- Partion(p.True,p)
 
-#Gives the Dimenson of the choosen Model for each iteration
+##Gives the Dimenson of the choosen Model for each iteration
 BIC <- c()
 AIC <- c()
 CV1 <- c()
 
 for (i in 1:m) {
-  #Generating Data
+  ##Generating Data
   Data <- DataGen(n,p,p.True)
   y <- Data[,1]
   X <- Data[,-1]
@@ -425,8 +423,43 @@ for (i in 1:m) {
 }
 
 ##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
-Probabilities <- matrix(0L,3,p-p.True)
+Probabilities <- matrix(0L,3,p-p.True+1)
 for(i in 0:(p-p.True)){
   Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) )/m
 }
-return(Probabilities)
+Probabilities
+
+
+##Simulation III 
+##Rule of Thumb Choice n_v
+
+##Define the number b of Samplepartions as function of n
+##Shao 93 claimed that b=O(n)
+b <- n*50
+
+##Vector of diffrent Sample sizes
+N <- seq(15,300,2)
+
+##Grid of possible n_v values for a given Samplezize n in N
+n_v <- function(n){
+  return(seq(2,n-2,2))
+}
+
+##Number of True regressors 
+##We suppose this number to be fixed. We do this for simplicity since we have limited computational power
+p.True<- 2
+
+##Number of Iteration of Modelfitting
+m <- 500
+
+##Criterion Function
+L <- function(n_v){
+  sum( CV(n_v,y,X) )
+}
+
+
+
+
+
+
+
