@@ -176,40 +176,39 @@ $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 	\label{Equation2.3-2.4}
 	It holds true that:
 	\begin{align*}
-	&&\Delta_{\alpha,n}>0 && \text{,for } \mathcal{M}_\alpha\in\text{Category I}&&\\
-	&&\Delta_{\alpha,n}=0 && \text{,for } \mathcal{M}_\alpha\in\text{Category II}&&
+		&&\Delta_{\alpha,n}>0 && \text{,for } \mathcal{M}_\alpha\in\text{Category I}&&\\
+		&&\Delta_{\alpha,n}=0 && \text{,for } \mathcal{M}_\alpha\in\text{Category II}&&
 	\end{align*}
 \end{lemma}
-
 \begin{proof}[Proof Lemma \ref{Equation2.3-2.4}]~\\
 	For the first part, assume $\mathcal{M}_\alpha\in$ Category I and note that we can rewrite $n\Delta_{\alpha,n}$ as follows
 	\begin{align}\nonumber
-	n\Delta_{\alpha,n}&= \beta^\prime X^\prime X\beta-\beta^\prime X^\prime P_\alpha X\beta\\\nonumber
-	&=||X\beta||^2-\beta^\prime X^\prime P_\alpha^\prime P_\alpha X\beta\\\nonumber
-	%\intertext{since $P_\alpha^\prime P_\alpha$=P_\alpha$}
-	&=||X\beta||^2-||P_\alpha X\beta||^2
-	\intertext{Since}\nonumber
-	||X\beta||^2&=||X\beta +P_\alpha X\beta -P_\alpha X\beta||^2\\\nonumber
-	&=||P_\alpha X\beta +X\beta\left(I_n-P_\alpha\right)||^2\\\nonumber
-	&=||P_\alpha X\beta||^2+<P_\alpha X\beta,(I_n-P_\alpha)X\beta>+||(I_n-P_\alpha)X\beta||^2\\\nonumber
-	&=||P_\alpha X\beta||^2+||\left(I_n-P_\alpha\right)X\beta||^2
-	\intertext{For $n\Delta_{\alpha,n}$ being strictly larger then zero it remains to show that,}\nonumber
-	||\left(I_n-P_\alpha\right)X\beta||^2&=||\left(I_n-P_\alpha\right)(X_\alpha\beta_\alpha+X_{\alpha^c}\beta_{\alpha^c})||^2\\
-	&=||\left(I_n-P_\alpha\right)X_{\alpha^c}\beta_{\alpha^c}||^2>0 \label{larger0}
+		n\Delta_{\alpha,n}&= \left(X \beta \right)^\prime \left(I_n-P_\alpha\right)X\beta\\\nonumber
+		&= \left(X \beta \right)^\prime \left(I_n-P_\alpha\right)^\prime\left(I_n-P_\alpha\right)X\beta\\\nonumber
+		&=||\left(I_n-P_\alpha\right)X\beta||^2\\\nonumber
+		&=||\left(I_n-P_\alpha\right)(X_\alpha\beta_\alpha+X_{\alpha^c}\beta_{\alpha^c})||^2\\
+		&=||\left(I_n-P_\alpha\right)X_{\alpha^c}\beta_{\alpha^c}||^2>0 \label{larger0}
 	\end{align}
 	Hence 
-	\[
-	(\mathcal{M}_\alpha\in \text{ Cat I } \wedge \text{ r}(X)=p) \Rightarrow(\exists\beta_i\in \alpha^c:\beta_i\neq0 \wedge X_{\alpha^c}\text{ r}(X)=p-d_\alpha)\Rightarrow X_{\alpha^c}\beta_{\alpha^c}\neq0
-	\]  
-	And since $(I_n-P_\alpha)$ is the Projection matrix onto span$\{x_{\alpha,1},\ldots,x_{\alpha,d_\alpha}\}$, it holds true that $(I_n-P_\alpha)X_{\alpha^c}\beta_{\alpha^c}\neq0$ and therefore (\ref{larger0}) must be strictly larger then zero. \\
+	%\[
+	%(\mathcal{M}_\alpha\in \text{ Cat I } \wedge \text{ r}(X)=p) \Rightarrow(\exists\beta_i\in \alpha^c:\beta_i\neq0 \wedge X_{\alpha^c}\text{ r}(X_{\alpha^c})=p-d_\alpha)\Rightarrow X_{\alpha^c}\beta_{\alpha^c}\neq0
+	%\]
+	$\mathcal{M}_\alpha\in$ Category I, it must exist at least one none zero component in $\beta_{\alpha^c}$. Together with $X$ having full rank, we can conclude that $X_{\alpha^c}\beta_{\alpha^c}$ is always unequal to zero.\\ 
+	Note further, that $(I_n-P_\alpha)$ is the Projection matrix onto the orthogonal complement of span$\{x_{\alpha,1},\ldots,x_{\alpha,d_\alpha}\}$. Since
+	\begin{align*}
+		X_{\alpha^c}\beta_{\alpha^c}&\neq 0\\
+		X_{\alpha^c}\beta_{\alpha^c}\not\perp (&I_n-P_\alpha)
+	\end{align*}
+	it holds that $(I_n-P_\alpha) X_{\alpha^c}\beta_{\alpha^c}\neq 0$ and therefore (\ref{larger0}) remains true.\\
 	\\
 	For the second part, assume $\mathcal{M}_\alpha\in$ Category II, then $X\beta=X_\alpha\beta_\alpha$. Thus
 	\begin{align*}
-	n\Delta_{\alpha,n}&=\beta^\prime X^\prime X\beta-\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1}X_\alpha^\prime X\beta\\
-	&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha -\beta_\alpha^\prime X_\alpha^\prime X_\alpha\left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X_\alpha\beta_\alpha\\
-	&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha - \beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha\\
-	&=0
-	\end{align*}	
+		n\Delta_\alpha,n&=\beta^\prime X^\prime X\beta-\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1}X_\alpha^\prime X\beta\\
+		&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha -\beta_\alpha^\prime X_\alpha^\prime X_\alpha\left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X_\alpha\beta_\alpha\\
+		&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha - \beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha\\
+		&=0
+	\end{align*}
+	
 \end{proof}
 
 %Lemma 2.5
