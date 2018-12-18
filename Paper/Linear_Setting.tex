@@ -3,29 +3,25 @@
 \section{The Linear Setting}
 %HABE KURZ DIE REIHENFOLGE GEÄNDERT, damit es der reihenfolge aus dem paper entspricht, können es ja später umbasteln
 
-In this section we consider the classical linear regression model which will be modified for the subsequent use of the CV($n_\nu$). Our linear regression model will be defined for each observation $i=1,...,n$ as
+In this section we consider the classical linear regression model which will be modified for the subsequent use of the CV($n_\nu$). For our following chapters and proofs we assume that everything is conditioned on $X$, however, for the sake of simplicity we refrain from explicitly mentioning this. Our linear regression model will be defined for each observation $i=1,...,n$ as
 \begin{align*}
 y_i=x_i^\prime\beta+\varepsilon_i
 \end{align*}
-with $x_i\in\mathbb{R}^p$ as the vector of covariates, $\beta\in\mathbb{R}^p$ as the true parameter vector and the residual $\varepsilon_i$ for the obseravtion $i$.
+with $x_i\in\mathbb{R}^p$ as the vector of covariates with the assumption that $p$ is fixed, $\beta\in\mathbb{R}^p$ as the true parameter vector and the residual $\varepsilon_i$ for the obseravtion $i$.
 %WEIß nicht ob man das so sagen kann:
-W.l.o.g. we assume that the residuals are independent and identically distributed and $E[\varepsilon_i|x_i]=0$ such as $E[\varepsilon_i^2|x_i]=\sigma^2$. Now we can write the linear regression model in matrix notation as
+W.l.o.g. we assume that the residuals are independent and identically distributed and $E[\varepsilon_i]=0$ such as $E[\varepsilon_i^2]=\sigma^2$. Now we can write the linear regression model in matrix notation as
 \begin{align*}
 	y=X\beta+\varepsilon
 \end{align*}
-with $X=[x_1,...,x_n]^\prime\in\mathbb{R}^{n\times p}$ as our adequate matrix, $y\in\mathbb{R}^{n}$ and $\varepsilon\in\mathbb{R}^{n}$.
+with $X=[x_1,...,x_n]^\prime\in\mathbb{R}^{n\times p}$ as our adequate matrix with the assumption of full rank, $y\in\mathbb{R}^{n}$ and $\varepsilon\in\mathbb{R}^{n}$.
 \\\\
-For the application of CV($n_\nu$) we have to describe the so called \textit{Compact model} of \cite{shao}, by using nearly the same notation. The idea behind this model is, that some $\beta_i's$ of the given model might be $0$ and we use a set $\alpha$ consisting of some integers from $1,...,p$ that indexed some of the $\beta_i's$ to get a more compact version of our initial linear regression model. A more detailed explanation of the indexing is given in chapter \ref{chapter_compact_model}. Therefore let 
+For the application of CV($n_\nu$) we have to describe another model which we call \textit{Compact model} referring to \cite{shao}, by using nearly the same notation. The idea behind this model is, that some $\beta_i's$ of the given model might be $0$ and we use a set $\alpha$ consisting of some integers from $1,...,p$ that indexed some of the $\beta_i's$ to get a more compact version of our initial linear regression model. A more detailed explanation of the indexing is given in chapter \ref{chapter_compact_model}. Therefore let 
 $\mathcal{A}=\{\alpha|\alpha\subseteq\{1,...,p\},\alpha\neq\emptyset\}$ be a collection of all indexsets $\alpha$, with 
 $|\alpha|\equiv d_\alpha\leq p$. Where $d_\alpha$ is the number of predictors in the compact model. Thus for any $\alpha\in\mathcal{A}$ and observation $i=1,...,n$ it is given by
 \begin{align*}
 	y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i
 \end{align*}
-which will be more easily denoted for observation $i$ as
-\begin{align*}
-	\mathcal{M}_\alpha=\{y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i|\alpha\in\mathcal{A}\}
-\end{align*}
-with $dim(\mathcal{M}_\alpha)=d_\alpha$. Because $x_{i,\alpha}\in\mathbb{R}^{d_\alpha}$ and $\beta_\alpha\in\mathbb{R}^{d_\alpha}$ are both vectors which include all the components of the initial model which where indexed by $\alpha$. Thus there are $2^p-1$ different $\alpha's$ possible and therefore $2^p-1$ different forms of $\mathcal{M}_\alpha$ for one observation $i$.
+which will be more easily denoted for observation $i$ as $\mathcal{M}_\alpha$. It has  $dim(\mathcal{M}_\alpha)=d_\alpha$, because $x_{i,\alpha}\in\mathbb{R}^{d_\alpha}$ and $\beta_\alpha\in\mathbb{R}^{d_\alpha}$ are both vectors which include all the components of the initial model which where indexed by $\alpha$.\footnote{There are $2^p-1$ different $\alpha's$ possible and therefore $2^p-1$ different forms of $\mathcal{M}_\alpha$ for one observation $i$. The $2^p-1$ is received by $2^p$ elements in the powerset of $\alpha$ minus 1 by leaving out the emptyset.}
 
 \subsection{Compact Model Categories} \label{chapter_compact_model}
 %KANN man das so machen?/Keine eigenen worte, alles aus shao

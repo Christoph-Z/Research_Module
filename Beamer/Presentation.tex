@@ -58,14 +58,56 @@
 \section{Sectiontitle}
 
 \begin{frame}
-\frametitle{Frametitle (Optional)}
+	\frametitle{Real Data Problem}
+	\begin{itemize}
+		\item hier Scatterplot
+	\end{itemize}
+\end{frame}
+
+\section{Framework and Motivation}
+
+\begin{frame}
+\frametitle{The Linear Setting}
 \begin{itemize}
-	\item Point 1
-	\item Point 2
-	\item and so on....
+	\item Our model for $i=1,..,n$ obs.:
+	\begin{align*}
+		y_i=x_i^\prime\beta+\varepsilon_i
+	\end{align*}
+	\item $x_i,\beta\in\mathbb{R}^p$
+	\item Assumptions:
+	$x_i$'s deterministic,
+	$E[\varepsilon_i|x_i]=0$ and $E[\varepsilon_i^2|x_i]=\sigma^2<\infty$
 \end{itemize}
 \end{frame}
 
 
+
+\begin{frame}
+	\frametitle{The Maximum Likelihood Setting}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Historical Classification: Model Selection Methods}
+	%WIE sollen wir das am besten aufschreiben?
+	%CV hier mit Lossfunction ausdrücken?
+	\begin{itemize}
+		\item $CV=\frac{1}{n\cdot n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2$
+		\item $AIC=2k-2ln(\hat{L})$
+		\item $BIC=ln(n)k-2ln(\hat{L})$
+		\item All methods minimize estimated expected squared prediction error
+	\end{itemize}
+\end{frame}
+
+\section{Leave-$n_\nu$-out Cross-Validation}
+
+\begin{frame}
+	\frametitle{CV($n_\nu$): Motivation}
+	\begin{itemize}
+		\item
+	\end{itemize}
+\end{frame}
 
 \end{document}
