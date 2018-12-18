@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[20pt]{beamer}
 
 %Standarteinstellungen
 \usepackage[english]{babel}
@@ -15,17 +15,39 @@
 %Anderthalbfacher Zeilenabstand
 \usepackage{setspace}
 
+%Farbe Section/Frametitles
+\setbeamercolor{title}{fg=blue}
+\setbeamercolor{frametitle}{fg=blue}
+
+%Bulletpoints statt Bullettriangles
+\setbeamertemplate{itemize item}[circle]
+
+%Bulletpoints Farbe
+\setbeamercolor{itemize item}{fg=blue} 
+
 %Vordefinierte Umgebungen
 \newtheorem{defi}{Definition}[subsection]
 \newtheorem{satz}{Satz}[subsection]
 \newtheorem{koro}{Korollar}[subsection]
 \newtheorem{prop}{Proposition}[subsection] 
 
+%Erstllt Section Überschrift als Einzelnen Frame
+\AtBeginSection[]{
+	\begin{frame}
+	\vfill
+	\centering
+	\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+		\usebeamerfont{title}\insertsectionhead\par%
+	\end{beamercolorbox}
+	\vfill
+\end{frame}
+}
+
 %Titelblatt
-\title[Cross Validation]{\huge Linear Model selection by Cross-Validation}
+\title[Cross Validation]{ Linear Model selection by Cross-Validation}
 %\subtitle{Researchmodule Econometrics}
-\author{  Vivien Fritzsche, Jan Scherer, \\ Christoph Zilligen}
-\date{ \today}
+\author{ Vivien Fritzsche, Jan Scherer, \\ Christoph Zilligen}
+\date{\today}
 
 \begin{document}
 \beamertemplatenavigationsymbolsempty
@@ -33,6 +55,16 @@
 \titlepage
 \end{frame}
 
+\section{Sectiontitle}
+
+\begin{frame}
+\frametitle{Frametitle (Optional)}
+\begin{itemize}
+	\item Point 1
+	\item Point 2
+	\item and so on....
+\end{itemize}
+\end{frame}
 
 
 
