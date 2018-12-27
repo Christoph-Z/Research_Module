@@ -431,17 +431,16 @@ Probabilities
 
 
 ##Simulation III 
-##Rule of Thumb Choice n_v
+##Wahl n_v
 
 ##Vector of different Sample sizes
 N <- seq(15,300,2)
 
 ##Number of True regressors 
-##We suppose this number to be fixed. We do this for simplicity since we have limited computational power
 p.True<- 2
 
-##Vector of different Modeldimensons
-P <- seq(p.True+1,10)
+##Number of Regressors
+p <- 5
 
 ##Number of Iteration of Modelfitting
 m <- 500
@@ -452,8 +451,8 @@ L <- function(model){
    + sum( model > p.True) -sum( (model <= p.True & model > 0) )
 }
 
-##Matrix of optimal n_v given n and p
-M <- matrix(0L,ncol = length(N), nrow = length(P))
+##Vector of optimal n_v given n
+M <- rep(0,length(N))
 
 ##Simulation
 for (i in 1:length(N)) {
@@ -461,33 +460,29 @@ for (i in 1:length(N)) {
   ##Define the number b of Samplepartions as function of n
   ##Shao 93 claimed that b=O(n)
   b <- n*50
-  
-  for (j in 1:length(P)) {
-    p <- P[j]
     
-    ##Grid of possible n_v values for a given Samplezize n in N
-    N_v <- seq(2,n-p,2)
+  ##Grid of possible n_v values for a given Samplezize n in N
+  N_v <- seq(2,n-p,2)
     
-    ##Vector of all Criterionfunction values fiven n_v
-    N_v.CritValue <- rep(0,length(N_v))
-    for (k in 1:length(N_v)) {
-      n_v <- N_v[k]
+  ##Vector of all Criterionfunction values given n_v
+  N_v.CritValue <- rep(0,length(N_v))
+  for (k in 1:length(N_v)) {
+    n_v <- N_v[k]
       
-      ##For statistical Influence fit the Model m times
-      for (l in 1:m) {
+    ##For statistical Influence fit the Model m times
+    for (l in 1:m) {
         
-        ##Generate Data
-        Data <- DataGen(n,p,p.True)
-        y <- Data[,1]
-        X <- Data[,-1]
-        
-        ##Select a Model
-        model <- CV(n_v,y,X, MonteCarlo = b)
-        N_v.CritValue[k] <-  N_v.CritValue[k] + L(model)
-      }
+      ##Generate Data
+      Data <- DataGen(n,p,p.True)
+      y <- Data[,1]
+      X <- Data[,-1]
+      
+      ##Select a Model
+      model <- CV(n_v,y,X, MonteCarlo = b)
+      N_v.CritValue[k] <-  N_v.CritValue[k] + L(model)
     }
-    TheChoosenOne <- which.min(N_v.CritValue)
-    M[j,i] <- N_v[TheChoosenOne]
+  TheChoosenOne <- which.min(N_v.CritValue)
+  M[i] <- N_v[TheChoosenOne]
   }
 }
 
