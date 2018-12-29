@@ -19,9 +19,10 @@ $\Big(\begin{matrix}
 	\label{Equation3.1}
 	The average squared prediction error of split $s$ is given by
 	\begin{align*}
-		ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel_2^2\\
-		&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel_2^2
+		ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2\\
+		&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel^2
 	\end{align*}
+	with $Q_{\alpha,s}=X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_{\alpha,s}^\prime$.
 \end{lemma}
 
 \begin{proof}[Proof of Lemma \ref{Equation3.1}]~\\
@@ -43,23 +44,23 @@ $\Big(\begin{matrix}
 	With the help of the following decompositions
 	\begin{align*}
 		X_\alpha^\prime y&=X_{\alpha,s}^\prime y_s+X_{\alpha,s^c}^\prime y_{s^c}\\
-		X_\alpha^\prime X_\alpha&=X_{\alpha,s}^\prime X_{\alpha,s}+X_{\alpha,s^c}^\prime X_{\alpha,s^c}\\
-		X_{\alpha,s} \hat{\beta}_{\alpha,s}&=P_{\alpha,s}y_s=I_{n_\nu}y_s=y_s
+		X_\alpha^\prime X_\alpha&=X_{\alpha,s}^\prime X_{\alpha,s}+X_{\alpha,s^c}^\prime X_{\alpha,s^c}
 	\end{align*}
-	Because $P_{\alpha,s}=P_{\alpha,s}^\prime P_{\alpha,s}=P_{\alpha,s}^{-1} P_{\alpha,s}=I_{n_\nu}$ is symmetric, idempotent and orthogonal. Thus now 
-	we can rewrite $\hat{\beta}_\alpha$ as
+	Thus now we can rewrite $\hat{\beta}_\alpha$ as
 	\begin{align}
 		\hat{\beta}_\alpha&=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y   \nonumber\\
 		&=(X_\alpha^\prime X_\alpha)^{-1}[X_{\alpha,s}^\prime y_s+X_{\alpha,s^c}^\prime y_{s^c}]  \nonumber \\
+		&=(X_\alpha^\prime X_\alpha)^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s})(X_{\alpha,s}^\prime X_{\alpha,s})^{-1}X_{\alpha,s}^\prime y_s+X_{\alpha,s^c}^\prime y_{s^c}]  \nonumber \\
 		&=(X_\alpha^\prime X_\alpha)^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s}) \hat{\beta}_{\alpha,s}+(X_{\alpha,s^c}^\prime X_{\alpha,s^c})\hat{\beta}_{\alpha,s^c}]
 		\label{beta_alpha_hat_decomposition}
 	\end{align}
 	The Average squared prediction error for split $s$ satisfies
 	\begin{align*}
-	ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel_2^2\\
-	&=\frac{1}{n_\nu}\parallel y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}\parallel_2^2\\
-	&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(I_{n_\nu}-Q_{\alpha,s})(y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c})\parallel_2^2
+	ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2\\
+	&=\frac{1}{n_\nu}\parallel y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}\parallel^2\\
+	&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(I_{n_\nu}-Q_{\alpha,s})(y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c})\parallel^2
 	\end{align*}
+	with $Q_{\alpha,s}=X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_{\alpha,s}^\prime$.\\ 
 	Thus it is enough to show that $(I_{n_\nu}-Q_{\alpha,s})(y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c})=y_s-X_{\alpha,s}\hat{\beta}_\alpha$ holds 
 	\begin{align*}
 		&-Q_{\alpha,s}y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}+Q_{\alpha,s}X_{\alpha,s}\hat{\beta}_{\alpha,s^c}=-X_{\alpha,s}\hat{\beta}_\alpha\\
@@ -77,7 +78,7 @@ Under the usage of Lemma \ref{Equation3.1} and averaging the $ASPE_{s}(\mathcal{
 \begin{lemma}
 	For each model $\mathcal{M}_\alpha$, the estimate of $~\hat{\Gamma}_{\alpha,n}^{CV}$ of $~\Gamma_{\alpha,n}$ is obtained by
 	\begin{align*}
-		\hat{\Gamma}_{\alpha,n}^{CV}=\frac{1}{n \cdot n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel_2^2
+		\hat{\Gamma}_{\alpha,n}^{CV}=\frac{1}{n \cdot n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel^2
 	\end{align*}
 	
 \end{lemma}

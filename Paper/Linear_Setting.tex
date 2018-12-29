@@ -2,14 +2,14 @@
 \begin{document}
 \section{The Linear Setting}
 %HABE KURZ DIE REIHENFOLGE GEÄNDERT, damit es der reihenfolge aus dem paper entspricht, können es ja später umbasteln
-
+%HIER auch annehmen dass die x_i's deerministisch sind?
 In this section we consider the classical linear regression model which will be modified for the subsequent use of the CV($n_\nu$). For our following chapters and proofs we assume that everything is conditioned on $X$, however, for the sake of simplicity we refrain from explicitly mentioning this. Our linear regression model will be defined for each observation $i=1,...,n$ as
 \begin{align*}
 y_i=x_i^\prime\beta+\varepsilon_i
 \end{align*}
 with $x_i\in\mathbb{R}^p$ as the vector of covariates with the assumption that $p$ is fixed, $\beta\in\mathbb{R}^p$ as the true parameter vector and the residual $\varepsilon_i$ for the obseravtion $i$.
-%WEIß nicht ob man das so sagen kann:
-W.l.o.g. we assume that the residuals are independent and identically distributed and $E[\varepsilon_i]=0$ such as $E[\varepsilon_i^2]=\sigma^2$. Now we can write the linear regression model in matrix notation as
+%WEIß nicht ob man das so sagen kann mit iid.:
+We assume that the residuals are independent and identically distributed and $E[\varepsilon_i]=0$ such as $E[\varepsilon_i^2]=\sigma^2$. Now we can write the linear regression model in matrix notation as
 \begin{align*}
 	y=X\beta+\varepsilon
 \end{align*}
@@ -32,11 +32,10 @@ Category~\RM{1}:& At least one $\beta_i\neq 0$ is \textit{not} in $\beta_\alpha$
 Category~\RM{2}:& $\beta_\alpha$ contains \textit{all} $\beta_i\neq 0$
 \end{tabular}
 \end{align*}
-Where Category~\RM{1} contains all the incorrect models and Category~\RM{2} contains all models which may be inefficient. If the components of $\beta$ in the initial model are acquainted, then $\mathcal{M}_\alpha$ can be assigned to one of these two categories.\\\\
-%VERBESSERUNG machen 
+Where Category~\RM{1} contains all the wrong models and Category~\RM{2} contains all models which may be too large. If the components of $\beta$ in the initial model are acquainted, then $\mathcal{M}_\alpha$ can be assigned to one of these two categories.\\\\
 The optimal model will be
 \begin{align*}
-\mathcal{M}_\star=\{\mathcal{M}_{\alpha_\star}|\mathcal{M}_{\alpha_\star}\in \text{Cat.~\RM{2}~and~} dim(\mathcal{M}_{\alpha_\star})<dim(\mathcal{M}_{\alpha})\text{~for~any~}\mathcal{M}_{\alpha}\in \text{Cat.~\RM{2}} \}
+\mathcal{M}_\star=\{\mathcal{M}_{\alpha_\star}|\mathcal{M}_{\alpha_\star}\in \text{Cat.~\RM{2}~and~} dim(\mathcal{M}_{\alpha_\star})\leq dim(\mathcal{M}_{\alpha})\text{~for~any~}\mathcal{M}_{\alpha}\in \text{Cat.~\RM{2}} \}
 \end{align*}
 
 \subsection{Ordinary Least Squares Estimator under $\mathcal{M}_\alpha$}
@@ -100,17 +99,17 @@ CESPE(\mathcal{M}_\alpha)=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{
 \end{align*}
 
 %PROOF evtl. in den Anhang + PRÜFEN
-\begin{proof}[Proof of Conditional Expected Squared Prediction Error] ~\\Under the use of linearity of expectation and the fact that $\hat{\beta}_\alpha$ is conditioned on $X,Y$ we get 
+\begin{proof}[Proof of Conditional Expected Squared Prediction Error] ~\\Under the use of linearity of expectation and the fact that $\hat{\beta}_\alpha$ is conditioned on $Y$ we get 
 	\begin{align*}
 	\begin{tabular}{ll}
-	$CESPE(\mathcal{M}_\alpha)$&$=E[ASPE(\mathcal{M}_\alpha)|X,Y]$\\
-	&$=E[\frac{1}{n}(Y-X_\alpha\hat{\beta}_\alpha)^\prime(Y-X_\alpha\hat{\beta}_\alpha)|X,Y]$\\
-	&$=E[\frac{1}{n}(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)^\prime(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)|X,Y]$\\
-	&$=E[\frac{1}{n}(\beta^\prime X^\prime+\varepsilon^\prime-\hat{\beta}_\alpha^\prime X_\alpha^\prime)(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)|X,Y]$\\
-	&$=E[\frac{1}{n}(\beta^\prime X^\prime X\beta+\beta^\prime X^\prime\varepsilon-\beta^\prime X^\prime X_\alpha\hat{\beta}_\alpha+\varepsilon^\prime X\beta+\varepsilon^\prime\varepsilon$\\&$~~~-\varepsilon^\prime X_\alpha\hat{\beta}_\alpha-\hat{\beta}_\alpha^\prime X_\alpha^\prime X\beta-\hat{\beta}_\alpha^\prime X_\alpha^\prime\varepsilon+\hat{\beta}_\alpha^\prime X_\alpha^\prime X_\alpha\hat{\beta}_\alpha)|X,Y]$\\
-	&$=\frac{1}{n}\beta^\prime X^\prime X\beta+\frac{1}{n}\beta^\prime X^\prime\cdot E[\varepsilon|X,Y]-\frac{1}{n}\beta^\prime X^\prime X_\alpha\hat{\beta}_\alpha$\\
-	&$~~~+\frac{1}{n}E[\varepsilon^\prime|X,Y]\cdot X\beta+\frac{1}{n}E[\varepsilon^\prime\varepsilon|X,Y]-\frac{1}{n}E[\varepsilon^\prime|X,Y]X_\alpha\hat{\beta}_\alpha$\\
-	&$~~~-\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime X\beta-\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime\cdot E[\varepsilon|X,Y]+\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime X_\alpha\hat{\beta}_\alpha$\\
+	$CESPE(\mathcal{M}_\alpha)$&$=E[ASPE(\mathcal{M}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(Y-X_\alpha\hat{\beta}_\alpha)^\prime(Y-X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)^\prime(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(\beta^\prime X^\prime+\varepsilon^\prime-\hat{\beta}_\alpha^\prime X_\alpha^\prime)(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(\beta^\prime X^\prime X\beta+\beta^\prime X^\prime\varepsilon-\beta^\prime X^\prime X_\alpha\hat{\beta}_\alpha+\varepsilon^\prime X\beta+\varepsilon^\prime\varepsilon$\\&$~~~-\varepsilon^\prime X_\alpha\hat{\beta}_\alpha-\hat{\beta}_\alpha^\prime X_\alpha^\prime X\beta-\hat{\beta}_\alpha^\prime X_\alpha^\prime\varepsilon+\hat{\beta}_\alpha^\prime X_\alpha^\prime X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=\frac{1}{n}\beta^\prime X^\prime X\beta+\frac{1}{n}\beta^\prime X^\prime\cdot E[\varepsilon|Y]-\frac{1}{n}\beta^\prime X^\prime X_\alpha\hat{\beta}_\alpha$\\
+	&$~~~+\frac{1}{n}E[\varepsilon^\prime|Y]\cdot X\beta+\frac{1}{n}E[\varepsilon^\prime\varepsilon|Y]-\frac{1}{n}E[\varepsilon^\prime|Y]X_\alpha\hat{\beta}_\alpha$\\
+	&$~~~-\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime X\beta-\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime\cdot E[\varepsilon|Y]+\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime X_\alpha\hat{\beta}_\alpha$\\
 	&$=\frac{1}{n}\parallel X\beta\parallel^2+0-\frac{1}{n} (X\beta)^\prime X_\alpha\hat{\beta}_\alpha+0+\frac{1}{n} n\sigma^2-0-\frac{1}{n}(X_\alpha\hat{\beta}_\alpha)^\prime X\beta$\\
 	&$~~~-0+\frac{1}{n}\parallel X_\alpha\hat{\beta}_\alpha\parallel^2$\\
 	&$=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}[(x_i^\prime\beta)^2-2(x_i^\prime\beta)(x_{i,\alpha}^\prime\hat{\beta}_\alpha)+(x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2]$\\
@@ -130,36 +129,35 @@ $\vartriangle_{\alpha,n}$&$=n^{-1}(X\beta)^\prime(I_n-P_\alpha)X\beta$\\
 $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 \end{tabular}
 \end{align*}
-%EVTL. in den Anhang+PRÜFEN (Mein proof ,den hat christoph auch gemacht)
 
 \begin{proof}[Proof of Unconditional Expected Squared Prediction Error]~\\
 	Under the usage of the 'Law of iterated expectations' and the following useful transformation of
 	%AUS Skript vom Liebl
 	\begin{align*}
 	\begin{tabular}{ll}
-	$E[\varepsilon^\prime P_\alpha^\prime P_\alpha\varepsilon|X]$&$=E[\varepsilon^\prime P_\alpha\varepsilon|X]$\\
-	&$=\sum_{i=1}^{n}\sum_{j=1}^{n}p_{ij,\alpha}\cdot E[\varepsilon_i\varepsilon_j|X]$\\
-	&$=\sum_{i=1}^{n}p_{ii,\alpha}\cdot E[\varepsilon_i^2|X]$\\
+	$E[\varepsilon^\prime P_\alpha^\prime P_\alpha\varepsilon]$&$=E[\varepsilon^\prime P_\alpha\varepsilon]$\\
+	&$=\sum_{i=1}^{n}\sum_{j=1}^{n}p_{ij,\alpha}\cdot E[\varepsilon_i\varepsilon_j]$\\
+	&$=\sum_{i=1}^{n}p_{ii,\alpha}\cdot E[\varepsilon_i^2]$\\
 	&$=\sum_{i=1}^{n}p_{ii,\alpha}\cdot \sigma^2$\\
 	&$=\sigma^2\cdot tr(P_\alpha)$\\
 	&$=\sigma^2\cdot d_\alpha$
 	\end{tabular}
 	\end{align*}
-	while respecting, that $P_\alpha$ is a symmetric and idempotent projection matrix with diagonal elements $p_{ii,\alpha}$. Also recall that for two matrices $A$ and $B$ with the same dimension, we are allowed to use $\parallel A-B\parallel_2^2=\parallel A\parallel_2^2-2AB+\parallel B\parallel_2^2$. And at least notice, that the orthogonal projection matrix $(I_n-P_\alpha)\in\mathbb{R}^{n\times n}$ is also symmetric and idempotent.\\\\
+	while respecting, that $P_\alpha$ is a symmetric and idempotent projection matrix with diagonal elements $p_{ii,\alpha}$. Also recall that for two vectors $a$ and $b$ with the same dimension, we are allowed to use $\parallel a-b\parallel^2=\parallel a\parallel^2-2a^\prime b+\parallel b\parallel^2$. And at least notice, that the orthogonal projection matrix $(I_n-P_\alpha)\in\mathbb{R}^{n\times n}$ is also symmetric and idempotent.\\\\
 	Thus now we can show, that
 	\begin{align*}
 	\begin{tabular}{ll}
-	$\Gamma_{\alpha,n}$&$=E[ASPE(\mathcal{M}_\alpha)|X]$\\
-	&$=E[E[ASPE(\mathcal{M}_\alpha)|X,Y]|X]$\\
-	&$=E[\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2|X]$\\
-	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-X_\alpha\hat{\beta}_\alpha\parallel_2^2|X]$\\
-	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-P_\alpha Y\parallel_2^2|X]$\\
-	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-P_\alpha X\beta-P_\alpha\varepsilon\parallel_2^2|X]$\\
-	&$=\sigma^2+\frac{1}{n}E[\parallel (I_n-P_\alpha)X\beta-P_\alpha\varepsilon\parallel_2^2|X]$\\
-	&$=\sigma^2+\frac{1}{n}E[\parallel (I_n-P_\alpha)X\beta\parallel_2^2-2(I_n-P_\alpha)X\beta P_\alpha\varepsilon+\parallel P_\alpha\varepsilon\parallel_2^2|X]$\\
-	&$=\sigma^2+\frac{1}{n}E[((I_n-P_\alpha)X\beta)^\prime((I_n-P_\alpha)X\beta)|X]-\frac{1}{n}2(I_n-P_\alpha)X\beta P_\alpha E[\varepsilon|X]$\\
-	&$~~~+\frac{1}{n}E[(P_\alpha\varepsilon)^\prime (P_\alpha\varepsilon)|X]$\\
-	&$=\sigma^2+\frac{1}{n}\beta^\prime X^\prime (I_n-P_\alpha)X\beta+\frac{1}{n}E[\varepsilon^\prime P_\alpha^\prime P_\alpha\varepsilon|X]$\\
+	$\Gamma_{\alpha,n}$&$=E[ASPE(\mathcal{M}_\alpha)]$\\
+	&$=E[E[ASPE(\mathcal{M}_\alpha)|Y]]$\\
+	&$=E[\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-X_\alpha\hat{\beta}_\alpha\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-P_\alpha Y\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-P_\alpha X\beta-P_\alpha\varepsilon\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel (I_n-P_\alpha)X\beta-P_\alpha\varepsilon\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel (I_n-P_\alpha)X\beta\parallel^2-2((I_n-P_\alpha) X\beta)^\prime P_\alpha\varepsilon+\parallel P_\alpha\varepsilon\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[((I_n-P_\alpha)X\beta)^\prime((I_n-P_\alpha)X\beta)]-\frac{1}{n}2(I_n-P_\alpha)X\beta P_\alpha E[\varepsilon]$\\
+	&$~~~+\frac{1}{n}E[(P_\alpha\varepsilon)^\prime (P_\alpha\varepsilon)]$\\
+	&$=\sigma^2+\frac{1}{n}\beta^\prime X^\prime (I_n-P_\alpha)X\beta+\frac{1}{n}E[\varepsilon^\prime P_\alpha^\prime P_\alpha\varepsilon]$\\
 	&$=\sigma^2+\vartriangle_{\alpha,n}+\frac{1}{n}\cdot\sigma^2\cdot tr(P_\alpha)$\\
 	&$=\sigma^2+n^{-1}\sigma^2d_\alpha+\vartriangle_{\alpha,n}$
 	\end{tabular}
@@ -210,14 +208,10 @@ $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 %Lemma 2.5
 \begin{lemma}
 	\label{Equation2.5}
-	Under the assumption that $p$ doesn't change for any $n$ (while $n$ is large) and the following condition:
+	For any $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\gamma\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$ it holds that:
 	\begin{align}
-		\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}>0 \text{~~~for~}\mathcal{M}_\alpha\in\text{Category}~\RM{1} \label{liminf_condition}
+		\liminf_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}>1~~~\Leftrightarrow~~~\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}>0 \text{~~~for~}\mathcal{M}_\alpha\in\text{Category}~\RM{1} \label{liminf_condition}
 	\end{align}
-	Then for any $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\gamma\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$ it holds that:
-	\begin{align*}
-		\liminf_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}>1~~~\Leftrightarrow~~~\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}>0
-	\end{align*}
 \end{lemma}
 
 \begin{proof}[Proof of Lemma \ref{Equation2.5}]~\\
@@ -241,33 +235,17 @@ $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 	Exactly when condition (\ref{liminf_condition}) for $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ holds.
 \end{proof}
 
-\begin{lemma}
-	\label{Equation2.5 condition does not hold}
-	Under the assumption that $p$ doesn't change for any $n$ (while $n$ is large) and $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\alpha\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$. If
+\textbf{Remark:}
+	Under the assumption that $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\gamma\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$. We have that if
 	\begin{align*}
-		\lim_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}=1~~~\Rightarrow~~~\mathcal{M}_\alpha=\mathcal{M}_\gamma
+		\lim_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}=1
 	\end{align*} 
-\end{lemma}
-
-\begin{proof}[Proof of Lemma \ref{Equation2.5 condition does not hold}]~\\
-	Let $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\alpha\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$. Then 
+	condition (\ref{liminf_condition}) does not hold, because
 	\begin{align*}
-		\lim_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}&=\liminf_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}\\
-		&=1+\frac{\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}}{\sigma^2}\\
-		&\stackrel{!}{=}1
+	\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}=0.
 	\end{align*}
-	Exactly when
-	\begin{align*}
-		\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}=0
-	\end{align*}
-	Thus condition (\ref{liminf_condition}) does not hold and it follows that
-	\begin{align*}
-		\mathcal{M}_\alpha=\mathcal{M}_\gamma
-	\end{align*}
-\end{proof}
-
-Considering condition (\ref{liminf_condition}) from an interpretational point of view we can say that
-this is a necessary condition that $CV(n_\nu)$ works correctly. Otherwise if the condition does not hold, the above described case in Lemma \ref{Equation2.5 condition does not hold} with $\mathcal{M}_\alpha=\mathcal{M}_\gamma$ is possible. That means, the $CV(n_\nu)$ can't distinguish between $Category~\RM{1}$ and $Category~\RM{2}$ if condition (\ref{liminf_condition}) does not hold and therefore the usage of this method is useless.
+Considering the condition (\ref{liminf_condition}) from an interpretational point of view we can say that
+this is a necessary condition that $CV(n_\nu)$ works correctly. Otherwise if the condition does not hold, the above described case in the Remark is possible. That means, the $CV(n_\nu)$ can't distinguish between $Category~\RM{1}$ and $Category~\RM{2}$ if condition (\ref{liminf_condition}) does not hold and therefore the usage of this method is useless.
 
 
 
