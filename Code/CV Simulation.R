@@ -360,18 +360,22 @@ p.True<- 2
 p <- 5
 
 ##Vector of diffrent Sample sizes
-N <- seq(15,200,2)
+N <- seq(15,300,2)
 
 ##Number of Repetitions of the Experiment
-m <- 800
+m <- 2000
 
 ##Vector of probabilties of frequencys of choosing a Cat II Model for each samplezize by m repetations 
 BIC <- rep(0,length(N))
 AIC <- rep(0,length(N))
 CV1 <- rep(0,length(N))
+MCV <- rep(0,length(N))
 
 for (i in 1:length(N)) {
   n <- N[i]
+  
+  ##Number of Samplepartions
+  b <- 5*n
   
   for (j in 1:m) {
     ##Generating Data
@@ -383,6 +387,7 @@ for (i in 1:length(N)) {
     BIC[i] <- BIC[i] + (sum( InfoCrit(y,X,Criterion = "BIC") < (p.True+1) & InfoCrit(y,X,Criterion = "BIC") >0) == p.True)
     AIC[i] <- AIC[i] + (sum( InfoCrit(y,X) < (p.True+1) & InfoCrit(y,X) > 0) == p.True)
     CV1[i] <- CV1[i] + (sum( CV(1,y,X) < (p.True+1) & CV(1,y,X) > 0) == p.True)
+    MCV[i] <- MCV[i] + (sum( CV(10,y,X,MonteCarlo = b) < (p.True+1) & CV(10,y,X,MonteCarlo = b) > 0) == p.True)
   }
   
 }
@@ -410,8 +415,9 @@ C2 <- Partion(p.True,p)
 BIC <- c()
 AIC <- c()
 CV1 <- c()
+MCV <- c()
 
-for (i in 1:m) {
+for (i in 1643:m) {
   ##Generating Data
   Data <- DataGen(n,p,p.True)
   y <- Data[,1]
@@ -420,12 +426,13 @@ for (i in 1:m) {
   BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
   AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
   CV1[i] <- sum( CV(1,y,X,C2) != 0)
+  MCV[i] <- sum( CV(10,y,X,MonteCarlo = n*30) != 0)
 }
 
 ##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
-Probabilities <- matrix(0L,3,p-p.True+1)
+Probabilities <- matrix(0L,4,p-p.True+1)
 for(i in 0:(p-p.True)){
-  Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) )/m
+  Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) , sum( MCV == (p.True + i)) )/m
 }
 Probabilities
 
@@ -443,7 +450,7 @@ p.True<- 2
 p <- 5
 
 ##Number of Iteration of Modelfitting
-m <- 500
+m <- 1000
 
 ##Criterion Function
 ##Is minimal iff CV chooses the true model and prefers less conservative Choices
@@ -459,10 +466,10 @@ for (i in 1:length(N)) {
   n <- N[i]
   ##Define the number b of Samplepartions as function of n
   ##Shao 93 claimed that b=O(n)
-  b <- n*50
+  b <- n*10
     
   ##Grid of possible n_v values for a given Samplezize n in N
-  N_v <- seq(2,n-p,2)
+  N_v <- seq(2,n-p-1,2)
     
   ##Vector of all Criterionfunction values given n_v
   N_v.CritValue <- rep(0,length(N_v))
@@ -484,7 +491,7 @@ for (i in 1:length(N)) {
   TheChoosenOne <- which.min(N_v.CritValue)
   M[i] <- N_v[TheChoosenOne]
   }
-}
+ }
 
 
 
