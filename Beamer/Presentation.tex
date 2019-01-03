@@ -90,7 +90,9 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 \begin{frame}
 \frametitle{Notation}
 \begin{itemize}
+	\item Let $A$ be any set, then $|A|$ denotes the nmber of elements of $A$
 	\item $\hat{y}=X\hat{\beta}=X(X^\prime X)^{-1} X^\prime y$
+	\item $\hat{y}_\alpha=X_\alpha(X_\alpha^\prime X_\alpha)^{-1} X_\alpha^\prime y$
 	\item $\alpha \subset \{1,\ldots,n\}$
 	\item $d_\alpha=|\alpha|$
 	\item $ASPE_\alpha = n^{-1} ||y-\hat{y}_\alpha||\equiv\Gamma_\alpha$
@@ -104,7 +106,7 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 \frametitle{Methods for Model Selection}
 
 \begin{align*}
-&\Gamma=n^{-1}||y-\hat{y}||^2
+&\Gamma=\E\left[||y-\hat{y}||^2\right]
 \\\\
 &AIC = 2k - 2\ln(\hat{L})\hspace{30cm}
 \\\\
