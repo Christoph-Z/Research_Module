@@ -1,4 +1,5 @@
 set.seed(100)
+library(ibd)
 ##Generate some data for regression
 n <- 50
 
@@ -88,7 +89,7 @@ Partion <- function(p.True,p){
 ##Leave one out Crossvalidation
 
 #Spits out a vector of Integers, i.e, alpha
-CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE ){  #n_v = #leaved out data points
+CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, BICV = NULL ){  #n_v = #leaved out data points
   #n_v          Number of leaved out data points
   #y,X          Data for Regression
   #Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
@@ -96,6 +97,8 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE )
   #MonteCarlo   Number of Subsets of {1,...,n} which is randomly drawn for a Monte Carlo CV
   #             (By Default do K-Fold CV)
   #Replacement  Replacement for Monte Carlo (Default False)
+  #
+  ##BICV        Incidence Matrix for a BICV
   
   ##Change some Variable names to keep the code shorter
   A <- Alpha
@@ -138,8 +141,11 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE )
     for (i in 1:b) {
       train[,i] <- sample(seq(1,n,1),n-n_v,replace = Replacement)
     }
-  }else{
-    
+  }
+  if(!is.null(BICV)){
+    #Convert the Incedence matrix of BIBD in our Notation
+    train <- BICV * seq(1,n,1)
+    }else{
     ##For the general case with all subsets of {1,...,n} 
     train <- combn(seq(1,n,1),n-n_v)
   }
@@ -416,6 +422,14 @@ BIC <- c()
 AIC <- c()
 CV1 <- c()
 MCV <- c()
+BICV <- c()
+
+##Number of leaved out data and number of samplepartions
+n_v <- 10
+b <- 50*n
+
+##Calculate BICD for BICV with ibd package
+BIBD <- ibd(n,b,n-n_v)$N
 
 for (i in 1643:m) {
   ##Generating Data
@@ -426,7 +440,8 @@ for (i in 1643:m) {
   BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
   AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
   CV1[i] <- sum( CV(1,y,X,C2) != 0)
-  MCV[i] <- sum( CV(10,y,X,MonteCarlo = n*30) != 0)
+  MCV[i] <- sum( CV(n_v,y,X,MonteCarlo = b) != 0)
+  BICV[i] <- sum( CV(n_v,y,X, BICV = BIBD) !=0)
 }
 
 ##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
