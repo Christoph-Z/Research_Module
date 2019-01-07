@@ -136,13 +136,11 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, 
   
   ##For the Mone Carlo CV with b subsets of {1,...,n}
   if(!is.null(b)){
-    
     train <- matrix(ncol = b, nrow = n-n_v)
     for (i in 1:b) {
       train[,i] <- sample(seq(1,n,1),n-n_v,replace = Replacement)
     }
-  }
-  if(!is.null(BICV)){
+  }else if(!is.null(BICV)){
     #Convert the Incedence matrix of BIBD in our Notation
     train <- BICV * seq(1,n,1)
     }else{
@@ -431,20 +429,20 @@ b <- 50*n
 ##Calculate BICD for BICV with ibd package
 BIBD <- ibd(n,b,n-n_v)$N
 
-for (i in 1643:m) {
+for (i in 1160:m) {
   ##Generating Data
   Data <- DataGen(n,p,p.True)
   y <- Data[,1]
   X <- Data[,-1]
   
-  BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
-  AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
-  CV1[i] <- sum( CV(1,y,X,C2) != 0)
-  MCV[i] <- sum( CV(n_v,y,X,MonteCarlo = b) != 0)
-  BICV[i] <- sum( CV(n_v,y,X, BICV = BIBD) !=0)
+  #BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
+  #AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
+  #CV1[i] <- sum( CV(1,y,X,C2) != 0)
+  MCV[i] <- sum( CV(n_v,y,X, MonteCarlo = b) != 0)
+  #BICV[i] <- sum( CV(n_v,y,X, BICV = BIBD) !=0)
 }
 
-##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
+ ##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
 Probabilities <- matrix(0L,4,p-p.True+1)
 for(i in 0:(p-p.True)){
   Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) , sum( MCV == (p.True + i)) )/m
