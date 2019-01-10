@@ -231,6 +231,12 @@ and $\mathcal{M}_\ast$ as true model
 	MCCV:& $\mathcal{B}\subset P$ s.t $\# \mathcal{B}=b$
 \end{tabular}
 \end{frame}
+%Their are different variations of CV.
+%They only differ in the way of sample splitting
+%Leave n_v out considers all possible spitings for a given n_v. Pro:it uses all possible information. Contra: The number of partitions grows factoriel in n_v. 
+%Mention that CV(1) (The most popular type of CV) is included in the first bulled point... At this point we can also claim why CV(1) is so popular.
+%BICV only uses a subset of the Parsons used in CV. The subset is choose due to some criterion.
+%MCCV Same as BICV but chooses the portions radome -> Bootstrapping
 
 \begin{frame}
 \frametitle{Categories of Models}
@@ -240,6 +246,9 @@ and $\mathcal{M}_\ast$ as true model
 	{\bfseries Category II}:& $\beta_\alpha$ contains all $\beta_i\neq0$.\\\\
 \end{tabular}
 \end{frame}
+%In order to do Theory, it turns out that it is convenient to split the different models into the following disjoint categories.
+%Category I includes a certain type of models, we never want to end up with. They all missing one importent parameter
+%Category II is more desirable. Moreover M_\ast is included in Cat II
 
 \begin{frame}
 \frametitle{Theory CV}
@@ -249,6 +258,7 @@ and $\mathcal{M}_\ast$ as true model
 &\Delta_{\alpha,n}= 0\hspace{1.5 cm},\text{for }\alpha\in\text{Cat II}\hspace{30cm}
 \end{align*}
 \end{frame}
+%One can show that we can derive the ESPE = \Game as follows 
 
 \begin{frame}
 \frametitle{Leave-one-out CV}
@@ -258,6 +268,7 @@ and $\mathcal{M}_\ast$ as true model
 	&\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV}=\mathcal{M}^\ast )\neq1&&
 \end{align*}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Leave-$n_\nu$-out CV}
