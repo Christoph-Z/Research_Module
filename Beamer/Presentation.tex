@@ -74,45 +74,49 @@
 \end{itemize}
 \end{frame}
 
-\thispagestyle{empty}
-\section{General Framework}
-
 \begin{frame}
 \frametitle{Linear Setting}
 \[
 	y_i=x_i^\prime\beta+\varepsilon_i
 \]
-$x_i$ deterministic\\\vspace*{5pt}
+$x_i$ deterministic, $\varepsilon_i$ iid \\\vspace*{5pt}
 $\E[\varepsilon_i]=0$\\\vspace*{5pt}
-$\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
+$\Var(\varepsilon_i)=\sigma^2<\infty$
 \end{frame}
+%We always consider a linear framework: uncorrelated regressors,...,
+%Some of the Betas might be zero and wie want to find out which of them are
+%For simplicity we assume x_i to be deterministic, note that the whole argumentation would also work with probabilistic x_i
 
 \begin{frame}
 \frametitle{Notation}
-\begin{itemize}
-	\item Let $A$ be any set, then $|A|$ denotes the nmber of elements of $A$
-	\item $\hat{y}=X\hat{\beta}=X(X^\prime X)^{-1} X^\prime y$
-	\item $\hat{y}_\alpha=X_\alpha(X_\alpha^\prime X_\alpha)^{-1} X_\alpha^\prime y$
-	\item $\alpha \subset \{1,\ldots,n\}$
-	\item $d_\alpha=|\alpha|$
-	\item $ASPE_\alpha = n^{-1} ||y-\hat{y}_\alpha||\equiv\Gamma_\alpha$
-	\item 
-	%X_\alpha is a d_\alpha vector containing the components of X,that are indexed by the integers in \alpha
-\end{itemize}
+$\mathcal{M}_\alpha$ submodel:
+\[
+	y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i
+\]
+with $\alpha\subseteq\{1,\ldots,p\}$\\\vspace*{5pt}
+and $\mathcal{M}_\ast$ as true model
 \end{frame}
-
+%Introduce our notation of submodels
+%There are 2^p-1 diffrent variations of diffrent models out of p regressors.
+%We denote that models by M_\alpha, where \alpha is a subset of d_\alpha distinct positive integers and \beta_\alpha (x_\alpha) is the d_\alpha containing the components of \beta which are indexed by the integers in \alpha
+%M_\ast denotes the true model.
 
 \begin{frame}
 \frametitle{Methods for Model Selection}
 
 \begin{align*}
-&\Gamma=\E\left[||y-\hat{y}||^2\right]
+&\Gamma_\alpha=\E\left[||y-\hat{y}_\alpha||^2\right]
 \\\\
-&AIC = 2k - 2\ln(\hat{L})\hspace{30cm}
+&AIC_\alpha = 2k - 2\ln(\hat{L}_\alpha)\hspace{30cm}
 \\\\
-&BIC = \ln(n)k - 2\ln(\hat{L})
+&BIC_\alpha = \ln(n)k - 2\ln(\hat{L}_\alpha)
 \end{align*}
 \end{frame}
+%Beside Cross Validation, there are several other way's in order to do model selection. Mention: t-test, F-test,R squared,.... But the most popular (or most often used) are Bic and Aic.
+%Due to theire basic aproach BIC, AIC and CV are very similar. 
+%All three methods/criterion estimate the Expected squared prediction error for the different model variations. The model with the smallest Prediction error is chosen.
+%AIC and BIC use alle date points for both, validation and construction inorder to estimate the Prediction error.(Last term of the equation). Since this leeds to a bias (overfitting) we need a correction term (first term)
+%AIC and BIC only differ in this correction term 
 
 \begin{frame}
 \frametitle{Cross Validation}
@@ -161,7 +165,7 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 		\node at (10,0)[draw,inner sep=0.8em, fill = gray]{} ;
 		\end{tikzpicture}
 		\begin{align*}
-		&CV={\color{white} |P|^{-1}\sum_{s \in P}}\underbrace{n^{-1}_\nu||y_s-\hat{y}_{\alpha,s^c} ||^2}_{\hat{\Gamma}_{\alpha,s}} &\hspace{15cm}&
+		&CV_\alpha={\color{white} |P|^{-1}\sum_{s \in P}}\underbrace{n^{-1}_\nu||y_s-\hat{y}_{\alpha,s^c} ||^2}_{\hat{\Gamma}_{\alpha,s}} &\hspace{15cm}&
 		\end{align*}
 		\vspace{20cm}
 	}
@@ -175,7 +179,7 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 		\node at (10,0)[draw,inner sep=0.8em, fill = gray]{} ;
 		\end{tikzpicture}
 		\begin{align*}
-		&CV={\color{red} |P|^{-1}\sum_{s \in P}}\underbrace{n^{-1}_\nu||y_s-\hat{y}_{\alpha,s^c} ||^2}_{\hat{\Gamma}_{\alpha,s}} &\hspace{15cm}&
+		&CV_\alpha={\color{red} |P|^{-1}\sum_{s \in P}}\underbrace{n^{-1}_\nu||y_s-\hat{y}_{\alpha,s^c} ||^2}_{\hat{\Gamma}_{\alpha,s}} &\hspace{15cm}&
 		\end{align*}
 		\vspace{20cm}
 	}
@@ -189,7 +193,7 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 		\node at (10,0)[draw,inner sep=0.8em, fill = gray]{} ;
 		\end{tikzpicture}
 		\begin{align*}
-		&CV=\color{red}\underbrace{{\color{red} |P|^{-1}\sum_{s \in P}}{\color{black}\underbrace{n^{-1}_\nu||y_s-\hat{y}_{\alpha,s^c} ||^2}_{\hat{\Gamma}_{\alpha,s}}} }_{\hat{\Gamma}_\alpha}&\hspace{15cm}&
+		&CV_\alpha=\color{red}\underbrace{{\color{red} |P|^{-1}\sum_{s \in P}}{\color{black}\underbrace{n^{-1}_\nu||y_s-\hat{y}_{\alpha,s^c} ||^2}_{\hat{\Gamma}_{\alpha,s}}} }_{\hat{\Gamma}_\alpha}&\hspace{15cm}&
 		\end{align*}
 		\vspace{20cm}
 	}
@@ -203,25 +207,30 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 		\node at (10,0)[draw,inner sep=0.8em, fill = gray]{} ;
 		\end{tikzpicture}
 		\begin{align*}
-		&CV=|P|^{-1}\sum_{s\in P}n_\nu^{-1}||y_s-\hat{y}_{\alpha,s^c}||^2&\hspace{15cm}&
+		&CV_\alpha=|P|^{-1}\sum_{s\in P}n_\nu^{-1}||y_s-\hat{y}_{\alpha,s^c}||^2&\hspace{15cm}&
 		\end{align*}
 		\vspace{20cm}
 	}
 \end{overprint}
 \end{frame}
+%The main different of CV in comarisen to AIC and BIC is the way of sample spliting,
+%CV devides the observations into a construction/trainingsample and a validation sample (see Example)
+%For example for N=6 we can split into n_s=4 and n_v=2
+%Claim that their (n_v over n) different ways of splitting the data,i.e, (n_v over n) different Partitions
+
+%As already claimed CV estimates the expected squared pred error by simple empirical average.
+%To get more statistical influence we calculate this estimate for every possible portion and calculate the average again
+%CV does this for every \alpha and chooses the \alpha with the smallest error
 
 \begin{frame}
 \frametitle{CV Variants}
 \setlength{\tabcolsep}{1pt}
 \begin{tabular}{ll}
-	CV:& $P=\{s\subset\{1,\ldots,n\}|\#s\equiv n_\nu\}$\\\\
+	CV:& $P=\{s\subset\{1,\ldots,n\}|\#s= n_\nu\}$\\\\
 	BICV:& $\mathcal{B}\subset P $ s.t $\# \mathcal{B}=b$\\\\
 	MCCV:& $\mathcal{B}\subset P$ s.t $\# \mathcal{B}=b$
 \end{tabular}
 \end{frame}
-
-\thispagestyle{empty}
-\section{Asymptotic Properties}
 
 \begin{frame}
 \frametitle{Categories of Models}
@@ -233,7 +242,7 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 \end{frame}
 
 \begin{frame}
-\frametitle{Theorie CV}
+\frametitle{Theory CV}
 \begin{align*}
 &\Gamma_{\alpha,n}=\sigma^2+\Delta_{\alpha,n}+n^{-1}d_\alpha\sigma^2\\\\
 &\Delta_{\alpha,n}> 0 \hspace{1.5cm},\text{for }\alpha\in\text{Cat I}\\\\
@@ -264,7 +273,7 @@ $\Var(\varepsilon_i)=\sigma^2<\infty$ $\forall i$
 \setlength{\tabcolsep}{1pt}
 \begin{tabular}{l}
 $\hat{\Gamma}^{CV(1)}_{\alpha,n}=\frac{\varepsilon^\prime\varepsilon}{n}+\frac{2}{n}d_\alpha\sigma^2-\frac{\varepsilon^\prime P_\alpha\varepsilon}{n}+o_p(n^{-1})$\\\\
-$\hat{\Gamma}^{CV(n_\nu)}_{\alpha,n}=\frac{\varepsilon^\prime\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n_c}+o_p(n_c^{-1})$
+$\hat{\Gamma}^{CV(n_\nu)}_{\alpha,n}=\frac{\varepsilon^\prime\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n-n_\nu}+o_p\left(\frac{1}{n-n_\nu}\right)$
 \end{tabular}
 \end{frame}
 
@@ -281,17 +290,17 @@ y =\begin{pmatrix}
 \vdots\\
 \beta_5
 \end{pmatrix}
-+\mathbf{\pmb{\varepsilon}}
++\mathbf{{\varepsilon}}
 \end{equation*}
 \begin{itemize}
-	\item $x_{j} \sim N(\mathbf{\pmb{\mu}}_j,\mathbf{I}_n\sigma^2_j)$ ~  $ j=2,\ldots5$
-	\item $\varepsilon \sim N(0,\mathbf{I}_n)$
+	\item $x_{j} \sim N(\mathbf{{\mu}}_j,{I}_n\sigma^2_j)$ ~  $ j=2,\ldots5$
+	\item $\varepsilon \sim N(0,{I}_n)$
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Thanks for your attention }
-J. Scherer: s3jasche$@$uni-bonn.de\\
+J. Scherer: s3jnsche$@$uni-bonn.de\\
 V. Fritzsche: s6vifrit$@$uni-bonn.de\\
 C. Zilligen: s3chzill$@$uni-bonn.de
 
