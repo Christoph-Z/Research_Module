@@ -423,13 +423,13 @@ MCV <- c()
 BICV <- c()
 
 ##Number of leaved out data and number of samplepartions
-n_v <- 10
+n_v <- 394
 b <- 50*n
 
 ##Calculate BICD for BICV with ibd package
 BIBD <- ibd(n,b,n-n_v)$N
 
-for (i in 1160:m) {
+for (i in 570:m) {
   ##Generating Data
   Data <- DataGen(n,p,p.True)
   y <- Data[,1]
@@ -438,11 +438,12 @@ for (i in 1160:m) {
   #BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
   #AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
   #CV1[i] <- sum( CV(1,y,X,C2) != 0)
-  MCV[i] <- sum( CV(n_v,y,X, MonteCarlo = b) != 0)
+  #MCV_50n[i] <- sum( CV(n_v,y,X, MonteCarlo = b) != 0)
+  MCV_5n[i] <- sum( CV(n_v,y,X, MonteCarlo = b_1) != 0)
   #BICV[i] <- sum( CV(n_v,y,X, BICV = BIBD) !=0)
 }
 
- ##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
+##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
 Probabilities <- matrix(0L,4,p-p.True+1)
 for(i in 0:(p-p.True)){
   Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) , sum( MCV == (p.True + i)) )/m
