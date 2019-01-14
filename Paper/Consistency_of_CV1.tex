@@ -19,9 +19,9 @@ the following holds
 \item If $\mathcal{M}_\alpha$ is in Category II, then $\hat{\Gamma}_{\alpha,n}^{CV} = \frac{1}{n}\varepsilon'\varepsilon + \frac{2}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon + o_P(n^{-1})$.
 \end{enumerate}
 If furthermore the following condition holds
-\begin{align*}
-\liminf_{n\to \infty} \Delta_{\alpha,n} > 0,
-\end{align*}
+\begin{itemize}
+\item[$(iii)$] $\liminf_{n\to \infty} \Delta_{\alpha,n} > 0,$
+\end{itemize}
 then 
 \begin{enumerate}
 \item[(III)] $\lim_{n\to\infty} P(\mathcal{M}_{CV}\textrm{ is in Category I})=0$,
@@ -30,8 +30,6 @@ then
 where $\mathcal{M}_{CV}$ denotes the model selected by using $CV(1)$.
 \end{satz}
 
-we provide the prove in the appendix.\
-
 Assertions $(I)$ and $(II)$ of the theorem state that $CV(1)$ consistently estimates the average squared prediction error. To see this in the case of $(II)$, note that $\frac{1}{n}\varepsilon'\varepsilon$ converges almost surely to $\sigma^2$ and that 
 $\frac{1}{n}\varepsilon'P_\alpha\varepsilon$ converges in probability to $\frac{1}{n}d_\alpha\sigma^2$.\
 
@@ -39,11 +37,85 @@ However the second statement gives a more precise description of the behavior of
 
 But consistency isn't enough to ensure that $CV(1)$ will detect the true model. Indeed, for any model in Category II the average squared prediction error reduces to the variance of the error term and hence are asymptotically indestinguishable. This idea is made precise by the statement $(IV)$ that the there exists some positive probability that the true model isn't chosen. On the other hand Shao shows in statement $(III)$ that the selected model is with probability approaching one in Category II.\
 
-A heuristic explanation for this incorrectness is delivered by statement $(II)$. The model defining terms are $\frac{1}{n}d_\alpha\sigma^2$ and the difference $\frac{1}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon$. This difference has mean zero and is of the same order of magnitude as the first term. This gives an explanation why $CV(1)$ tends to select to large models.\
+A heuristic explanation for this incorrectness is delivered by statement $(II)$. The model defining terms are $\frac{1}{n}d_\alpha\sigma^2$ and the difference $\frac{1}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon$. This difference  is a random variable with mean zero and is of the same order of magnitude as the first term.
+Hence, there is a positive probability that $CV(1)$ will select to large models. 
 
-The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the assumptotic invertibility of this matrix. If the $x_i$ are stochastic, it is fulfilled for example if the $x_i$ are iid and if the matrix $\mathrm{E}[x_ix_i']$ is invertible.\
+Assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the assymptotic invertibility of this matrix. 
+For examplfe it is fulfilled if the $x_i$ are iid with finite second moments that are bounded from below as then 
+\begin{align*}
+\lim_{n\to \infty} \frac{1}{n} \sum_{i=1}^n x_ix_i' = \mathrm{E}\bigl[ x_ix_i' \bigr] \quad a.s.
+\end{align*} 
+by the strong law of large numbers. Since the $x_i$ are iid their covariance matrix is positive definit and invertible. 
 
-Under assumption $(i)$ one can show that the second assumption is equivalent to $\lim \max n^{-1}\lVert x_i\rVert^2=0$. That is, the observations are allowed to grow but not too fast. This condition is for example satisfied if the $x_i$ are bounded.\
+\textbf{Claim:} In the iid setting it holds that
+\begin{align*}
+\mathrm{rank}(X) = p \quad \forall n\ge p \quad a.s.
+\end{align*}
+(could it be that this statement is too strong? Should I restate it in the sufficiently large terminology?)
+\textbf{Proof:}(UEBERARBEITEN!!! Und ich muss mir noch Gedanken machen was für annahmen ich bzgl der einzelnen variablen in einem der Zufallsvektoren stellen muss; reicht keine lineare starke lineare Abhangigkeit?) 
+Gedanken sammeln: Gilt 
+Spalten von $X$ linear abhängig $\iff$ Korrelation zwischen einzelnen Spalten ist 1?
+for $p=2$ let $x_{i,1}=\lambda x_{i,2}$. Then the correlation of these columns is 
+\begin{align*}
+\mathrm{cor}(x_1,x_2) &= \frac{\frac{1}{n}\sum_{i=1}^n x_{i,1}x_{i,2}}
+{\sqrt{\frac{1}{n}\sum_{i=1}^n x_{i,1}^2}\sqrt{\frac{1}{n}\sum_{i=1}^n x_{i,2}^2}}\\
+&= \frac{\frac{1}{n}\sum_{i=1}^n \lambda x_{i,2}^2}
+{\sqrt{\frac{1}{n}\sum_{i=1}^n \lambda^2 x_{i,2}^2}\sqrt{\frac{1}{n}\sum_{i=1}^n x_{i,2}^2}} = 1
+\end{align*}
+Evtl gehts schneller ueber masstheorie: Wenn der Rang von X voll ist, spannen die Spaltenvektoren den gesamten Rp auf. Irgednwas das der zufallsvektor ein mass bzgl ner kombination zwischen lebesgue und dirac massen ist.
+dann argumentiere, dass ein linearer unterraum kein volumen bzgl des lebesgue maßes hat, also nur mit wahrscheinlichkeit null eintritt. und andererseits, dass das ereignis der linearen abhangigkeit bei punktmassen nur eintreffen kann, wenn die variablen verteilungen in einem geeingeten verhaltnis zueinander legen, welches ich im vorfeld ausschliessen musste.
+
+
+Under assumption $(i)$ one can show that the second assumption is equivalent to $\lim \max n^{-1}\lVert x_i\rVert^2=0$. That is, the observations are allowed to grow but not too fast. This condition is for example satisfied if the $x_i$ are bounded.
+
+For arbitrary $\alpha \in \mathcal{A}$ holds
+\begin{align*}
+\lim_{n\to\infty} \max_{1\le i\le n} p_{ii\alpha} &= \lim_{n\to\infty} \max_{1\le i\le n} x_{i,\alpha}'(X_\alpha'X_\alpha)^{-1} x_{i,\alpha} \\
+&= \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} x_{i,\alpha}'\biggl(\frac{X_\alpha'X_\alpha}{n}\biggr)^{-1} x_{i,\alpha} \\
+&\le \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\max_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\le C^\ast < \infty \textrm{ for sufficiently large $n$} }  \lVert x_{i,\alpha} \rVert ^2 \\
+&\le C^\ast \lim_{n\to \infty} \max_{1\le i \le n} \frac{\lVert x_{i,\alpha}\rVert ^2}{n}
+\end{align*}
+and 
+\begin{align*}
+\lim_{n\to \infty} \max_{1\le i \le n} p_{ii\alpha} &=  \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} x_{i,\alpha}'\biggl(\frac{X_\alpha'X_\alpha}{n}\biggr)^{-1} x_{i,\alpha} \\
+&\ge \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\min_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\ge C_\ast > 0 \textrm{ for $n$ sufficiently large}} \lVert x_{i,\alpha} \rVert ^2\\
+&\ge C_\ast \lim_{n\to\infty} \max_{1\le i\le n} \frac{\lVert x_{i,\alpha}\rVert^2}{n}.
+\end{align*}
+Hence, 
+\begin{align*}
+\lim_{n\to \infty} \max_{1\le i \le n} p_{ii\alpha} = 0 \iff \lim_{n\to\infty} \max_{1\le i\le n} \frac{\lVert x_{i,\alpha}\rVert^2}{n} = 0.
+\end{align*}
+Furthermore there is no relation between condition $(i)$ and $(ii)$. To clarify this, note the following to examples:
+
+1. 
+condition $(ii)$ isn't sufficient to ensure asymptotic invertibility of $X_\alpha'X_\alpha$. To see this, take a look at the following design for $p=2$:
+\begin{align*}
+x_{i,1}= \begin{cases}
+1 & \textrm{$i$ is even}\\
+0 & \textrm{else}
+\end{cases}
+\end{align*}
+and 
+\begin{align*}
+x_{i,2} = \begin{cases}
+\frac{1}{n} & \textrm{$i$ is odd}\\
+0 & \textrm{else}
+\end{cases}
+\end{align*}
+Then for any $n$ it holds that
+\begin{align*}
+\sum_{i=1} ^n x_{i,1}x_{i,2} = 0 \\
+\sum_{i=1} ^n x_{i,1}^2 \le \frac{n}{2}\\
+\sum_{i=1} ^n x_{i,2}^2 \to \frac{\pi ^2}{6}
+\end{align*}
+THIS IS NO EXAMPLE AS WE NEED ASYMPTOTIC INVERTEBILITY FOR BEING ABLE TO SPEAK ABOUT THE SEQUENCE!!!
+I want to find a design that doesn't grow at n but the diagonal entries of the projection matrix are still converging uniformly to zero. 
+Actually this should be quite simple.. Just take some sequence which grows at speed say n squared 
+e.g. $x_{i,1} = \sqrt{i} \Rightarrow \sum_i x_i^2 = n(n-1)/2$ 
+HOORAY!!THIS ONE WORKS!!!
+As for the gram matrix (if I choose the second variable orthogonal to the first but else in the same manner as the first (or just some constant sequence with holes for orthogonality. Then teh inverse is shrinking at speed n-2 where the maximal elemts are growing root n resp n (as we're looking at a quadratic form) 
+
+(2.) the second example was my jumping powers of two design which shows that there exists designs that grow at order n and whose variances aren't bounded.
 
 \textbf{Proof of $(I)$:} A first order Taylor expansion of $(1-x)^{-2}$ in $x$ around $0$ yields 
 \begin{align*}
@@ -178,4 +250,61 @@ P\biggl(\biggl|\sum_{i=1}^n &p_{ii\alpha}(\varepsilon_i^2-\sigma^2)I(|(\varepsil
 establishing that $\sum_{i=1}^n p_{ii\alpha}\varepsilon_i^2= d_\alpha \sigma^2 + o_P(1)$.
 Combining the results from (1.) and (2.) we obtain $\hat{\Gamma}_{\alpha,n}^{CV} =\frac{1}{n}\varepsilon'\varepsilon- \frac{1}{n}\varepsilon'P_\alpha\varepsilon + \frac{2}{n}d_\alpha\sigma^2 +o_P(n^{-1})$
 proving the second claim.$\quad\square$
+
+\textbf{Proof of $(III)$:}
+Since $(I)$ and $(II)$ imply that $\hat{\Gamma}_{\alpha,n}^{CV}$ consistently estimates $\Gamma_{\alpha,n}$, it suffices to show that $CV(1)$ asymptotically wouldn't choose any model in Category $I$, if we compare the $\Gamma_{\alpha,n}$. 
+Note that for any model in Category $II$ holds
+\begin{align*}
+\lim_{n\to \infty} \Gamma_{\alpha,n} = \sigma^2 
+\end{align*}
+and for any model in Category $I$
+\begin{align*}
+\liminf_{n\to \infty} \Gamma_{\alpha,n} = \sigma^2 + \liminf_{n \to \infty} \Delta_{\alpha,n} >  \sigma^2,
+\end{align*}
+by condition $(iii)$ of the theorem. Hence, the expected squared prediction error for any model in Category $I$ is larger than the expected squared prediction error for models in category $II$. Or put differently, $CV(1)$ won't choose any model in Category $I$ asymptotically with probability approaching one. $\quad\square$.
+
+\textbf{Proof of $(IV)$:}
+Suppose that $\mathcal{M}_\ast$ is not of size $p$, i.e. $d_\ast < p$.
+By $(II)$ 
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{CV} = \frac{1}{n}\varepsilon'\varepsilon + \frac{2}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon + o_P\biggl(\frac{1}{n}\biggr)
+\end{align*}
+By $(III)$ it suffices to look at models in Category $II$.
+Furthermore 
+\begin{align*}
+&\{ \exists\alpha\in \textrm{Category $II$} \textrm{ s.t. $\mathcal{M}_\alpha$ is preferable to $\mathcal{M}_\ast$ w.r.t. $CV(1)$ at step $n$ }\} \\
+= &\{ \exists\alpha\in \textrm{Category $II$}: \hat{\Gamma}_{\alpha,n}^{CV} < \hat{\Gamma}_{\ast,n}^{CV} \} \\
+= &\biggl\{ \exists\alpha\in \textrm{Category $II$}: \frac{2}{n}(d_\alpha-d_\ast)\sigma^2 < \frac{1}{n}\varepsilon'(P_\alpha-P_\ast)\varepsilon + o_P\biggl(\frac{1}{n}\biggr) \biggr\}\\
+= &\{ \exists\alpha\in \textrm{Category $II$}: 2(d_\alpha-d_\ast)\sigma^2 <\varepsilon'(P_\alpha-P_\ast)\varepsilon + o_P(1) \}.
+\end{align*}
+And hence, 
+\begin{align*}
+&P(\mathcal{M}_{CV}\neq \mathcal{M}_\ast) \\
+= &P\bigl(\exists\alpha\in \textrm{Category $II$} \textrm{ s.t. $\mathcal{M}_\alpha$ is preferable to $\mathcal{M}_\ast$ w.r.t. $CV(1)$ at step $n$ }\bigr)\\
+= &P\bigl(\exists\alpha\in \textrm{Category $II$}: 2(d_\alpha-d_\ast)\sigma^2 <\varepsilon'(P_\alpha-P_\ast)\varepsilon\bigr) + o(1)
+\end{align*}
+
+Nebenrechnung:
+By definition of $\mathcal{M}_\ast$, we know that $d_\alpha > d_\ast$ for any $\alpha \in $Category $II$
+\begin{align*}
+P_\alpha-P_\ast = X_\alpha(X_\alpha'X_\alpha)^{-1}X_\alpha' - X_\ast (X_\ast'X_\ast)^{-1} X_\ast'
+\end{align*}
+this doesn't help me anywhere. 
+But maybe a geometric interpretation helps:
+$\varepsilon'(P_\alpha-P_\ast) \varepsilon$
+could be interpreted as the inner product between $\varepsilon$ and the difference between its projections onto $\alpha$ space  ($P_\alpha\varepsilon$) and $\ast$ space ($P_\ast\varepsilon$).
+
+Intuitively it makes sense that the this still is a projetion operator
+\begin{align*}
+(P_\alpha-P_\ast) (P_\alpha-P_\ast) &= \underbrace{P_\alpha^2}_{=P_\alpha} -P_\ast P_\alpha - P_\alpha P_\ast + \underbrace{P_\ast^2}_{=P_\ast}\\
+P_\ast P_\alpha &= X_\ast (X_\ast'X_\ast)^{-1} X_\ast'X_\alpha(X_\alpha'X_\alpha)^{-1}X_\alpha'\\
+&= X_\ast (X_\ast'X_\ast)^{-1} ( X_\ast' X_\ast +  X_\ast'X_{\alpha \cup \ast^c})(X_\alpha'X_\alpha)^{-1}X_\alpha'\\
+&= X_\ast (X_\alpha'X_\alpha)^{-1}X_\alpha' + X_\ast (X_\ast'X_\ast)^{-1} X_\ast'X_{\alpha \cup \ast^c}(X_\alpha'X_\alpha)^{-1}X_\alpha'
+\end{align*}
+but I don't see why it should be idempotent?!
+
+Maybe the difference of two projections is only itself a projection if the difference space is orthogonal to the other space; 
+if there is corellation between these two spaces, there might be correlation between ...
+
+$\lim_{n\to\infty}P(\mathcal{M}_{CV}=\mathcal{M}_\ast) \neq 1$
 \end{document}
