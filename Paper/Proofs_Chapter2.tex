@@ -45,17 +45,10 @@
 \begin{proof}[Proof Lemma \ref{Equation2.3-2.4}]~\\
 	For the first part, assume $\mathcal{M}_\alpha\in$ Category I and note that we can rewrite $n\Delta_{\alpha,n}$ as follows
 	\begin{align}\nonumber
-	n\Delta_{\alpha,n}&= \beta^\prime X^\prime X\beta-\beta^\prime X^\prime P_\alpha X\beta\\\nonumber
-	&=||X\beta||^2-\beta^\prime X^\prime P_\alpha^\prime P_\alpha X\beta\\\nonumber
-	%\intertext{since $P_\alpha^\prime P_\alpha$=P_\alpha$}
-	&=||X\beta||^2-||P_\alpha X\beta||^2
-	\intertext{Since}\nonumber
-	||X\beta||^2&=||X\beta +P_\alpha X\beta -P_\alpha X\beta||^2\\\nonumber
-	&=||P_\alpha X\beta +X\beta\left(I_n-P_\alpha\right)||^2\\\nonumber
-	&=||P_\alpha X\beta||^2+<P_\alpha X\beta,(I_n-P_\alpha)X\beta>+||(I_n-P_\alpha)X\beta||^2\\\nonumber
-	&=||P_\alpha X\beta||^2+||\left(I_n-P_\alpha\right)X\beta||^2
-	\intertext{For $n\Delta_{\alpha,n}$ being strictly larger then zero it remains to show that,}\nonumber
-	||\left(I_n-P_\alpha\right)X\beta||^2&=||\left(I_n-P_\alpha\right)(X_\alpha\beta_\alpha+X_{\alpha^c}\beta_{\alpha^c})||^2\\
+	n\Delta_{\alpha,n}&= \left(X \beta \right)^\prime \left(I_n-P_\alpha\right)X\beta\\\nonumber
+	&= \left(X \beta \right)^\prime \left(I_n-P_\alpha\right)^\prime\left(I_n-P_\alpha\right)X\beta\\\nonumber
+	&=||\left(I_n-P_\alpha\right)X\beta||^2\\\nonumber
+	&=||\left(I_n-P_\alpha\right)(X_\alpha\beta_\alpha+X_{\alpha^c}\beta_{\alpha^c})||^2\\
 	&=||\left(I_n-P_\alpha\right)X_{\alpha^c}\beta_{\alpha^c}||^2>0 \label{larger0}
 	\end{align}
 	Hence 

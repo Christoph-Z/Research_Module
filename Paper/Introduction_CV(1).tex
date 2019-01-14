@@ -1,0 +1,12 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\subsection{Theory of CV(1) (Titel finden)}
+The simplest and most used form of CV is the {\itshape leave one out Cross Validation} where $n_\nu=1$. Note, that for this special case there are $N$ different partitions of the observed sample. Therefore we get the following objective function for $\alpha$ to minimize 
+\[
+	L_{N,1}^{CV}(\alpha)=\frac{1}{N}\sum_{i}^{N}(y_i - x_i^\prime\hat{\beta}_{\alpha,-i})^2
+\]
+where $\hat{\beta}_{\alpha,-i}=(X_{\alpha,-i}^\prime X_{\alpha,-i})^{-1}X_{\alpha,-i}^\prime y_i$ is the OLS Estimator of $y_i$.
+
+
+
+\end{document}

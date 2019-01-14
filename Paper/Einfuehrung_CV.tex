@@ -12,9 +12,9 @@ We are interested in predicting a future value of $y$ for a given value of $x$. 
 \]
 where $\alpha$ is some set of unknown values in some parameter space $\mathscr{A}$, e.g $\alpha$ can be an underlying parametric model or a tuning parameter.\\
 \\
-The idea of cross validation is to choose some $\alpha^\star$ to minimize the loss between our prediction $\hat{y}$ and a corresponding real value of $y$. More explicitly we want $\alpha^\star$ to solve
+The idea of cross validation is to choose some $\alpha^\ast$ to minimize the loss between our prediction $\hat{y}$ and a corresponding real value of $y$. More explicitly we want $\alpha^\ast$ to solve
 \[
-	\alpha^\star=\arg\min_{\alpha\in\mathscr{A}}\{L_{n_\nu}(Y,X\alpha)\}
+	\alpha^\ast=\arg\min_{\alpha\in\mathscr{A}}\{L_{n_\nu}(Y,X\alpha)\}
 \]
 where $L_{n_\nu}$ is some loss function.\footnote{In statistics a loss function, is a function that maps estimation errors to the set of real numbers.  }
  
@@ -35,14 +35,11 @@ The name cross validation refers to the way of splitting up the observations int
 \subsection{Dependency between the number of omitted data points and the  parameter choice of Cross Validation}
 A natural question is: How many data points should be omitted in order to evaluate our prediction of $\alpha$ and in which way does this influences the prediction properties of the Cross Validation procedure.\\
 \\
-The in practice most often used variant of Cross Validation is the so called {\itshape leave one out Cross Validation} with $n_\nu=1$ omitted data points. The reason for the popularity of this type of Cross Validation is it's low computational complexity.\footnote{The computational complexity of CV depends strongly on the number of possible partition in $\Gamma$, which increases as $n_\nu$ increases.}\\
+The in practice most often used variant of Cross Validation is the so called {\itshape leave one out Cross Validation} with $n_\nu=1$ omitted data points. The reason for the popularity of this type of Cross Validation is it's low computational complexity.\footnote{The computational complexity of CV depends strongly on the number of possible partition in $\Gamma$, which increases as $n_\nu$ increases, i.e, $P=\binom{n}{n_\nu}$}.\\
 \\
 Throughout this paper we want to study both, the asymptotic and small sample properties of different methods of Cross Validation in the Framework of Model selection. Especially we will show that {\itshape leave one out Cross Validation} is asymptotically incorrect and chooses too conservative conservative models.\\
 \\
 Moreover we will use simulation studies to find a rough rule of thumb of choosing $n_\nu$ for a given sample and model selecting problem.
-
-
-
 
 
 \end{document}

@@ -1,4 +1,5 @@
 set.seed(100)
+library(ibd)
 ##Generate some data for regression
 n <- 50
 
@@ -88,7 +89,7 @@ Partion <- function(p.True,p){
 ##Leave one out Crossvalidation
 
 #Spits out a vector of Integers, i.e, alpha
-CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE ){  #n_v = #leaved out data points
+CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, BICV = NULL ){  #n_v = #leaved out data points
   #n_v          Number of leaved out data points
   #y,X          Data for Regression
   #Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
@@ -96,6 +97,8 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE )
   #MonteCarlo   Number of Subsets of {1,...,n} which is randomly drawn for a Monte Carlo CV
   #             (By Default do K-Fold CV)
   #Replacement  Replacement for Monte Carlo (Default False)
+  #
+  ##BICV        Incidence Matrix for a BICV
   
   ##Change some Variable names to keep the code shorter
   A <- Alpha
@@ -133,13 +136,14 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE )
   
   ##For the Mone Carlo CV with b subsets of {1,...,n}
   if(!is.null(b)){
-    
     train <- matrix(ncol = b, nrow = n-n_v)
     for (i in 1:b) {
       train[,i] <- sample(seq(1,n,1),n-n_v,replace = Replacement)
     }
-  }else{
-    
+  }else if(!is.null(BICV)){
+    #Convert the Incedence matrix of BIBD in our Notation
+    train <- BICV * seq(1,n,1)
+    }else{
     ##For the general case with all subsets of {1,...,n} 
     train <- combn(seq(1,n,1),n-n_v)
   }
@@ -360,18 +364,22 @@ p.True<- 2
 p <- 5
 
 ##Vector of diffrent Sample sizes
-N <- seq(15,200,2)
+N <- seq(15,300,2)
 
 ##Number of Repetitions of the Experiment
-m <- 800
+m <- 2000
 
 ##Vector of probabilties of frequencys of choosing a Cat II Model for each samplezize by m repetations 
 BIC <- rep(0,length(N))
 AIC <- rep(0,length(N))
 CV1 <- rep(0,length(N))
+MCV <- rep(0,length(N))
 
 for (i in 1:length(N)) {
   n <- N[i]
+  
+  ##Number of Samplepartions
+  b <- 5*n
   
   for (j in 1:m) {
     ##Generating Data
@@ -383,6 +391,7 @@ for (i in 1:length(N)) {
     BIC[i] <- BIC[i] + (sum( InfoCrit(y,X,Criterion = "BIC") < (p.True+1) & InfoCrit(y,X,Criterion = "BIC") >0) == p.True)
     AIC[i] <- AIC[i] + (sum( InfoCrit(y,X) < (p.True+1) & InfoCrit(y,X) > 0) == p.True)
     CV1[i] <- CV1[i] + (sum( CV(1,y,X) < (p.True+1) & CV(1,y,X) > 0) == p.True)
+    MCV[i] <- MCV[i] + (sum( CV(10,y,X,MonteCarlo = b) < (p.True+1) & CV(10,y,X,MonteCarlo = b) > 0) == p.True)
   }
   
 }
@@ -410,52 +419,93 @@ C2 <- Partion(p.True,p)
 BIC <- c()
 AIC <- c()
 CV1 <- c()
+MCV <- c()
+BICV <- c()
 
-for (i in 1:m) {
+##Number of leaved out data and number of samplepartions
+n_v <- 394
+b <- 50*n
+
+##Calculate BICD for BICV with ibd package
+BIBD <- ibd(n,b,n-n_v)$N
+
+for (i in 570:m) {
   ##Generating Data
   Data <- DataGen(n,p,p.True)
   y <- Data[,1]
   X <- Data[,-1]
   
-  BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
-  AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
-  CV1[i] <- sum( CV(1,y,X,C2) != 0)
+  #BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
+  #AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
+  #CV1[i] <- sum( CV(1,y,X,C2) != 0)
+  #MCV_50n[i] <- sum( CV(n_v,y,X, MonteCarlo = b) != 0)
+  MCV_5n[i] <- sum( CV(n_v,y,X, MonteCarlo = b_1) != 0)
+  #BICV[i] <- sum( CV(n_v,y,X, BICV = BIBD) !=0)
 }
 
 ##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
-Probabilities <- matrix(0L,3,p-p.True+1)
+Probabilities <- matrix(0L,4,p-p.True+1)
 for(i in 0:(p-p.True)){
-  Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) )/m
+  Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) , sum( MCV == (p.True + i)) )/m
 }
 Probabilities
 
 
 ##Simulation III 
-##Rule of Thumb Choice n_v
+##Wahl n_v
 
-##Define the number b of Samplepartions as function of n
-##Shao 93 claimed that b=O(n)
-b <- n*50
-
-##Vector of diffrent Sample sizes
+##Vector of different Sample sizes
 N <- seq(15,300,2)
 
-##Grid of possible n_v values for a given Samplezize n in N
-n_v <- function(n){
-  return(seq(2,n-2,2))
-}
-
 ##Number of True regressors 
-##We suppose this number to be fixed. We do this for simplicity since we have limited computational power
 p.True<- 2
 
+##Number of Regressors
+p <- 5
+
 ##Number of Iteration of Modelfitting
-m <- 500
+m <- 1000
 
 ##Criterion Function
-L <- function(n_v){
-  sum( CV(n_v,y,X) )
+##Is minimal iff CV chooses the true model and prefers less conservative Choices
+L <- function(model){
+   + sum( model > p.True) -sum( (model <= p.True & model > 0) )
 }
+
+##Vector of optimal n_v given n
+M <- rep(0,length(N))
+
+##Simulation
+for (i in 1:length(N)) {
+  n <- N[i]
+  ##Define the number b of Samplepartions as function of n
+  ##Shao 93 claimed that b=O(n)
+  b <- n*10
+    
+  ##Grid of possible n_v values for a given Samplezize n in N
+  N_v <- seq(2,n-p-1,2)
+    
+  ##Vector of all Criterionfunction values given n_v
+  N_v.CritValue <- rep(0,length(N_v))
+  for (k in 1:length(N_v)) {
+    n_v <- N_v[k]
+      
+    ##For statistical Influence fit the Model m times
+    for (l in 1:m) {
+        
+      ##Generate Data
+      Data <- DataGen(n,p,p.True)
+      y <- Data[,1]
+      X <- Data[,-1]
+      
+      ##Select a Model
+      model <- CV(n_v,y,X, MonteCarlo = b)
+      N_v.CritValue[k] <-  N_v.CritValue[k] + L(model)
+    }
+  TheChoosenOne <- which.min(N_v.CritValue)
+  M[i] <- N_v[TheChoosenOne]
+  }
+ }
 
 
 
