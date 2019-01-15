@@ -68,12 +68,15 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Real Data Problem}
-\begin{itemize}
-	\item hier Scatterplot
-\end{itemize}
+\frametitle{Motivating Example}
+\centering
+\includegraphics[width=1.25\textheight]{scatterplot.png}
 \end{frame}
+%Explain Example: Aim is ro estimate Liveexpectincy.Given some possible regressors.
+%Scaterplott gets quickly comlicated for a growing number of regressors -> Therfore, we need a numeric procedure in order to select the model with best prediction ability.
+%%Christoph%%
 
+\thispagestyle{empty}
 \section{General Framework and Notation}
 
 \begin{frame}
@@ -81,13 +84,14 @@
 \[
 	y_i=x_i^\prime\beta+\varepsilon_i
 \]
-$x_i$ deterministic, $\varepsilon_i$ iid \\\vspace*{5pt}
+$x_i\in \mathbb{R}^p$ deterministic, $\varepsilon_i$ iid \\\vspace*{5pt}
 $\E[\varepsilon_i]=0$\\\vspace*{5pt}
 $\Var(\varepsilon_i)=\sigma^2<\infty$
 \end{frame}
-%We always consider a linear framework: uncorrelated regressors,...,
+%We always consider a linear framework:,...,
 %Some of the Betas might be zero and wie want to find out which of them are
 %For simplicity we assume x_i to be deterministic, note that the whole argumentation would also work with probabilistic x_i
+%%Vivien%%
 
 \begin{frame}
 \frametitle{Notation}
@@ -96,15 +100,20 @@ $\mathcal{M}_\alpha$ submodel:
 	y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i
 \]
 with $\alpha\subseteq\{1,\ldots,p\}$\\\vspace*{5pt}
-and $\mathcal{M}_\ast$ as true model
+and $\mathcal{M}_\ast$ as true model\\\vspace*{5pt}
+$\hat{\beta}_\alpha$ is the OLS estimator
 \end{frame}
 %Introduce our notation of submodels
 %There are 2^p-1 diffrent variations of diffrent models out of p regressors.
-%We denote that models by M_\alpha, where \alpha is a subset of d_\alpha distinct positive integers and \beta_\alpha (x_\alpha) is the d_\alpha containing the components of \beta which are indexed by the integers in \alpha
+%To explain the structer of the submodels, Example Blackboard
 %M_\ast denotes the true model.
+%%Vivien%%
+
+\thispagestyle{empty}
+\section{Methods for Model Selection}
 
 \begin{frame}
-\frametitle{Methods for Model Selection}
+\frametitle{Popular Methods}
 
 \begin{align*}
 &\Gamma_\alpha=\E\left[||y-\hat{y}_\alpha||^2\right]
@@ -119,6 +128,7 @@ and $\mathcal{M}_\ast$ as true model
 %All three methods/criterion estimate the Expected squared prediction error for the different model variations. The model with the smallest Prediction error is chosen.
 %AIC and BIC use alle date points for both, validation and construction inorder to estimate the Prediction error.(Last term of the equation). Since this leeds to a bias (overfitting) we need a correction term (first term)
 %AIC and BIC only differ in this correction term 
+%%Vivien$$
 
 \begin{frame}
 \frametitle{Cross Validation}
@@ -217,12 +227,14 @@ and $\mathcal{M}_\ast$ as true model
 \end{frame}
 %The main different of CV in comarisen to AIC and BIC is the way of sample spliting,
 %CV devides the observations into a construction/trainingsample and a validation sample (see Example)
+%Construction Sample -> To calculat the OLS Estimator... Validation -> Assesing the Prediction ability's/performance....
 %For example for N=6 we can split into n_s=4 and n_v=2
-%Claim that their (n_v over n) different ways of splitting the data,i.e, (n_v over n) different Partitions
+%Claim that their (n over n_v) different ways of splitting the data,i.e, (n_v over n) different Partitions
 
 %As already claimed CV estimates the expected squared pred error by simple empirical average.
-%To get more statistical influence we calculate this estimate for every possible portion and calculate the average again
+%To reduce variance we calculate this estimate for every possible portion and calculate the average again
 %CV does this for every \alpha and chooses the \alpha with the smallest error
+%%Vivien%%
 
 \begin{frame}
 \frametitle{CV Variants}
@@ -237,8 +249,12 @@ and $\mathcal{M}_\ast$ as true model
 %They only differ in the way of sample splitting
 %Leave n_v out considers all possible spitings for a given n_v. Pro:it uses all possible information. Contra: The number of partitions grows factoriel in n_v. 
 %Mention that CV(1) (The most popular type of CV) is included in the first bulled point... At this point we can also claim why CV(1) is so popular.
-%BICV only uses a subset of the Parsons used in CV. The subset is choose due to some criterion.
+%BICV only uses a subset of the Parsons used in CV. The subset is choose due to some criterion.This partions are choosen by combinatorical procedures s.t computed first and second moments of the data are close to the full set of partions.
 %MCCV Same as BICV but chooses the portions radome -> Bootstrapping
+%%Vivien%%
+
+\thispagestyle{empty}
+\section{Asymptotic Properties}
 
 \begin{frame}
 \frametitle{Categories of Models}
@@ -251,18 +267,23 @@ and $\mathcal{M}_\ast$ as true model
 %In order to do Theory, it turns out that it is convenient to split the different models into the following disjoint categories.
 %Category I includes a certain type of models, we never want to end up with. They all missing one importent parameter
 %Category II is more desirable. Moreover M_\ast is included in Cat II
+%%JAN%%
 
 \begin{frame}
 \frametitle{Theory CV}
 \begin{align*}
-&\Gamma_{\alpha,n}=\sigma^2+\Delta_{\alpha,n}+n^{-1}d_\alpha\sigma^2\\\\
+&\Gamma_{\alpha}=\sigma^2+\Delta_{\alpha,n}+n^{-1}d_\alpha\sigma^2\\\\
 &\Delta_{\alpha,n}> 0 \hspace{1.5cm},\text{for }\alpha\in\text{Cat I}\\\\
 &\Delta_{\alpha,n}= 0\hspace{1.5 cm},\text{for }\alpha\in\text{Cat II}\hspace{30cm}
 \end{align*}
 \end{frame}
 %One can show that we can derive the ESPE = \Game as follows 
+%First Term: error variance (Noise)
+%Last Term: Prediction error due to dimensiionality of the model
+%middel Term: model misspecification error
 %The last term of the equation n^{-1}d_\aleph\sigma^2 vanishes as n goes to infinity, no matter in which category the model is
-%But the \Delta term is only zero for Cat II Models -> Therefore CV tend pick Cat II models, for n suff large. But will it also pick the optimal model?
+%But the \Delta term is only zero for Cat II Models -> Therefore any reasonable method tend pick Cat II models, for n suff large. But will it also pick the optimal model?
+%%JAN%%
 
 \begin{frame}
 \frametitle{Leave-one-out CV}
@@ -272,17 +293,27 @@ and $\mathcal{M}_\ast$ as true model
 	&\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV}=\mathcal{M}^\ast )\neq1&&
 \end{align*}
 \end{frame}
-%Althought CV(1)  estimates ESPE consitently it's asymptotically incorect. Incorect in the way, that it estimates to conservative models... 
+%Under fairly weak assumptions 
+%Althought CV(1)  estimates ESPE consitently
+%MCV denotes the by cv selected model
+%CV Chooses only models in Cat II with prob. approaching 1.
+%The prob of predictig the true model is unequal to 1 -> chooses to big models. 
+%Asymptotically equivalent to AIC by Stone
+%%JAN%%
 
 \begin{frame}
 \frametitle{Leave-$n_\nu$-out CV}
+Assumption: $\frac{n_v}{n}\to 1$, $n-n_v\to \infty$
 \begin{align*}
-&\hspace{0.3cm}\hat{\Gamma}^{CV(n_\nu)}_{\alpha,n}=\Gamma_{\alpha,n}+o_p(1)&\hspace{5cm}&\\\\
-&\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV} \text{ is in Cat I})=0&&\\\\
+&\hspace{0.3cm}\hat{\Gamma}^{CV(n_\nu)}_{\alpha,n}=\Gamma_{\alpha,n}+o_p(1)&\hspace{5cm}&\\[8pt]
+&\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV} \text{ is in Cat I})=0&&\\[8pt]
 &{\color{red}\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV}=\mathcal{M}^\ast )=1}&&
 \end{align*}
 \end{frame}
-%Leave n_v out ist better...
+%Acording to it's theroetically properties CV(n_v) behaves analogeously to CV(1) expect that it selcts the True model with prob aproaching 1 under sufficient conditions acording the chioce of n_v.
+%Erklörung conditions
+%The asymptoticly incorectes of CV(1) is rectified by CV(n_v)
+%%JAN%%
 
 \begin{frame}
 \frametitle{Proof Sketch}
@@ -292,6 +323,14 @@ $\hat{\Gamma}^{CV(1)}_{\alpha,n}=\frac{\varepsilon^\prime\varepsilon}{n}+\frac{2
 $\hat{\Gamma}^{CV(n_\nu)}_{\alpha,n}=\frac{\varepsilon^\prime\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n-n_\nu}+o_p\left(\frac{1}{n-n_\nu}\right)$
 \end{tabular}
 \end{frame}
+%%JAN%
+
+\thispagestyle{empty}
+\section{Simulations}
+%Basiclay we want to anser to questions:
+%How the probability of choosing moodels in cat II behaves for the different methods and different sample sizes 
+%How the probabilty of choosing the optimal model behaves fro the diffrent methods and a given and fixed samplesize
+%%Christoph%%
 
 \begin{frame}
 \frametitle{Simulation Studies}
@@ -313,12 +352,24 @@ y =\begin{pmatrix}
 	\item $\varepsilon \sim N(0,{I}_n)$
 \end{itemize}
 \end{frame}
+%We assume the following model
+%First Regressor = constant
+%Distribution Assumtions
+%\beta_3-\beta_5=0
+%%Christoph%%
 
 \begin{frame}
 \centering
 \includegraphics[width=1.3\textheight]{Simulation1.png}
 \end{frame}
+%The Graphic shows a graph for every Method
+%We obtain that all Methods behave simalary, i.e The probabiltiy of selecting a Cat II model growth together with the samplesize and aproaching one very quickly.
+%Moreover one can see that all methods behave similary for ceratin shocs in the datastructure
+%%Christoph%%
 
+%As we allready claimed out: For n large enought the Prob of choosing a Cat I model goes to Zero. Therfor we just can ignore all these models by choosing n large. 
+%In the next simulation we concentrate on the probabilty of choosing a model of certain size within Cat II
+%%Christoph%%
 \begin{frame}
 \frametitle{Thanks for your attention }
 J. Scherer: s3jnsche$@$uni-bonn.de\\
