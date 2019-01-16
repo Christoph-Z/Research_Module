@@ -10,7 +10,7 @@ ggplot(d,aes(x=C,y=M,size=P,label=P)) +
   theme_bw() +
   guides(colour = FALSE,size = FALSE) +
   theme(text = element_text(size=15),
-        plot.title = element_text(size = 15,hjust = 0.5,face="bold")) +
+        plot.title = element_text(size = 20,hjust = 0.5,face="bold")) +
   theme(axis.title.x = element_text(size = 15)) +
   theme(axis.title.y = element_text(size = 15)) +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0))) +

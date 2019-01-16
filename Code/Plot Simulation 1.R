@@ -1,3 +1,6 @@
+library(dplyr)
+library(tidyr)
+
 MCV <- MCV[1:50]
 AIC <- AIC[1:50]
 CV1 <- CV1[1:50]
@@ -23,7 +26,7 @@ ggplot(d1,aes(x=Samplesize,y=value,colour=key)) +
   ylab("Prob of choosing a Cat. II Model") + ggtitle("Probabiltie of Cat. II Model") +
   theme_bw() +
   theme(text = element_text(size=15),
-        plot.title = element_text(size = 15,hjust = 0.5,face="bold")) +
+        plot.title = element_text(size = 20,hjust = 0.5,face="bold")) +
   theme(axis.title.x = element_text(size = 15)) +
   theme(axis.title.y = element_text(size = 15)) +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0))) +
