@@ -1,5 +1,6 @@
 library(dplyr)
 library(tidyr)
+library(ggplot2)
 
   ESP1 <- function(a,n){
   return(1+a/n)
@@ -31,7 +32,7 @@ ggplot(d,aes(x=Samplesize)) +
   geom_line(aes(y=ASPE1_2,color = "M*"),size =1.2) +
   geom_line(aes(y=ESPE1_3,color = "M*+1"),size =1,linetype=5) +
   geom_line(aes(y=ASPE1_3,color = "M*+1"),size =1.2) +
-  ylab("Exspected Squared Prediction Error") + ggtitle("Asymptotic propperties CV(1)") +
+  ylab("Expected Squared Prediction Error") + ggtitle("Asymptotic Properties CV(1)") +
   theme_bw() +
   theme(text = element_text(size=15),
         plot.title = element_text(size = 20,hjust = 0.5,face="bold")) +
@@ -50,7 +51,7 @@ ggplot(d,aes(x=Samplesize)) +
   geom_line(aes(y=ASPE2_2,color = "M*"),size =1.2) +
   geom_line(aes(y=ESPE2_3,color = "M*+1"),size =1,linetype=5) +
   geom_line(aes(y=ASPE2_3,color = "M*+1"),size =1.2) +
-  ylab("Exspected Squared Prediction Error") + ggtitle(expression(bold(paste("Asymptotic propperties ",CV(n[v]))))) +
+  ylab("Expected Squared Prediction Error") + ggtitle(expression(bold(paste("Asymptotic Properties ",CV(n[v]))))) +
   theme_bw() +
   theme(text = element_text(size=15),
         plot.title = element_text(size = 20,hjust = 0.5,face="bold")) +
