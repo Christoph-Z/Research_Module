@@ -367,7 +367,7 @@ p <- 5
 N <- seq(15,300,2)
 
 ##Number of Repetitions of the Experiment
-m <- 2000
+m <- 500
 
 ##Vector of probabilties of frequencys of choosing a Cat II Model for each samplezize by m repetations 
 BIC <- rep(0,length(N))
@@ -377,6 +377,7 @@ MCV <- rep(0,length(N))
 
 for (i in 1:length(N)) {
   n <- N[i]
+  n_v <- floor(n-n^(3/4))
   
   ##Number of Samplepartions
   b <- 5*n
@@ -391,7 +392,7 @@ for (i in 1:length(N)) {
     BIC[i] <- BIC[i] + (sum( InfoCrit(y,X,Criterion = "BIC") < (p.True+1) & InfoCrit(y,X,Criterion = "BIC") >0) == p.True)
     AIC[i] <- AIC[i] + (sum( InfoCrit(y,X) < (p.True+1) & InfoCrit(y,X) > 0) == p.True)
     CV1[i] <- CV1[i] + (sum( CV(1,y,X) < (p.True+1) & CV(1,y,X) > 0) == p.True)
-    MCV[i] <- MCV[i] + (sum( CV(10,y,X,MonteCarlo = b) < (p.True+1) & CV(10,y,X,MonteCarlo = b) > 0) == p.True)
+    MCV[i] <- MCV[i] + (sum( CV(n_v,y,X,MonteCarlo = b) < (p.True+1) & CV(n_v,y,X,MonteCarlo = b) > 0) == p.True)
   }
   
 }
@@ -424,12 +425,12 @@ BICV <- c()
 
 ##Number of leaved out data and number of samplepartions
 n_v <- 394
-b <- 50*n
+b <- 5*n
 
 ##Calculate BICD for BICV with ibd package
-BIBD <- ibd(n,b,n-n_v)$N
+BIBD <- ibd(n,b,n-n_v,pbar = TRUE)$N
 
-for (i in 570:m) {
+ for (i in 1:m) {
   ##Generating Data
   Data <- DataGen(n,p,p.True)
   y <- Data[,1]
