@@ -1,9 +1,10 @@
-\documentclass[20pt,mathserif]{beamer}
+\documentclass[20pt,mathserif,xcolor=dvipsnames]{beamer}
 
 %Standarteinstellungen
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
+
 
 %Mathepackages
 \usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
@@ -19,6 +20,8 @@
 %Anderthalbfacher Zeilenabstand
 \usepackage{setspace}
 
+%RoyalBlue
+
 %Farbe Section/Frametitles
 \setbeamercolor{title}{fg=blue}
 \setbeamercolor{frametitle}{fg=blue}
@@ -30,7 +33,17 @@
 \setbeamercolor{itemize item}{fg=blue} 
 
 %Seitennummerierung
-\setbeamertemplate{footline}[frame number] 
+%Mit Absoluter Seitenzahl
+%\setbeamertemplate{footline}[frame number] 
+%Ohne Absolute Seitenzahl
+\setbeamertemplate{footline}{% 
+	\hfill% 
+	\usebeamercolor[fg]{page number in head/foot}% 
+	\usebeamerfont{page number in head/foot}% 
+	\insertframenumber%
+	%\,/\,\inserttotalframenumber
+	\kern1em\vskip2pt% 
+}
 
 %Vordefinierte Umgebungen
 \newtheorem{defi}{Definition}[subsection]
@@ -55,7 +68,7 @@
 }
 
 %Titelblatt
-\title[Cross Validation]{ Linear Model selection by Cross-Validation}
+\title[Cross Validation]{ Linear Model Selection by Cross Validation}
 %\subtitle{Researchmodule Econometrics}
 \author{ Vivien Fritzsche, Jan Scherer, \\ Christoph Zilligen}
 \date{\today}
@@ -270,9 +283,9 @@ $\hat{\beta}_\alpha$ is the OLS estimator
 %%JAN%%
 
 \begin{frame}
-\frametitle{Theory CV}
+\frametitle{Expected  Prediction Error}
 \begin{align*}
-&\Gamma_{\alpha}=\sigma^2+\Delta_{\alpha,n}+n^{-1}d_\alpha\sigma^2\\\\
+&\Gamma_{\alpha,n}=\sigma^2+\Delta_{\alpha,n}+n^{-1}d_\alpha\sigma^2\\\\
 &\Delta_{\alpha,n}> 0 \hspace{1.5cm},\text{for }\alpha\in\text{Cat I}\\\\
 &\Delta_{\alpha,n}= 0\hspace{1.5 cm},\text{for }\alpha\in\text{Cat II}\hspace{30cm}
 \end{align*}
@@ -290,7 +303,7 @@ $\hat{\beta}_\alpha$ is the OLS estimator
 \begin{align*}
 	&\hspace{0.3cm}\hat{\Gamma}^{CV(1)} _{\alpha,n}=\Gamma_{\alpha,n}+o_p(1)&\hspace{5cm}&\\\\
 	&\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV} \text{ is in Cat I})=0&&\\\\
-	&\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV}=\mathcal{M}^\ast )\neq1&&
+	&\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV}=\mathcal{M}_\ast )\neq1&&
 \end{align*}
 \end{frame}
 %Under fairly weak assumptions 
@@ -305,9 +318,9 @@ $\hat{\beta}_\alpha$ is the OLS estimator
 \frametitle{Leave-$n_\nu$-out CV}
 Assumption: $\frac{n_v}{n}\to 1$, $n-n_v\to \infty$
 \begin{align*}
-&\hspace{0.3cm}\hat{\Gamma}^{CV(n_\nu)}_{\alpha,n}=\Gamma_{\alpha,n}+o_p(1)&\hspace{5cm}&\\[8pt]
+&\hspace{0.3cm}\hat{\Gamma}^{CV(n_\nu)}_{\alpha,n}=\Gamma_{\alpha,n-n_\nu}+o_p(1)&\hspace{5cm}&\\[8pt]
 &\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV} \text{ is in Cat I})=0&&\\[8pt]
-&{\color{red}\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV}=\mathcal{M}^\ast )=1}&&
+&{\color{red}\lim_{n\rightarrow\infty}\mathrm{P}(\mathcal{M}_{CV}=\mathcal{M}_\ast )=1}&&
 \end{align*}
 \end{frame}
 %Acording to it's theroetically properties CV(n_v) behaves analogeously to CV(1) expect that it selcts the True model with prob aproaching 1 under sufficient conditions acording the chioce of n_v.
