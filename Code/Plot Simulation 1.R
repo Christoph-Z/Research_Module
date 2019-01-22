@@ -23,7 +23,7 @@ d1 <-d %>% gather(key,value,MCCV,AIC,BIC,CV1)
 ggplot(d1,aes(x=Samplesize,y=value,colour=key)) +
   geom_line(size=1.2) +
   coord_cartesian(ylim = c(0.6,1), xlim = c(13, 113)) +
-  ylab("Prob of choosing a Cat. II Model") + ggtitle("Probabiltie of Cat. II Model") +
+  ylab("Prob of choosing a Cat. II Model") + ggtitle("Probability of Cat. II Model") +
   theme_bw() +
   theme(text = element_text(size=15),
         plot.title = element_text(size = 20,hjust = 0.5,face="bold")) +
