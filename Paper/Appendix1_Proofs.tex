@@ -1,0 +1,30 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\subsection*{Appendix \RM{1}}
+
+\begin{proof}[Proof of the OLS estimator in equation (\ref{OLS})]~\\
+	The minimization problem of a least squares estimator is given by
+	\begin{align*}
+	\min_{b_\alpha}(y-X_\alpha b_\alpha)^\prime(y-X_\alpha b_\alpha)
+	\end{align*}
+	By using the subsequent rules for matrix diferentation:\\\\
+	\textit{For vectors $a,\beta$ with adequate dimensions and a symmetric matrix A with adequate dimension, it holds:}
+	\begin{align*}
+	1)&~ \frac{\partial}{\partial \beta}(\beta^\prime a)=a\\
+	2)&~\frac{\partial}{\partial \beta}(\beta^\prime A\beta)=2A\beta
+	\end{align*}
+	The first order conditions yields
+	\begin{align*}
+	& \frac{\partial}{\partial b_\alpha}(y-X_\alpha b_\alpha)^\prime(y-X_\alpha b_\alpha)\stackrel{!}{=}0\\
+	\Leftrightarrow & \frac{\partial}{\partial b_\alpha}(y^\prime y-b_\alpha^\prime X_\alpha^\prime y-y^\prime X_\alpha b_\alpha+b_\alpha^\prime X_\alpha^\prime X_\alpha b_\alpha)=0\\
+	\Leftrightarrow & \frac{\partial}{\partial b_\alpha}(y^\prime y-2b_\alpha^\prime X_\alpha^\prime y+b_\alpha^\prime X_\alpha^\prime X_\alpha b_\alpha)=0\\
+	\Leftrightarrow & -2X_\alpha^\prime y +2 X_\alpha^\prime X_\alpha b_\alpha=0\\
+	\Leftrightarrow & X_\alpha^\prime X_\alpha b_\alpha=X_\alpha^\prime y
+	\end{align*}
+	And under the assumption that $rank(X_\alpha)=rank(X_\alpha^\prime X_\alpha)=d_\alpha$ is full, we know that $X_\alpha^\prime X_\alpha$ is invertible, thus 
+	\begin{align*}
+	\hat{\beta}_\alpha=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y
+	\end{align*}
+\end{proof}
+
+\end{document}

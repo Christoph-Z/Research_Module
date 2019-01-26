@@ -1,0 +1,157 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+\section*{Appendix}
+
+%HIER kommen die Proofs rein, beim reinkopieren muss man auf den grünen doppelfpeil um das dokument einmal zu erstellen und anzuzeigen, damit das ausgeführt wird , danach ist es auch in der großen datei sichtbar, sonst nicht (die anzeige links zum appendix ist wohl deshalb rot, da das kapitel appendix keine nummer bekommt, also nicht wundern)
+\subsection*{Appendix \RM{1} - Proofs}
+
+\begin{proof}[Proof of the OLS estimator in equation (\ref{OLS})]~\\
+	The minimization problem of a least squares estimator is given by
+	\begin{align*}
+	\min_{b_\alpha}(y-X_\alpha b_\alpha)^\prime(y-X_\alpha b_\alpha)
+	\end{align*}
+	By using the subsequent rules for matrix diferentation:\\\\
+	\textit{For vectors $a,\beta$ with adequate dimensions and a symmetric matrix A with adequate dimension, it holds:}
+	\begin{align*}
+	1)&~ \frac{\partial}{\partial \beta}(\beta^\prime a)=a\\
+	2)&~\frac{\partial}{\partial \beta}(\beta^\prime A\beta)=2A\beta
+	\end{align*}
+	The first order conditions yields
+	\begin{align*}
+	& \frac{\partial}{\partial b_\alpha}(y-X_\alpha b_\alpha)^\prime(y-X_\alpha b_\alpha)\stackrel{!}{=}0\\
+	\Leftrightarrow & \frac{\partial}{\partial b_\alpha}(y^\prime y-b_\alpha^\prime X_\alpha^\prime y-y^\prime X_\alpha b_\alpha+b_\alpha^\prime X_\alpha^\prime X_\alpha b_\alpha)=0\\
+	\Leftrightarrow & \frac{\partial}{\partial b_\alpha}(y^\prime y-2b_\alpha^\prime X_\alpha^\prime y+b_\alpha^\prime X_\alpha^\prime X_\alpha b_\alpha)=0\\
+	\Leftrightarrow & -2X_\alpha^\prime y +2 X_\alpha^\prime X_\alpha b_\alpha=0\\
+	\Leftrightarrow & X_\alpha^\prime X_\alpha b_\alpha=X_\alpha^\prime y
+	\end{align*}
+	And under the assumption that $rank(X_\alpha)=rank(X_\alpha^\prime X_\alpha)=d_\alpha$ is full, we know that $X_\alpha^\prime X_\alpha$ is invertible, thus 
+	\begin{align*}
+	\hat{\beta}_\alpha=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y
+	\end{align*}
+\end{proof}
+
+
+\begin{proof}[Proof of Conditional Expected Squared Prediction Error] ~\\Under the use of linearity of expectation and the fact that $\hat{\beta}_\alpha$ is conditioned on $Y$ we get 
+	\begin{align*}
+	\begin{tabular}{ll}
+	$CESPE(\mathcal{M}_\alpha)$&$=E[ASPE(\mathcal{M}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(Y-X_\alpha\hat{\beta}_\alpha)^\prime(Y-X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)^\prime(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(\beta^\prime X^\prime+\varepsilon^\prime-\hat{\beta}_\alpha^\prime X_\alpha^\prime)(X\beta+\varepsilon-X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=E[\frac{1}{n}(\beta^\prime X^\prime X\beta+\beta^\prime X^\prime\varepsilon-\beta^\prime X^\prime X_\alpha\hat{\beta}_\alpha+\varepsilon^\prime X\beta+\varepsilon^\prime\varepsilon$\\&$~~~-\varepsilon^\prime X_\alpha\hat{\beta}_\alpha-\hat{\beta}_\alpha^\prime X_\alpha^\prime X\beta-\hat{\beta}_\alpha^\prime X_\alpha^\prime\varepsilon+\hat{\beta}_\alpha^\prime X_\alpha^\prime X_\alpha\hat{\beta}_\alpha)|Y]$\\
+	&$=\frac{1}{n}\beta^\prime X^\prime X\beta+\frac{1}{n}\beta^\prime X^\prime\cdot E[\varepsilon|Y]-\frac{1}{n}\beta^\prime X^\prime X_\alpha\hat{\beta}_\alpha$\\
+	&$~~~+\frac{1}{n}E[\varepsilon^\prime|Y]\cdot X\beta+\frac{1}{n}E[\varepsilon^\prime\varepsilon|Y]-\frac{1}{n}E[\varepsilon^\prime|Y]X_\alpha\hat{\beta}_\alpha$\\
+	&$~~~-\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime X\beta-\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime\cdot E[\varepsilon|Y]+\frac{1}{n}\hat{\beta}_\alpha^\prime X_\alpha^\prime X_\alpha\hat{\beta}_\alpha$\\
+	&$=\frac{1}{n}\parallel X\beta\parallel^2+0-\frac{1}{n} (X\beta)^\prime X_\alpha\hat{\beta}_\alpha+0+\frac{1}{n} n\sigma^2-0-\frac{1}{n}(X_\alpha\hat{\beta}_\alpha)^\prime X\beta$\\
+	&$~~~-0+\frac{1}{n}\parallel X_\alpha\hat{\beta}_\alpha\parallel^2$\\
+	&$=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}[(x_i^\prime\beta)^2-2(x_i^\prime\beta)(x_{i,\alpha}^\prime\hat{\beta}_\alpha)+(x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2]$\\
+	&$=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2$
+	\end{tabular}
+	\end{align*}
+\end{proof}
+
+
+\begin{proof}[Proof of Unconditional Expected Squared Prediction Error]~\\
+	Under the usage of the Law of iterated expectations and the following useful transformation of
+	%AUS Skript vom Liebl
+	\begin{align*}
+	\begin{tabular}{ll}
+	$E[\varepsilon^\prime P_\alpha^\prime P_\alpha\varepsilon]$&$=E[\varepsilon^\prime P_\alpha\varepsilon]$\\
+	&$=\sum_{i=1}^{n}\sum_{j=1}^{n}p_{ij,\alpha}\cdot E[\varepsilon_i\varepsilon_j]$\\
+	&$=\sum_{i=1}^{n}p_{ii,\alpha}\cdot E[\varepsilon_i^2]$\\
+	&$=\sum_{i=1}^{n}p_{ii,\alpha}\cdot \sigma^2$\\
+	&$=\sigma^2\cdot tr(P_\alpha)$\\
+	&$=\sigma^2\cdot d_\alpha$
+	\end{tabular}
+	\end{align*}
+	while respecting, that $P_\alpha$ is a symmetric and idempotent projection matrix with diagonal elements $p_{ii,\alpha}$. Also recall that for two vectors $a$ and $b$ with the same dimension, we are allowed to use $\parallel a-b\parallel^2=\parallel a\parallel^2-2a^\prime b+\parallel b\parallel^2$. And at least notice, that the orthogonal projection matrix $(I_n-P_\alpha)\in\mathbb{R}^{n\times n}$ is also symmetric and idempotent.\\\\
+	Thus now we can show, that
+	\begin{align*}
+	\begin{tabular}{ll}
+	$\Gamma_{\alpha,n}$&$=E[ASPE(\mathcal{M}_\alpha)]$\\
+	&$=E[E[ASPE(\mathcal{M}_\alpha)|Y]]$\\
+	&$=E[\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-X_\alpha\hat{\beta}_\alpha\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-P_\alpha Y\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel X\beta-P_\alpha X\beta-P_\alpha\varepsilon\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel (I_n-P_\alpha)X\beta-P_\alpha\varepsilon\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[\parallel (I_n-P_\alpha)X\beta\parallel^2-2((I_n-P_\alpha) X\beta)^\prime P_\alpha\varepsilon+\parallel P_\alpha\varepsilon\parallel^2]$\\
+	&$=\sigma^2+\frac{1}{n}E[((I_n-P_\alpha)X\beta)^\prime((I_n-P_\alpha)X\beta)]-\frac{1}{n}2(I_n-P_\alpha)X\beta P_\alpha E[\varepsilon]$\\
+	&$~~~+\frac{1}{n}E[(P_\alpha\varepsilon)^\prime (P_\alpha\varepsilon)]$\\
+	&$=\sigma^2+\frac{1}{n}\beta^\prime X^\prime (I_n-P_\alpha)X\beta+\frac{1}{n}E[\varepsilon^\prime P_\alpha^\prime P_\alpha\varepsilon]$\\
+	&$=\sigma^2+\vartriangle_{\alpha,n}+\frac{1}{n}\cdot\sigma^2\cdot tr(P_\alpha)$\\
+	&$=\sigma^2+n^{-1}\sigma^2d_\alpha+\vartriangle_{\alpha,n}$
+	\end{tabular}
+	\end{align*}
+\end{proof}	
+
+
+\begin{proof}[Proof Lemma \ref{Equation2.3-2.4}]~\\
+	For the first part, assume $\mathcal{M}_\alpha\in$ Category I and note that we can rewrite $n\Delta_{\alpha,n}$ as follows
+	\begin{align}\nonumber
+	n\Delta_{\alpha,n}&= \left(X \beta \right)^\prime \left(I_n-P_\alpha\right)X\beta\\\nonumber
+	&= \left(X \beta \right)^\prime \left(I_n-P_\alpha\right)^\prime\left(I_n-P_\alpha\right)X\beta\\\nonumber
+	&=||\left(I_n-P_\alpha\right)X\beta||^2\\\nonumber
+	&=||\left(I_n-P_\alpha\right)(X_\alpha\beta_\alpha+X_{\alpha^c}\beta_{\alpha^c})||^2\\
+	&=||\left(I_n-P_\alpha\right)X_{\alpha^c}\beta_{\alpha^c}||^2>0 \label{larger0}
+	\end{align}
+	Hence 
+	%\[
+	%(\mathcal{M}_\alpha\in \text{ Cat I } \wedge \text{ r}(X)=p) \Rightarrow(\exists\beta_i\in \alpha^c:\beta_i\neq0 \wedge X_{\alpha^c}\text{ r}(X_{\alpha^c})=p-d_\alpha)\Rightarrow X_{\alpha^c}\beta_{\alpha^c}\neq0
+	%\]
+	$\mathcal{M}_\alpha\in$ Category I, it must exist at least one none zero component in $\beta_{\alpha^c}$. Together with $X$ having full rank, we can conclude that $X_{\alpha^c}\beta_{\alpha^c}$ is always unequal to zero.\\ 
+	Note further, that $(I_n-P_\alpha)$ is the Projection matrix onto the orthogonal complement of span$\{x_{\alpha,1},\ldots,x_{\alpha,d_\alpha}\}$. Since
+	\begin{align*}
+	X_{\alpha^c}\beta_{\alpha^c}&\neq 0\\
+	X_{\alpha^c}\beta_{\alpha^c}\not\perp (&I_n-P_\alpha)
+	\end{align*}
+	it holds that $(I_n-P_\alpha) X_{\alpha^c}\beta_{\alpha^c}\neq 0$ and therefore (\ref{larger0}) remains true.\\
+	\\
+	For the second part, assume $\mathcal{M}_\alpha\in$ Category II, then $X\beta=X_\alpha\beta_\alpha$. Thus
+	\begin{align*}
+	n\Delta_\alpha,n&=\beta^\prime X^\prime X\beta-\beta^\prime X^\prime X_\alpha \left(X_\alpha^\prime X_\alpha\right)^{-1}X_\alpha^\prime X\beta\\
+	&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha -\beta_\alpha^\prime X_\alpha^\prime X_\alpha\left(X_\alpha^\prime X_\alpha\right)^{-1} X_\alpha^\prime X_\alpha\beta_\alpha\\
+	&=\beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha - \beta_\alpha^\prime X_\alpha^\prime X_\alpha \beta_\alpha\\
+	&=0
+	\end{align*}
+	
+\end{proof}
+
+
+\begin{proof}[Proof of Lemma \ref{Equation2.5}]~\\
+	Let $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\alpha\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$. It follows for the \textit{unconditional expected squared prediction errors} with Lemma \ref{Equation2.3-2.4}:
+	\begin{align*}
+	\begin{tabular}{ll}
+	$\Gamma_{\alpha,n}$&$=\sigma^2+n^{-1}d_\alpha\sigma^2+\Delta_{\alpha,n}~~~~~$ with $\Delta_{\alpha,n}>0$\\
+	$\Gamma_{\gamma,n}$&$=\sigma^2+n^{-1}d_\gamma\sigma^2~~~~~~~~~~~~~~~~$with $\Delta_{\gamma,n}=0$
+	\end{tabular}
+	\end{align*}
+	Then:
+	\begin{align*}
+	\liminf_{n\rightarrow\infty}\frac{\Gamma_{\alpha,n}}{\Gamma_{\gamma,n}}&=\liminf_{n\rightarrow\infty}\frac{\sigma^2+n^{-1}d_\alpha\sigma^2+\Delta_{\alpha,n}}{\sigma^2+n^{-1}d_\gamma\sigma^2}	\\
+	&=\liminf_{n\rightarrow\infty}\Big[\frac{\sigma^2+n^{-1}d_\alpha\sigma^2}{\sigma^2+n^{-1}d_\alpha\sigma^2}+\frac{\Delta_{\alpha,n}}{\sigma^2+n^{-1}d_\alpha\sigma^2}\Big]\\
+	&=\liminf_{n\rightarrow\infty}\Big[1+\frac{\Delta_{\alpha,n}}{\sigma^2+n^{-1}d_\alpha\sigma^2}\Big]\\
+	&=1+\liminf_{n\rightarrow\infty}\frac{\Delta_{\alpha,n}}{\sigma^2+n^{-1}d_\alpha\sigma^2}\\
+	&=1+\frac{\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}}{\sigma^2+ \liminf_{n\rightarrow\infty} n^{-1}d_\alpha\sigma^2}\\
+	&=1+\frac{\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}}{\sigma^2}\\
+	&>1
+	\end{align*}
+	Exactly when condition (\ref{liminf_condition}) for $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ holds.
+\end{proof}
+
+
+\subsection*{Appendix \RM{2}}
+
+
+
+%Programmcode-Umgebung im Anhang%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Überschrift ohne Nummer 
+\begin{lstlisting}[title={Algorithmus:~$m+1=6$ und $n=200$}]
+
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
