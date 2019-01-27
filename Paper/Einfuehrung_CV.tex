@@ -35,7 +35,9 @@ The name \textit{Cross-Validation} refers to the way of splitting up the observa
 \subsection{Dependency between the number of omitted data points and the  parameter choice of Cross-Validation}
 A natural question is: How many data points should be omitted in order to evaluate our prediction of $\alpha$ and in which way does this influences the prediction properties of the \textit{Cross-Validation} procedure.\\
 \\
-The in practice most often used variant of \textit{Cross-Validation} is the so called \textit{ Leave-one-out Cross-Validation} with $n_\nu=1$ omitted data points. The reason for the popularity of this type of \textit{Cross-Validation} is it's low computational complexity.\footnote{The computational complexity of CV depends strongly on the number of possible partitions in $\Gamma$, which increases as $n_\nu$ increases, i.e, $|P|=\binom{n}{n_\nu}$}.\\
+The in practice most often used variant of \textit{Cross-Validation} is the so called \textit{ Leave-one-out Cross-Validation} with $n_\nu=1$ omitted data points. The reason for the popularity of this type of \textit{Cross-Validation} is it's low computational complexity.\footnote{The computational complexity of CV depends strongly on the number of possible partitions in $\Gamma$, which increases as $n_\nu$ increases, i.e,
+%WIEder zurückgeändert, da P hier ja gar nicht das set of partitions war
+$P=\binom{n}{n_\nu}$}.\\
 \\
 Throughout this paper we want to study both, the asymptotic and small sample properties of different methods of \textit{Cross-Validation} in the framework of model selection. Especially we will show that \textit{ Leave-one-out Cross-Validation} is asymptotically incorrect and chooses too conservative models.\\
 %HABE das mal rausgenommen:
