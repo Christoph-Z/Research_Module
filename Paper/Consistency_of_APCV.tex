@@ -5,19 +5,16 @@
 \hat{\Gamma}_{\alpha,n}^{APCV}=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2
 \end{align*}
 
-\begin{koro}[Consistency of APCV($n_v$)]
+%FUElltext Fußnote
+LALA corollary\footnote{Proof of Corollary \ref{Consistency_APCV} is given in Appendix \RM{1}}.
+
+\begin{coro}[Consistency of APCV($n_v$)]
+\label{Consistency_APCV}
 Under the conditions of theorem XY, the statments $(I)-(III)$ hold for the approximate $CV(n_v)$.
-\end{koro}
-\textbf{Proof:} The first statement follows by letting 
-\begin{align*}
-R_n= \frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2\ge 0.
-\end{align*}
-To see that the second statement remains true, note that
-\begin{align*}
-\hat{\Gamma}_{\alpha,n}^{APCV} &= \frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 +\frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2\\
-&=\frac{1}{n} \varepsilon'(I_n-P_\alpha)\varepsilon+ \underbrace{\frac{2n-n_v}{(n-n_v)(n-1)}}_{=\frac{1}{n-n_v}+o(1)}[d_\alpha\sigma^2+o_P(1)]\\
-&=\frac{\varepsilon'\varepsilon}{n} + \frac{d_\alpha\sigma^2}{n-n_v}+o_P\biggl(\frac{1}{n-n_v}\biggr).
-\end{align*}
-The proof of the third statement remains unchanged. $\quad \square$
+\end{coro}
+
+
+
+
 
 \end{document}
