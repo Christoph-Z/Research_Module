@@ -11,21 +11,21 @@ where $i=1,\ldots,n$ with $n$ being the total number of observations. The error 
 \]
 where $\beta_1,\beta_2$ are unequal to zero. So the Model with the best predictive ability have to be chosen out of five prossible regressor $\{x_1,\ldots,x_5\}$. \\
 \\
-For the different simulations we consider the five model section methods: CV(1), MCCV($n_\nu$),BICV($n_\nu$) and since they are popular in praxis AIC,BIC as benchmark. Also note that $n_v=n-n^{3/4}$.
+For the different simulations we consider the five model section methods: CV(1), MCCV($n_\nu$),BICV($n_\nu$) and since they are popular in praxis AIC,BIC as benchmark. Also note that $n_v=n-\lfloor n^{3/4}\rfloor$.
 
 \subsection{Ability of distinguishing between Category I and II }
-In the first simulation we wan to take a closer look at the probability given in proposition (\ref{THM_Consistency of $CV(1)$} ) III. We saw that for $n\to\infty$ the different \textit{Cross-Validation} methods are perfectly able to distinguish between category I and II, hence the probability of choosing a model from Category I equals zero. But how god will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
+In the first simulation we want to take a closer look at the probability given in Theorem (\ref{THM_Consistency of $CV(1)$} ) III. We saw that for $n\to\infty$ the different \textit{Cross-Validation} methods are perfectly able to distinguish between category I and II, hence the probability of choosing a model from Category I equals zero. But how god will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
 \\
 Figure \ref{Simulation1} shows how the probability of choosing a Category II model behaves for different sample sizes. To calculate these probabilities we repeat the procedure of model selection 2000 times for each sample size and plot the relative frequencies.\footnote{Note that for each of the 200 iterations a completely new sample was generated.}
 
-As we can see in Figure \ref{Simulation1} the probabilities of choosing a Category II model is converging to 1 for all five methods. Moreover all methods perform quite similar in distinguishing between the two models only, the MCCV seems to be slightly worse then the over ones. The purpose of this is the smaller trainings set of MCCV which is chosen with $n^{3/4}$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, which is a less accurate estimate than $\Gamma_{\alpha,n}$ which is calculated by the other methods. 
+As we can see in Figure \ref{Simulation1} the probabilities of choosing a Category II model is converging to 1 for all five methods. Moreover all methods perform quite similar in distinguishing between the two models only, the MCCV seems to be slightly worse then the over ones. The purpose of this is the smaller trainings set of MCCV which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, which is a less accurate estimate than $\Gamma_{\alpha,n}$ which is calculated by the other methods. 
 \begin{figure}[h]
 	\label{Simulation1}
 	\centering
 	\includegraphics[width=1\textwidth]{Simulation1.png}\\
 \caption{Probability of Choosing Cat II Models}
 \end{figure}
-\section{Ability of distinguishing in between Category II Models  }
+\section{Ability of distinguishing in between Category II Models}
 
 
 
