@@ -13,20 +13,13 @@ DataGen <- function(n,p,p.True){
   x_2 <- rnorm(n,2,1)
   x_3 <- rnorm(n,0,1)
   x_4 <- rnorm(n,5,2)
+  x_5 <- rnorm(n,4,1)
   
   eps <- rnorm(n,0,1)     #Errorterm
   
-  ##Generate some unecessary extra data 
-  x_5 <- rnorm(n,4,1)
-  x_6 <- rnorm(n,2,2)
-  x_7 <- rnorm(n,1,3)
-  x_8 <- rnorm(n,3,7)
-  x_9 <- rnorm(n,0,1)
-  x_10 <- rnorm(n,5,5)
-  
   ##Possible values for Beta and X
-  beta.pos <- c(1.5,3,2,5,3,7,4,6,5,7)
-  X.pos <- cbind(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10)
+  beta.pos <- c(1.5,3,2,5,3)
+  X.pos <- cbind(x_1,x_2,x_3,x_4,x_5)
   
   beta.vec <- c(beta.pos[1:p.True],rep(0,p-p.True)) 
   X<- X.pos[,1:p]
