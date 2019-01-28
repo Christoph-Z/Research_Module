@@ -1,6 +1,58 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \section{Simulations}
+After the evaluation of the asymptotic properties of the different \textit{Cross-Validation} procedures we want to take a closer look to the finite sample performance. Therefore, we consider the following model:
+\[
+	y_i=\beta_1+x_{2i}\beta_2+x_{3i}\beta_3+x_{4i}\beta_4+x_{5i}\beta_5+\varepsilon_i
+\]
+where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid form $N(01)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix}. Moreover, we assume that
+\[
+	\beta=(\beta_1,\beta_2,0,0,0)^\prime
+\]
+where $\beta_1,\beta_2$ are unequal to zero. So the Model with the best predictive ability have to be chosen out of five prossible regressor $\{x_1,\ldots,x_5\}$. \\
+\\
+For the different simulations we consider the five model section methods: CV(1), MCCV($n_\nu$),BICV($n_\nu$) and since they are popular in praxis AIC,BIC as benchmark. Also note that $n_v=n-n^{3/4}$.
+
+\subsection{Ability of distinguishing between Category I and II }
+In the first simulation we wan to take a closer look at the probability given in proposition (\ref{THM_Consistency of $CV(1)$} ) III. We saw that for $n\to\infty$ the different \textit{Cross-Validation} Methods are perfectly able to distinguish between category I and II, hence the probability of choosing a model from Category I equals zero. But how god will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
+\\
+To answer this questions we calculate the probabilities of choosing a model from category II for a grid of different sample sizes, starting with $n=15$ an going up to $n=120$ in steps by 2. Then we repeat the model section procedure for each method and sample size 2000 times and plot the relative frequency's of choosing a category II model.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{Simulation1.png}\\
+\caption{Probability of Choosing Cat II Models}
+\end{figure}\\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \subsection{CV(1) and MCCV($n_{\nu}$)}
 %BEISPIELTABELLE habe mal ein paar willkürliche sachen in der ersten zeile eingegeben, die wir später einfach nur ersetzen müssen, die letzten zeilen hab ich jetzt nicht weiter mit beispielzahlen gefüllt (ist noch eine alte tabelle von mir)
