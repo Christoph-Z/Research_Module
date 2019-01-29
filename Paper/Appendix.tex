@@ -496,7 +496,7 @@
 
 
 \begin{proof}[Proof of Lemma \ref{Lemma_MCCV}]~\\
-	(1.) Denote by $s_i$ the $i$th selected subset in $\mathcal{R}$. Then the probability that subset $s \in \mathcal{R}^\ast$ is selected at the $i$th selection step, i.e. $s_i=s$, is given by
+	(1.) Denote by $s_i$ the $i^{th}$ selected subset in $\mathcal{R}$. Then the probability that subset $s \in \mathcal{R}^\ast$ is selected at the $i$th selection step, i.e. $s_i=s$, is given by
 	\begin{align*}
 	P(s_i=s)= \frac{1}{\# \mathcal{R}^\ast} = \binom{n}{n_v}^{-1}.
 	\end{align*}
@@ -517,20 +517,20 @@
 	= \frac{1}{b^2}\underbrace{\sum_{s\in \mathcal{R}}V_\mathcal{R} [a(s)]}_{=bV_\mathcal{R} [a(s)]}
 	\le \frac{1}{b}\mathrm{E}_\mathcal{R}\bigl[a(s)^2\bigr].
 	\end{align*}
-	(3.) Using that for any two real numbers $a,b$ it holds that $(a+b)^2\le 2(a^2+b^2$ yields
+	(3.) Using that for any two real numbers $a,b$ it holds that $(a+b)^2\le 2(a^2+b^2)$ yields
 	\begin{align*}
 	V_\mathcal{R}\bigl(a(s)+b(s)\bigr) 
 	&= \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] + b(s) - \mathrm{E}_\mathcal{R}[b(s)]\bigr)^2\bigr]\\
 	&\le 2 \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] \bigr)^2+\bigl(b(s) - \mathrm{E}_\mathcal{R}[b(s)]\bigr)^2\bigr]\\
 	&= 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(b(s)\bigr)\bigr]. 
 	\end{align*}
-	(4.) At first note that $\mathcal{R}^\ast$ has $b=\binom{n}{n_v}$ elements. Fix some $i$ and $j$ in $\{1,\dots, n\}$ such that $j>i$. To count the number of sets which contain $i$, we can count the number of subsets of $\{1,\dots, n\}/\{i\}$ that have $n_v-1$ elements, i.e.
+	(4.) At first note that $\mathcal{R}^\ast$ has $b=\binom{n}{n_v}$ elements. Fix some $i$ and $j$ in $\{1,\dots, n\}$ such that $j>i$. To count the number of sets which contain $i$, we can count the number of subsets of $\{1,\dots, n\}\backslash\{i\}$ that have $n_v-1$ elements, i.e.
 	\begin{align*}
-	\#\{s\in \mathcal{R}^\ast|i\in s\} = \#\{s \subseteq \{1,\dots, n\}/\{i\} | \# s =n_v-1\} = \binom{n-1}{n_v-1} =\frac{n_v}{n}\binom{n}{n_v}.
+	\#\{s\in \mathcal{R}^\ast|i\in s\} = \#\{s \subseteq \{1,\dots, n\}\backslash\{i\} | \# s =n_v-1\} = \binom{n-1}{n_v-1} =\frac{n_v}{n}\binom{n}{n_v}.
 	\end{align*}
 	Similarly, the number of sets which contain both $i$ and $j$ can be computed as
 	\begin{align*}
-	\#\{s\in \mathcal{R}^\ast|i,j\in s , j>i\} &= \#\{s \subseteq \{1,\dots, n\}/\{i,j\} | \# s =n_v-2\} \\
+	\#\{s\in \mathcal{R}^\ast|i,j\in s , j>i\} &= \#\{s \subseteq \{1,\dots, n\}\backslash\{i,j\} | \# s =n_v-2\} \\
 	&= \binom{n-2}{n_v-2} = \frac{n_v(n_v-1)}{n(n-1)}\binom{n}{n_v}.
 	\end{align*}
 	Hence, $\mathcal{R}^\ast$ is a balanced incomlete block design. \\
@@ -539,9 +539,9 @@
 
 \begin{proof}[Proof of Theorem \ref{THM_Consistency_MCCV}]~\\
 	\textbf{Proof of $(I)$:} \\
-	Shao doesn't proof this assertion in his paper but gives a guideline which we follow.
+	\cite{shao} doesn't proof this assertion in his paper but gives a guideline which we follow.
 	
-	Analogously as in the proof of theorem XY, we can bound $\hat{\Gamma}_{\alpha,n}^{MCCV}$ by
+	Analogously as in the proof of Theorem \ref{THM_Consistency of $CV(1)$}, we can bound $\hat{\Gamma}_{\alpha,n}^{MCCV}$ by
 	\begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{MCCV}= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-\hat{y}_{\alpha,s^c}\rVert^2
 	= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert (I_{n_v}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2\\
@@ -550,9 +550,10 @@
 	As $\mathcal{R}^\ast$ is a balanced incomplete block design it holds that
 	\begin{align*}
 	\mathrm{E}_\mathcal{R} \biggl[\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2 \biggr] 
-	= \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\sum_{i\in s}(y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2
-	= \frac{1}{n}\sum_{i\in s}(y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2.
+	= \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\sum_{i\in s}(y_i-x_{i,\alpha}'\hat{\beta}_\alpha)^2
+	= \frac{1}{n}\sum_{i\in s}(y_i-x_{i,\alpha}'\hat{\beta}_\alpha)^2.
 	\end{align*}
+	%NOCH bearbeiten!
 	And by the strong law of large numbers (NOT STRONG LAW! I NEED TO USE A TRUNCATION TECHNIQUE WRT THE RANDOM SAMPLING MEASURE!!)
 	we can establish that $\hat{\Gamma}_{\alpha,n}^{MCCV} = \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2 + o_P(1)$.Finally let
 	\begin{align*}
@@ -560,7 +561,7 @@
 	\end{align*} 
 	and the remaining proof of statement $(I)$ is the same as in the case of $BICV(n_v)$.\\\\
 	\textbf{Proof of $(II)$:}\\
-	To proof the second statement, Shao uses a more refined decomposition as in the proof of theorem XY. 
+	To proof the second statement, \cite{shao} uses a more refined decomposition as in the proof of Theorem \ref{THM_Consistency of $CV(1)$}. 
 	\begin{enumerate}
 		\item  $\hat{\Gamma}_{n,\alpha}^{MCCV} = \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s+ A_{\alpha1}-A_{\alpha2}+a_{\alpha3}+B_\alpha$
 		\item $A_{\alpha1} = B_{\alpha1}+ B_{\alpha2}$
@@ -610,7 +611,7 @@
 	=\frac{c_n}{n_v} \frac{n}{n_v} \mathrm{E}_\mathcal{R}\bigl[\varepsilon_s'Q_{\alpha,s}\varepsilon_s\bigr]
 	= \frac{c_n}{n_v} \frac{n}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\varepsilon_s'Q_{\alpha,s}\varepsilon_s.
 	\end{align*}
-	Similar calculations as for XY and using that $\mathcal{R}^\ast$ is a balanced incomplete block design yields 
+	Similar calculations as for Theorem \ref{THM_Consistency of $CV(1)$} and using that $\mathcal{R}^\ast$ is a balanced incomplete block design yields 
 	\begin{align*}
 	\frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\varepsilon_s'Q_{\alpha,s}\varepsilon_s 
 	&= \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast} \sum_{i\in s} p_{i,i,\alpha}\varepsilon_i^2 
@@ -659,7 +660,7 @@
 	&=\frac{d_\alpha\sigma^2}{n-n_v}+ o_P\biggl(\frac{1}{n-n_v}\biggr).
 	\end{align*}
 	
-	Letting $t_n=O[n^2/((n-n_v)^2b)]$ corresponding variances satisfy
+	Letting $t_n=O[n^2/((n-n_v)^2b)]$, then corresponding variances satisfy
 	\begin{align*}
 	V_\mathcal{R}\bigl[(n-n_v)B_{\alpha1}\bigr]\le \underbrace{\frac{c_n^2(n-n_v)^2}{n_v^2b}\frac{n^2}{n_v^2}}_{=t_n} \mathrm{E}_\mathcal{R}\biggl[ (\varepsilon_s'Q_{\alpha,s}\varepsilon_s)^2\biggr]
 	\end{align*}
@@ -676,7 +677,7 @@
 	&\le \underbrace{\frac{4(1+c_n)^2(n-n_v)^2}{n_v^2b}}_{=t_n}\mathrm{E}_\mathcal{R}\bigl[ \bigl(\varepsilon_s'X_{\alpha,s}(\hat{\beta}_\alpha-\beta_\alpha)\bigr)^2\bigr]\\
 	&= t_n (\hat{\beta}_\alpha-\beta_\alpha)'\mathrm{E}_\mathcal{R}\bigl[X_{\alpha,s}'\varepsilon_s \varepsilon_s'X_{\alpha,s}\bigr](\hat{\beta}_\alpha-\beta_\alpha) = O_P(t_n)
 	\end{align*}
-	where in the last equality we used that $\mathrm{E}\mathrm{E}_\mathcal{R}[X_{\alpha,s}'\varepsilon_s \varepsilon_s'X_{\alpha,s}]\le \sigma^2 X_\alpha'X_\alpha=O(n)$ and $\hat{\beta}_\alpha-\beta_\alpha=O_P(n^{-0.5})$.\
+	where in the last equality we used that $\mathrm{E}[\mathrm{E}_\mathcal{R}[X_{\alpha,s}'\varepsilon_s \varepsilon_s'X_{\alpha,s}]]\le \sigma^2 X_\alpha'X_\alpha=O(n)$ and $\hat{\beta}_\alpha-\beta_\alpha=O_P(n^{-0.5})$.\
 	
 	Furthermore
 	\begin{align*}
@@ -703,7 +704,7 @@
 	\begin{align*}
 	\varepsilon_s'P_{\alpha,s}\varepsilon_s = \sum_{i\in s} p_{ii,\alpha,s} \varepsilon_i^2 + \sum_{i \in s}\sum_{j\in s, j\neq i}  p_{ij,\alpha,s} \varepsilon_i\varepsilon_j.
 	\end{align*}
-	By the same truncation technique as in the proof of theorem CYX, one can show that $\sum_{i\in s} p_{ii,\alpha,s} \varepsilon_i^2 = d_\alpha\sigma^2 + o_P(1)$. Since the second term on the right hand side has mean zero and variance
+	By the same truncation technique as in the proof of Theorem \ref{THM_Consistency of $CV(1)$}, one can show that $\sum_{i\in s} p_{ii,\alpha,s} \varepsilon_i^2 = d_\alpha\sigma^2 + o_P(1)$. Since the second term on the right hand side has mean zero and variance
 	\begin{align*}
 	V\biggl( \sum_{i \in s}\sum_{j\in s, j\neq i}  p_{ij,\alpha,s} \varepsilon_i\varepsilon_j\biggr) =  \sum_{i \in s}
 	\underbrace{\sum_{j\in s, j\neq i}  p_{ij,\alpha,s}^2}_{\le p_{ii,\alpha,s}} \sigma^4 \le d_\alpha \sigma^4,
@@ -732,7 +733,7 @@
 	\mathrm{E}_\mathcal{R} \biggl[ \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s\biggr] 
 	=\frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\varepsilon_s'\varepsilon_s
 	\end{align*}
-	by the lemma above. As furthermore $\mathcal{R}^\ast$ is a balanced incomplete block design by lemma XY 
+	by the Lemma \ref{Lemma_MCCV}. As furthermore $\mathcal{R}^\ast$ is a balanced incomplete block design by Lemma \ref{Lemma_MCCV} 
 	\begin{align*}
 	\frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\varepsilon_s'\varepsilon_s
 	= \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{i=1}^n \varepsilon_i^2 \underbrace{\#\{s\in \mathcal{R}^\ast | i\in s\}}_{=\binom{n}{n_v}\frac{n_v}{n}}
