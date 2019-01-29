@@ -7,10 +7,11 @@ x_4 <- rnorm(n,5,2)
 x_5 <- rnorm(n,4,1)
 
 ##Possible values for Beta and X
-beta.pos <- c(1.5,3,2,5,3)
+beta <- c(1.5,3,0,0,0)
 X <- cbind(x_1,x_2,x_3,x_4,x_5)
 
 eps <- rnorm(n,0,1)     #Errorterm
+y <- X%*%beta+eps
 
 ##Number of Possible Regressors
 p <- length(X[1,])                          
@@ -62,7 +63,7 @@ for (i in 1:length(A[1,])) {
 ##Combination of Samplesplits
 train <- matrix(ncol = b, nrow = n-n_v)
 for (i in 1:b) {
-  train[,i] <- sample(seq(1,n,1),n-n_v,replace = Replacement)
+  train[,i] <- sample(seq(1,n,1),n-n_v,replace = FALSE)
 }
 
 Inverses_MCCV <- list()
@@ -91,44 +92,74 @@ for (i in 1:length(A[1,])) {
 
 ##AIC/BIC
 InfoCrit <- function(y,X,I,A,Criterion = "AIC"){
-  j <- 0
-  for (i in I) {
-    j <- j+1
-    
-    ##Number of regressors
-    k <- sum(A[,j] != 0)
-    
-    ##Data for the choosen Model
-    X.model <- X[,A[,j]] 
-    
-    ##Expectation observation i
-    mu <- X.model%*%i%*%t(X.model)%*%y
-    
-    error <- sum((y-mu)^2)
-    
-    ##Varianz
-    var <- 1/n*error
-    
-    ##Calculate Log Likelihood value
-    LogL <- -n/2*log(2*pi)-n/2*log(var)-1/(2*var)*error
-    
     ##Calculate Information Criterion
     
     ##For AIC
     if(Criterion == "AIC"){
-      InfoCriterion[i] <- 2*k-2*LogL
+      
+      j <- 0
+      InfoCriterion <- c()
+      for (i in I) {
+        j <- j+1
+        
+        ##Number of regressors
+        k <- sum(A[,j] != 0)
+        
+        ##Data for the choosen Model
+        X.model <- X[,A[,j]] 
+        
+        ##Expectation observation j
+        mu <- X.model%*%i%*%t(X.model)%*%y
+        
+        error <- sum((y-mu)^2)
+        
+        ##Varianz
+        var <- 1/n*error
+        
+        ##Calculate Log Likelihood value
+        LogL <- -n/2*(log(2*pi)-log(var)-1)
+      
+      InfoCriterion[j] <- 2*k-2*LogL
     }
-    
+    }
     ##For BIC
     if(Criterion == "BIC"){
-      InfoCriterion[i] <- log(n)*k - 2*LogL
+      j <- 0
+      InfoCriterion <- c()
+      for (i in I) {
+        j <- j+1
+        
+        ##Number of regressors
+        k <- sum(A[,j] != 0)
+        
+        ##Data for the choosen Model
+        X.model <- X[,A[,j]] 
+        
+        ##Expectation observation j
+        mu <- X.model%*%i%*%t(X.model)%*%y
+        
+        error <- sum((y-mu)^2)
+        
+        ##Varianz
+        var <- 1/n*error
+        
+        ##Calculate Log Likelihood value
+        LogL <- -n/2*(log(2*pi)-log(var)-1)
+      
+      InfoCriterion[j] <- log(n)*k - 2*LogL
     }
-  }
+    }
   
   #Choose the Model which minimze the Information Criterion
   TheChosenOne <- which.min(InfoCriterion)
   return(A[,TheChosenOne])
 }
+
+Rprof("AIC")
+InfoCrit(y,X,Inverses_IC,A)
+Rprof(NULL)
+summaryRprof("AIC")
+
 
 
 ##CV
@@ -144,8 +175,9 @@ CV <- function(n_v,y,X,I,A,train){
       train.j <- train[,j]                 
       X.train <- X[train.j,A[,i]]    
       #Prediction Error for a given alpha and a given subset
-      Pred.Error[j] <- norm(as.matrix(y[-train.j]-X[-train.j,A[,i]]%*%I[k]%*%t(X.train)%*%y[train.j]),"2")^2
-      
+      for(v in I[k]){
+        Pred.Error[j] <- norm(as.matrix(y[-train.j]-X[-train.j,A[,i]]%*%v%*%t(X.train)%*%y[train.j]),"2")^2
+      }
     }
     MeanPred.Error[i] <- 1/length(train[1,])*sum(Pred.Error)
   }
@@ -153,5 +185,12 @@ CV <- function(n_v,y,X,I,A,train){
   return(A[,TheChosenOne])
 }
 
+Rprof("CV")
+CV(395,y,X,Inverses_MCCV,A,train)
+Rprof(NULL)
+summaryRprof("CV")
 
-CV(1,y,X,Inverses_CV1,A,train)
+Rprof("CV2")
+CV(n_v,y,X,MonteCarlo = 5*500)
+Rprof(NULL)
+summaryRprof("CV2")
