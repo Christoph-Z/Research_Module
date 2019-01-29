@@ -5,7 +5,7 @@
 We consider the following Lemma\footnote{Proof of Lemma \ref{Lemma_MCCV} is given in Appendix \RM{1}}.
 \begin{lemma}
 	\label{Lemma_MCCV}
-Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}$. Then for any functions $a,b:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
+Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}\subseteq\mathcal{R}^\ast$. Then for any functions $a,b:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
 \begin{enumerate}
 \item $\mathrm{E}_\mathcal{R} \bigl[ b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr] = \binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s)$
 \item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$
@@ -20,7 +20,7 @@ LALALA Theorem\footnote{Proof of Theorem \ref{THM_Consistency_MCCV} is given in 
 
 \begin{thm}[Consistency of $MCCV(n_v)$]
 \label{THM_Consistency_MCCV}
-Under the conditions of Theorem XY and
+Under the conditions of Theorem \ref{THM_Consistency of $CV(1)$} and
 \begin{align*}
 \max_{s\in \mathcal{R}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =o_P(1)
 \end{align*}
