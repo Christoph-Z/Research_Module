@@ -1,11 +1,12 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \section{Simulations}
+\label{Simulation1}
 After the evaluation of the asymptotic properties of the different \textit{Cross-Validation} procedures we want to take a closer look to the finite sample performance. Therefore, we consider the following model:
 \[
 	y_i=\beta_1+x_{2i}\beta_2+x_{3i}\beta_3+x_{4i}\beta_4+x_{5i}\beta_5+\varepsilon_i
 \]
-where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid form $N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix}. Moreover, we assume that
+where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid form $N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix II}. Moreover, we assume that
 \[
 	\beta=(\beta_1,\beta_2,0,0,0)^\prime
 \]
@@ -25,15 +26,23 @@ As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Categ
 	\includegraphics[width=1\textwidth]{Simulation1.png}\\
 \caption{Probability of Choosing Cat II Models}
 \end{figure}
-\section{Ability of distinguishing in between Category II Models}
-
-
-
-
-
-
-
-
+\subsection{Ability of distinguishing  between Category II Models}
+In chapter \ref{Simulation1} we showed that all five methods of model section are quite good in distinguishing between models form Category I and II, hence they all picked Category II models with large probabilities. \\
+\\
+For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption we choose a large sample size of $n=500$, hence we already mentioned that for such large sample size the probability of choosing a Category II model is close to one.\\
+\\
+Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all five methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be  the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one then the true models dimensionality with $M_\ast+1$.\\
+As we can see, both AIC and CV(1) perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that AIC and CV(1) are asymptotically equivalent} and tend to pick to large models. BIC and MCCV  perform better, both pick the true model with a probability close to one and they choose to large models in only few cases. Within our 2000 simulations there was not a single case where BIC and MCCV chooses models with a dimensionality larger then $M_\ast+1$.
+\begin{figure}[h]
+	\label{Simulation2}
+	\centering
+	\includegraphics[width=1\textwidth]{Simulation2.png}\\
+	\caption{Probability of Choosing diffrent Models form Cat II}
+\end{figure}
+\subsection{R Code Efficiency}
+Beside asymptotic analyses, the performance of the small sample properties is an important aspect of statistical research. An often used approach to analyse such small sample properties are simulation studies, like we did in the previous chapters.\\
+\\
+Like many other researches before we had to struggle a lot with the computational complexity. Due to inefficiencies of our R code we had to spend weeks of computing time. Therefore one import part of our work was to find ways in order to speed up our R code and reduce it's computational complexity.  
 
 
 
