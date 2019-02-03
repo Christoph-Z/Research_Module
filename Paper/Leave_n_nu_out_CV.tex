@@ -27,6 +27,7 @@ For the construction of the estimator $\hat{\Gamma}_{\alpha,n}^{CV}$, we first h
 Under the usage of Lemma \ref{Equation3.1}, we have to calculate the $ASPE_{s}(\mathcal{M}_\alpha)$ for all subsets $s$  for a given $n_\nu$ in the corresponding set of partitions $\mathcal{R}^\ast$. And the last step is to average this expression by cardinality of $\mathcal{R}^\ast$, such that we achieve the following claim.
 
 \begin{claim}
+	\label{estimator CV(n_v)}
 	For each model $\mathcal{M}_\alpha$ (and $n_\nu$ given), the estimate $~\hat{\Gamma}_{\alpha,n}^{CV}$ of $~\Gamma_{\alpha,n-n_\nu}$ is received by
 	\begin{align*}
 		\hat{\Gamma}_{\alpha,n}^{CV}&=|\mathcal{R}^\ast|^{-1}\sum_{s\in \mathcal{R}^\ast}n_\nu^{-1}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2\\
@@ -34,7 +35,7 @@ Under the usage of Lemma \ref{Equation3.1}, we have to calculate the $ASPE_{s}(\
 	\end{align*}	
 	with $Q_{\alpha,s}=X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_{\alpha,s}^\prime$.
 \end{claim}
-
+In the next subsections we show the different variants of the \textit{Leave-$n_\nu$-Out Cross-Validation} and some asymptotic properties of these.
 
 \subfile{Consistency_of_CV1}	
 
