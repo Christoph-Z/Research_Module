@@ -71,7 +71,7 @@ CESPE(\mathcal{M}_\alpha)=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{
 \end{align*}
 Thus we easily achive with the help of the formula above in the last step the overall \textit{Unconditional Expected Squared Prediction Error} (unconditional on Y), that is given by\footnote{Proof of $\Gamma_{\alpha,n}$ is given in Appendix \RM{1}} 
 \begin{align}
-\Gamma_{\alpha,n}=\sigma^2+n^{-1}d_\alpha\sigma^2+\vartriangle_{\alpha,n} \label{GAMMA_ALPHA}
+\Gamma_{\alpha,n}=\sigma^2+n^{-1}d_\alpha\sigma^2+\vartriangle_{\alpha,n} 
 \end{align}
 with
 \begin{align*}
@@ -79,8 +79,7 @@ with
 $\vartriangle_{\alpha,n}$&$=n^{-1}(X\beta)^\prime(I_n-P_\alpha)X\beta$\\
 $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 \end{tabular}
-\end{align*}
-This expression (\ref{GAMMA_ALPHA}) will be estimated by our model selection method we introduce in the next chapter. 
+\end{align*} 
 Where $\vartriangle_{\alpha,n}$ shows the model misspecification which is more precisely given in Lemma \ref{Equation2.3-2.4} and $P_\alpha$ as the corresponding hat matrix under model $\mathcal{M}_\alpha.$ The first expression of $\Gamma_{\alpha,n}$ which is given by $\sigma^2$ is the error term variance and $n^{-1}d_\alpha\sigma^2+\vartriangle_{\alpha,n}$ is a mirror of the errors in estimation and model selection. This second error term vanishes if $n$ goes to infinity and $\vartriangle_{\alpha,n}=0$ by the correct model category. Thus now we introduce the following Lemma \ref{Equation2.3-2.4}\footnote{Proof of Lemma \ref{Equation2.3-2.4} is given in Appendix \RM{1}}
 and Lemma \ref{Equation2.5}\footnote{Proof of Lemma \ref{Equation2.5} is given in Appendix \RM{1}}.
 
