@@ -42,11 +42,11 @@ As we can see, both AIC and CV(1) perform almost equivalent\footnote{These simil
 \subsection{R Code Efficiency}
 Beside asymptotic analyses, the performance of the small sample properties is an important aspect of statistical research. An often used approach to analyse such small sample properties are simulation studies, like we did in the previous chapters.\\
 \\
-Due to inefficiencies of our R code we had to spend weeks of computing time. Therefore one import part of our work was to find ways in order to speed up our R code and reduce it's complexity.\\
+Due to inefficiencies of our R code we had to spend weeks of computing time. Therefore one import part of our work was to find ways in order to speed up our R code and reduce it's computational complexity.\\
 \\
 The statistical software R is popular in statistics, although it's slow in comparison to other languages. The reason for the popularity of R is its high flexibility and simplicity.
 
-To speed R up, our first approach was to look at the basic commands we used and to make them less flexible. To do so we used the command {\itshape package :: function}. This command shows the code behind predefined R commands, for example for the {\itshape sample()} command \footnote{{\itshape sample(x,size)} draws randomly {\itshape size} elements from the set {\itshape x} } we get:
+To speed R up, our first approach was to look at the basic commands we used and to make them less flexible. To do so we used the command {\itshape package :: function}. This command shows the code behind predefined R commands, for example the {\itshape sample()} command \footnote{{\itshape sample(x,size)} draws randomly {\itshape size} elements from the set {\itshape x} } we get:
 \begin{lstlisting}
 > base::sample
 function (x, size, replace = FALSE, prob = NULL) 
@@ -67,8 +67,9 @@ function (x, size, replace = FALSE, prob = NULL)
 We see that {\itshape sample} checks additional conditions beside it's main purpose, since we do not need this, we can simplify it by using {\itshape x[sample.int(length(x), size)}.\\
 \\
 One other example is the matrix vector multiplication. R for example would compute $P=X(X^\prime X)^{-1}X^\prime y$ by first solving $X(X^\prime X)^{-1}$, then multiplying the outcome with $X^\prime$ and finally multiplying with $y$. This is inefficient due to the dimensionality of the out coming intermediate results, a more efficient way of computing is $P=X[ (X^\prime X)^{-1}(X^\prime y)]$.
-
-
+\\
+\\
+The most time consuming aspect of our simulations is the process of models selection. Its natural to start there with the search of inefficiencies
 
 
 
