@@ -2,11 +2,11 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-MCV <- MCV[1:50]
-AIC <- AIC[1:50]
-CV1 <- CV1[1:50]
-BIC <- BIC[1:50]
-N <- N[1:50]
+MCV <- MCV/m
+AIC <- AIC/m
+CV1 <- CV/m
+BIC <- BIC/m
+N <- N
 
 plot(N,BIC,type = "l",lwd = 2 ,ylim = c(0.62,1),xlim = c(15,113), xlab = "Samplesize", ylab = "Prob. of choosing a Cat II Model", main = "Probability of Cat II Model")
 lines(N,AIC,type = "l",lwd = 2,col = "red")
@@ -21,9 +21,10 @@ legend(13,1,c("BIC","AIC","CV(1)","MCCV"),col = c("black","red","green","blue"),
 d <- data.frame("Samplesize"=N,"MCCV"=MCV,"AIC"=AIC,"CV1"=CV1,"BIC"=BIC)
 d1 <-d %>% gather(key,value,MCCV,AIC,BIC,CV1)
 
+#850,550
 ggplot(d1,aes(x=Samplesize,y=value,colour=key)) +
   geom_line(size=1.2) +
-  coord_cartesian(ylim = c(0.6,1), xlim = c(13, 113)) +
+  coord_cartesian(ylim = c(0.5,1), xlim = c(13, 200)) +
   ylab("Prob of choosing a Cat. II Model") + ggtitle("Probability of Cat. II Model") +
   theme_bw() +
   theme(text = element_text(size=15),

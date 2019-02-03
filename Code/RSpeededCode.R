@@ -5,7 +5,7 @@ library(profvis)
 ##Generating data
 
 ##Sample size
-n <- 500
+n <- 5000
 ##Number of regressors
 p <- 5
 ##Number of regressors unequal to zero
@@ -23,6 +23,7 @@ x_5 <- rnorm(n,4,1)
 X.all <- cbind(x_1,x_2,x_3,x_4,x_5)
 y.mean <- X.all%*%beta
 y <- X.all%*%beta+rnorm(n,0,1)
+X <- X.all
 
 ##--------------------------------------------------------------------
 ##Basic speed comparison
@@ -175,7 +176,7 @@ InfoCrit <- function(y,X,I,A,Criterion = "AIC"){
       var <- 1/n*sum((y-mu)^2)
       
       ##Calculate Log Likelihood value
-      LogL <- -n/2*(log(2*pi)-log(var)-1)
+      LogL <- -n/2*(log(2*pi)+log(var)+1)
       
       InfoCriterion[j] <- log(n)*k - 2*LogL
     }
@@ -272,7 +273,7 @@ MCCV <- function(n,n_v, y, X, A, b, Replacement = FALSE){  #n_v = #leaved out da
 
 
 ##Combination of Samplesplits
-train <- matrix(ncol = b, nrow = n-n_v)
+train.MCCV <- matrix(ncol = b, nrow = n-n_v)
 for (i in 1:b) {
   train[,i] <- sample(seq(1,n,1),n-n_v,replace = FALSE)
 }
@@ -282,11 +283,11 @@ Pmatrix_MCCV <- list()
 k <- 0
 for (i in 1:length(A[1,])) {
   A.i <- A[,i]
-  for (j in 1:length(train[1,])) {
+  for (j in 1:length(train.MCCV[1,])) {
     k <- k+1
-    train.j <- train[,j]
+    train.j <- train.MCCV[,j]
     X.train <- X[train.j,A.i] 
-    Pmatrix_MCCV[[paste0("element",k)]] <- X[-train,A.i]%*%(solve(t(X.train)%*%X.train)%*%t(X.train))
+    Pmatrix_MCCV[[paste0("element",k)]] <- X[-train.j,A.i]%*%(solve(t(X.train)%*%X.train)%*%t(X.train))
   }
 }
 
@@ -296,7 +297,7 @@ MCCV.v2 <- function(n,n_v, y, X,I, A, b,train, Replacement = FALSE){  #n_v = #le
   k <- 0
   for (i in 1:length(A[1,])) {
     Pred.Error <- c()
-    for (j in 1:n) {
+    for (j in 1:length(train[1,])) {
       k <- k+1
       #To make the Code a bit shorter
       train.j <- train[,j]                 
@@ -331,8 +332,8 @@ AIC <- rep(0,length(N))
 CV <- rep(0,length(N))
 MCV <- rep(0,length(N))
 
-for (i in 1:length(N)) {
-  n <- N[i]
+for (q in 1:length(N)) {
+  n <- N[q]
   n_v <- floor(n-n^(3/4))
   
   ##Number of Samplepartions
@@ -372,11 +373,11 @@ for (i in 1:length(N)) {
   k <- 0
   for (i in 1:length(A[1,])) {
     A.i <- A[,i]
-    for (j in 1:length(train[1,])) {
+    for (j in 1:length(train.MCCV[1,])) {
       k <- k+1
       train.j <- train.MCCV[,j]
       X.train <- X[train.j,A.i] 
-      Pmatrix_MCCV[[paste0("element",k)]] <- X[-train,A.i]%*%(solve(t(X.train)%*%X.train)%*%t(X.train))
+      Pmatrix_MCCV[[paste0("element",k)]] <- X[-train.j,A.i]%*%(solve(t(X.train)%*%X.train)%*%t(X.train))
     }
   }
   
@@ -391,10 +392,10 @@ for (i in 1:length(N)) {
     temp.MCV <- MCCV.v2(n,n_v,y,X,Pmatrix_MCCV,A,b,train.MCCV)
     
     ##Counting how many times a Cat II Model is picked for n= N[i] in m interations
-    BIC[i] <- BIC[i] + (sum( temp.BIC < (p.True+1) & temp.BIC >0) == p.True)
-    AIC[i] <- AIC[i] + (sum( temp.AIC < (p.True+1) & temp.AIC > 0) == p.True)
-    CV[i] <- CV[i] + (sum( temp.CV1 < (p.True+1) & temp.CV1 > 0) == p.True)
-    MCV[i] <- MCV[i] + (sum( temp.MCV < (p.True+1) & temp.MCV > 0) == p.True)
+    BIC[q] <- BIC[q] + (sum( temp.BIC < (p.True+1) & temp.BIC >0) == p.True)
+    AIC[q] <- AIC[q] + (sum( temp.AIC < (p.True+1) & temp.AIC > 0) == p.True)
+    CV[q] <- CV[q] + (sum( temp.CV1 < (p.True+1) & temp.CV1 > 0) == p.True)
+    MCV[q] <- MCV[q] + (sum( temp.MCV < (p.True+1) & temp.MCV > 0) == p.True)
   }
   
 }
