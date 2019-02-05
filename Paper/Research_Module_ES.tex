@@ -20,6 +20,7 @@
 \usepackage{paralist}
 \usepackage{graphicx}
 \usepackage{braket}
+\usepackage{bbm}
 
 %Vordefinierte Umgebungen
 \newtheorem{defi}{Definition}[subsection]
@@ -27,6 +28,9 @@
 \newtheorem{koro}{Korollar}[subsection]
 \newtheorem{lemma}{Lemma}[subsection]
 \newtheorem{prop}{Proposition}[subsection] 
+\newtheorem{claim}{Claim}[subsection]
+\newtheorem{thm}{Theorem}[subsection]
+\newtheorem{coro}{Corollary}[subsection]
 
 %Subfiles
 \usepackage{subfiles}
@@ -60,8 +64,8 @@
 \definecolor{forestGreen}{rgb}{0.13,0.55,0.13}
 %Damit wir Quellcode nutzen können.
 \usepackage{listings}
-\lstset{numbers=left,
-	backgroundcolor=\color{codeBackground},
+\lstset{%numbers=left,
+	backgroundcolor=\color{white},%codeBackground
 	frame=single,
 	numberstyle=\tiny,
 	numbersep=5pt,
@@ -72,7 +76,7 @@
 	xrightmargin=15pt,
 	basicstyle=\ttfamily\scriptsize,
 	stepnumber=1,
-	keywordstyle=\color{blue},         
+	%keywordstyle=\color{blue},         
 	commentstyle=\color{dkgreen},       
 	stringstyle=\color{mauve}         
 }
@@ -119,15 +123,6 @@
 \subfile{Leave_n_nu_out_CV}
 \subfile{Model_selection_and_subclasses}	
 \subfile{Simulations}
-
-
-
-
-\section{Real Data}
-
-\subsection{Comparison CV(1) and MCCV($n_{\nu}$): Prediction Error}
-
-
 \subfile{Conclusion}
 
 	
@@ -135,22 +130,10 @@
 \newpage
 \pagenumbering{Roman} 		      % röm.ziffern	
 \setcounter{page}{1}			  % ab ziffer 1
-\section*{Appendix}
+
 \addcontentsline{toc}{section}{Appendix}
-\subsection*{Appendix \RM{1}}
+\subfile{Appendix}
 
-\subsection*{Appendix \RM{2}}
-
-
-
-%Programmcode-Umgebung im Anhang%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Überschrift ohne Nummer 
-\begin{lstlisting}[title={Algorithmus:~$m+1=6$ und $n=200$}]
-
-\end{lstlisting}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 % Literaturverzeichnis

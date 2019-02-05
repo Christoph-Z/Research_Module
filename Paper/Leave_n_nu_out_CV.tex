@@ -6,82 +6,36 @@ In this chapter we describe the \textit{Leave-$n_\nu$-Out Cross-Validation} by \
 \begin{align*}
 CV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{CV}
 \end{align*}
-while $\hat{\Gamma}_{\alpha,n}^{CV}$ is the estimated \textit{Unconditional Expected Squared Prediction Error} $\Gamma_{\alpha,n}$. It yields an $\alpha^\star$ for getting the optimal model $\mathcal{M}_\star$.
+while $\hat{\Gamma}_{\alpha,n}^{CV}$ is the estimated \textit{Unconditional Expected Squared Prediction Error} of $\Gamma_{\alpha,n-n_\nu}$. It yields an $\alpha_{CV}$ for getting the chosen model $\mathcal{M}_{CV}$ for a given $n_\nu$, which is not necessarily the optimal model $\mathcal{M}_\ast$.\\\\
+First thing to do is splitting the given data into two parts, the \textit{set of validation} with $\{(y_i,x_i), i\in s\}$ and a \textit{training set} with $\{(y_i,x_i), i\in s^c\}$, where $s\subset\{1,...,n\}$. We have that $|s|\equiv n_\nu$ (number of datapoints used for assessing the prediction ability) and $|s^c|=n-n_\nu$ (number of datapoints used for
+%ANDers gehts glaube ich nicht ohne n_c wieder reinzunehmen (anndere wortwahl)
+construction data) such that $n=|s|+|s^c|$. There are in total
+$\binom{n}{n_\nu}$ possible ways of splitting the data into subsets $s$ with $n_\nu$ integers in it. That means our set of possible Partitions for a given $n_\nu$ is denoted by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ with the above mentioned cardinality $|\mathcal{R}^\ast|=\binom{n}{n_\nu}$.\\
 
-
-First thing to do is splitting the given data into two parts, the \textit{set of validation} with $\{(y_i,x_i), i\in s\}$ and a \textit{training set} with $\{(y_i,x_i), i\in s^c\}$, where $s\subset\{1,...,n\}$. We have that $|s|\equiv n_\nu$ (number of datapoints used for validation) and $|s^c|=n-n_\nu$ (number of datapoints used for
-%ANDers gehts glaube ich nicht ohne n_c wieder reinzunehmen (vektoren anders darstellen) (anndere wortwahl)
-construction data) such that $n=|s|+|s^c|$. There are 
-$\Big(\begin{matrix}
-	n\\n_\nu
-\end{matrix}\Big)$ different subsets $s$ with $n_\nu$ integers in it. For the estimator $\hat{\Gamma}_{\alpha,n}^{CV}$ we have to calculate the \textit{average squared prediction error of split $s$} under $\mathcal{M}_\alpha$. For this,   $\mathcal{M}_\alpha$ uses the construction data $\{(y_i,x_i), i\in s^c\}$. We know the definition of $ASPE(\mathcal{M}_\alpha)$ in (\ref{ASPE}). Thus for split $s$ we have a vector $y_s\in\mathbb{R}^{n_\nu}$ of future values out of validation set and the vector of the fitted value components under $\mathcal{M}_\alpha$, which is $\hat{y}_{\alpha,s^c}$ that uses the construction data. We have to average the squared prediction error by $|s|=n_\nu$ such that we achieve the following Lemma.
+For the construction of the estimator $\hat{\Gamma}_{\alpha,n}^{CV}$, we first have to calculate the \textit{average squared prediction error of split $s$} under $\mathcal{M}_\alpha$. For this,   $\mathcal{M}_\alpha$ uses the construction data $\{(y_i,x_i), i\in s^c\}$. We know the definition of $ASPE(\mathcal{M}_\alpha)$ in (\ref{ASPE}). Thus for split $s$ we have a vector $y_s\in\mathbb{R}^{n_\nu}$ of future values out of validation set and the vector of the fitted value components under $\mathcal{M}_\alpha$, which is $\hat{y}_{\alpha,s^c}$ that uses the construction data. We have to average the squared prediction error by $|s|=n_\nu$ such that we achieve the following Lemma\footnote{Proof of Lemma \ref{Equation3.1} is given in Apendix \RM{1}}.
 \begin{lemma}
 	\label{Equation3.1}
 	The average squared prediction error of split $s$ is given by
 	\begin{align*}
-		ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel_2^2\\
-		&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel_2^2
+		ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2\\
+		&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel^2
 	\end{align*}
+	with $Q_{\alpha,s}=X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_{\alpha,s}^\prime$.
 \end{lemma}
 
-\begin{proof}[Proof of Lemma \ref{Equation3.1}]~\\
-	Given by construction, we have
-	\begin{align*}
-		X_\alpha=\Big(\begin{matrix}
-		X_{\alpha,s}\\ X_{\alpha,s^c}
-		\end{matrix}\Big)
-		\text{~~~consisting of the two submatrices~} X_{\alpha,s}\in\mathbb{R}^{n_\nu\times d_\alpha} \text{~and~} X_{\alpha,s^c}\in\mathbb{R}^{(n-n_\nu)\times d_\alpha}
-	\end{align*}
-	and 
-	\begin{align*}
-		y=\Big(\begin{matrix}
-		y_{s}\\ y_{s^c}
-		\end{matrix}\Big),~~\hat{\beta}_\alpha=\Big(\begin{matrix}
-		\hat{\beta}_{\alpha,s}\\ \hat{\beta}_{\alpha,s^c}
-		\end{matrix}\Big)
-	\end{align*}
-	With the help of the following decompositions
-	\begin{align*}
-		X_\alpha^\prime y&=X_{\alpha,s}^\prime y_s+X_{\alpha,s^c}^\prime y_{s^c}\\
-		X_\alpha^\prime X_\alpha&=X_{\alpha,s}^\prime X_{\alpha,s}+X_{\alpha,s^c}^\prime X_{\alpha,s^c}\\
-		X_{\alpha,s} \hat{\beta}_{\alpha,s}&=P_{\alpha,s}y_s=I_{n_\nu}y_s=y_s
-	\end{align*}
-	Because $P_{\alpha,s}=P_{\alpha,s}^\prime P_{\alpha,s}=P_{\alpha,s}^{-1} P_{\alpha,s}=I_{n_\nu}$ is symmetric, idempotent and orthogonal. Thus now 
-	we can rewrite $\hat{\beta}_\alpha$ as
-	\begin{align}
-		\hat{\beta}_\alpha&=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y   \nonumber\\
-		&=(X_\alpha^\prime X_\alpha)^{-1}[X_{\alpha,s}^\prime y_s+X_{\alpha,s^c}^\prime y_{s^c}]  \nonumber \\
-		&=(X_\alpha^\prime X_\alpha)^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s}) \hat{\beta}_{\alpha,s}+(X_{\alpha,s^c}^\prime X_{\alpha,s^c})\hat{\beta}_{\alpha,s^c}]
-		\label{beta_alpha_hat_decomposition}
-	\end{align}
-	The Average squared prediction error for split $s$ satisfies
-	\begin{align*}
-	ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel_2^2\\
-	&=\frac{1}{n_\nu}\parallel y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}\parallel_2^2\\
-	&=\frac{1}{n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(I_{n_\nu}-Q_{\alpha,s})(y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c})\parallel_2^2
-	\end{align*}
-	Thus it is enough to show that $(I_{n_\nu}-Q_{\alpha,s})(y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c})=y_s-X_{\alpha,s}\hat{\beta}_\alpha$ holds 
-	\begin{align*}
-		&-Q_{\alpha,s}y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}+Q_{\alpha,s}X_{\alpha,s}\hat{\beta}_{\alpha,s^c}=-X_{\alpha,s}\hat{\beta}_\alpha\\
-		\Leftrightarrow&-X_{\alpha,s}(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime y_s- X_{\alpha,s}\hat{\beta}_{\alpha,s^c}+X_{\alpha,s}(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime X_{\alpha,s}\hat{\beta}_{\alpha,s^c}=-X_{\alpha,s}\hat{\beta}_{\alpha}\\
-		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime y_s+ \hat{\beta}_{\alpha,s^c}-(X_{\alpha}^\prime X_{\alpha})^{-1}X_{\alpha,s}^\prime X_{\alpha,s}\hat{\beta}_{\alpha,s^c}=\hat{\beta}_{\alpha}\\
-		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}(X_{\alpha,s}^\prime X_{\alpha,s})\hat{\beta}_{\alpha,s}+ \hat{\beta}_{\alpha,s^c}-(X_{\alpha}^\prime X_{\alpha})^{-1}(X_{\alpha,s}^\prime X_{\alpha,s})\hat{\beta}_{\alpha,s^c}=\hat{\beta}_{\alpha}\\
-		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s})(\hat{\beta}_{\alpha,s}-\hat{\beta}_{\alpha,s^c})+(X_{\alpha}^\prime X_{\alpha})\hat{\beta}_{\alpha,s^c}]=\hat{\beta}_{\alpha}\\
-		\Leftrightarrow&(X_{\alpha}^\prime X_{\alpha})^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s})(\hat{\beta}_{\alpha,s}-\hat{\beta}_{\alpha,s^c})+[X_{\alpha,s}^\prime X_{\alpha,s}+X_{\alpha,s^c}^\prime X_{\alpha,s^c}]\hat{\beta}_{\alpha,s^c}]=\hat{\beta}_{\alpha}\\
-		\Leftrightarrow&(X_\alpha^\prime X_\alpha)^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s}) \hat{\beta}_{\alpha,s}+(X_{\alpha,s^c}^\prime X_{\alpha,s^c})\hat{\beta}_{\alpha,s^c}]=\hat{\beta}_{\alpha}
-	\end{align*}
-Which is exactly the decomposition of $\hat{\beta}_{\alpha}$ in   (\ref{beta_alpha_hat_decomposition}).\\
-\end{proof}
 
-Under the usage of Lemma \ref{Equation3.1} and averaging the $ASPE_{s}(\mathcal{M}_\alpha)$, we get the above mentioned estimator for $\Gamma_{\alpha,n}$.
-\begin{lemma}
-	For each model $\mathcal{M}_\alpha$, the estimate of $~\hat{\Gamma}_{\alpha,n}^{CV}$ of $~\Gamma_{\alpha,n}$ is obtained by
-	\begin{align*}
-		\hat{\Gamma}_{\alpha,n}^{CV}=\frac{1}{n \cdot n_\nu}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel_2^2
-	\end{align*}
-	
-\end{lemma}
+Under the usage of Lemma \ref{Equation3.1}, we have to calculate the $ASPE_{s}(\mathcal{M}_\alpha)$ for all subsets $s$  for a given $n_\nu$ in the corresponding set of partitions $\mathcal{R}^\ast$. And the last step is to average this expression by cardinality of $\mathcal{R}^\ast$, such that we achieve the following claim.
 
+\begin{claim}
+	\label{estimator CV(n_v)}
+	For each model $\mathcal{M}_\alpha$ (and $n_\nu$ given), the estimate $~\hat{\Gamma}_{\alpha,n}^{CV}$ of $~\Gamma_{\alpha,n-n_\nu}$ is received by
+	\begin{align*}
+		\hat{\Gamma}_{\alpha,n}^{CV}&=|\mathcal{R}^\ast|^{-1}\sum_{s\in \mathcal{R}^\ast}n_\nu^{-1}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2\\
+		&=|\mathcal{R}^\ast|^{-1}n_\nu^{-1}\sum_{s\in \mathcal{R}^\ast}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel^2
+	\end{align*}	
+	with $Q_{\alpha,s}=X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_{\alpha,s}^\prime$.
+\end{claim}
+In the next subsections we show the different variants of the \textit{Leave-$n_\nu$-Out Cross-Validation} and some asymptotic properties of these.
 
 \subfile{Consistency_of_CV1}	
 

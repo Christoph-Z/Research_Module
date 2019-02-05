@@ -13,20 +13,13 @@ DataGen <- function(n,p,p.True){
   x_2 <- rnorm(n,2,1)
   x_3 <- rnorm(n,0,1)
   x_4 <- rnorm(n,5,2)
+  x_5 <- rnorm(n,4,1)
   
   eps <- rnorm(n,0,1)     #Errorterm
   
-  ##Generate some unecessary extra data 
-  x_5 <- rnorm(n,4,1)
-  x_6 <- rnorm(n,2,2)
-  x_7 <- rnorm(n,1,3)
-  x_8 <- rnorm(n,3,7)
-  x_9 <- rnorm(n,0,1)
-  x_10 <- rnorm(n,5,5)
-  
   ##Possible values for Beta and X
-  beta.pos <- c(1.5,3,2,5,3,7,4,6,5,7)
-  X.pos <- cbind(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10)
+  beta.pos <- c(1.5,3,2,5,3)
+  X.pos <- cbind(x_1,x_2,x_3,x_4,x_5)
   
   beta.vec <- c(beta.pos[1:p.True],rep(0,p-p.True)) 
   X<- X.pos[,1:p]
@@ -388,11 +381,17 @@ for (i in 1:length(N)) {
     y <- Data[,1]
     X <- Data[,-1]
     
+    #Define some temporary Variables, i.e, define for a given Method the in iteration i choosed Model
+    temp.BIC <- InfoCrit(y,X,Criterion = "BIC")
+    temp.AIC <- InfoCrit(y,X) 
+    temp.CV1 <- CV(1,y,X)
+    temp.MCV <- CV(n_v,y,X,MonteCarlo = b)
+    
     ##Counting how many times a Cat II Model is picked for n= N[i] in m interations
-    BIC[i] <- BIC[i] + (sum( InfoCrit(y,X,Criterion = "BIC") < (p.True+1) & InfoCrit(y,X,Criterion = "BIC") >0) == p.True)
-    AIC[i] <- AIC[i] + (sum( InfoCrit(y,X) < (p.True+1) & InfoCrit(y,X) > 0) == p.True)
-    CV1[i] <- CV1[i] + (sum( CV(1,y,X) < (p.True+1) & CV(1,y,X) > 0) == p.True)
-    MCV[i] <- MCV[i] + (sum( CV(n_v,y,X,MonteCarlo = b) < (p.True+1) & CV(n_v,y,X,MonteCarlo = b) > 0) == p.True)
+    BIC[i] <- BIC[i] + (sum( temp.BIC < (p.True+1) & temp.BIC >0) == p.True)
+    AIC[i] <- AIC[i] + (sum( temp.AIC < (p.True+1) & temp.AIC > 0) == p.True)
+    CV1[i] <- CV1[i] + (sum( temp.CV1 < (p.True+1) & temp.CV1 > 0) == p.True)
+    MCV[i] <- MCV[i] + (sum( temp.MCV < (p.True+1) & temp.MCV > 0) == p.True)
   }
   
 }
@@ -436,11 +435,10 @@ BIBD <- ibd(n,b,n-n_v,pbar = TRUE)$N
   y <- Data[,1]
   X <- Data[,-1]
   
-  #BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
-  #AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
-  #CV1[i] <- sum( CV(1,y,X,C2) != 0)
-  #MCV_50n[i] <- sum( CV(n_v,y,X, MonteCarlo = b) != 0)
-  MCV_5n[i] <- sum( CV(n_v,y,X, MonteCarlo = b_1) != 0)
+  BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
+  AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
+  CV1[i] <- sum( CV(1,y,X,C2) != 0)
+  MCV[i] <- sum( CV(n_v,y,X, MonteCarlo = b) != 0)
   #BICV[i] <- sum( CV(n_v,y,X, BICV = BIBD) !=0)
 }
 
