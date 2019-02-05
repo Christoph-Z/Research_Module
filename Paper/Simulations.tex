@@ -87,8 +87,10 @@ The most time consuming aspects are {\itshape solved.default,\%*\%} and {\itshap
 \begin{align*}
 \hat{\beta_\alpha}=X_\alpha(X^\prime_\alpha X_\alpha)^{-1}X_\alpha^\prime y
 \end{align*}
-Note, that we repeat all model selections several times for any fixed $n$ in all simulations. Therefore we generate a complete new sample for each iteration in the simulations and calculate the corresponding OLS estimator. To avoid this we treat X to be deterministic s.t we only have to generate one sample of $X$ observations. In order to introduce stochastic we only use the error term $\varepsilon$ in the data generating process (\ref{SimulationModel}). That means we only have to compute an new $y$ for the different iteration s.t we can pull out the calculation of $X_\alpha(X^\prime_\alpha X_\alpha)^{-1}X_\alpha^\prime$ of the Simulation loop. 
-
+Note, that we repeat all model selections several times for any fixed $n$ in all simulations. Since in our simulation design the regressors are fixed, some parts of the OLS estimate doesn't change in the different simulation steps and hence could be pulled out of the CV function to reduce redundant computations. In each new simulation step we only draw new error terms and hence only the y values differ. Thus we can give the matrix inverses and the set of Alphas directly to the function instead recomputing it over and over.
+\\
+Another point where we want to save computing power is by using an algebraic reformulation of the average squared prediction error as in \cite{shao}.
+\\
 This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Code Appendix blabka}. Table \ref{CVneu} shows the time profiling of these new algorithm.\\
 \\
 \begin{table}[!h]
