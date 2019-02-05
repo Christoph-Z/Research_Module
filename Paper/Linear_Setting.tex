@@ -13,13 +13,14 @@ We assume that the residuals are independent and identically distributed and $E[
 \end{align*}
 with $X=[x_1,...,x_n]^\prime\in\mathbb{R}^{n\times p}$ as our matrix with the assumption of full rank, $y\in\mathbb{R}^{n}$ and $\varepsilon\in\mathbb{R}^{n}$.
 \\\\
-For the application of CV($n_\nu$) we have to describe another model which we call \textit{Compact model} referring to \cite{shao}, by using nearly the same notation. The idea behind this model is, that some $\beta_i's$ of the given model might be $0$ and we use a set $\alpha$ consisting of some integers from $1,...,p$ that indexed some of the $\beta_i's$ to get a submodel of our initial linear regression model. A more detailed explanation of the indexing is given in chapter \ref{chapter_compact_model}. Therefore let 
+For the application of CV($n_\nu$) we have to describe another model which we call \textit{Compact model} referring to \cite{shao}, by using nearly the same notation. The idea behind this model is, that some $\beta_i's$ of the given model might be $0$ and we use a set $\alpha$ consisting of some integers from $1,...,p$ that indexed some of the $\beta_i's$ to get a submodel of our initial linear regression model. A more detailed explanation of the indexing is given below in this chapter. Therefore let 
 $\mathcal{A}=\{\alpha|\alpha\subseteq\{1,...,p\},\alpha\neq\emptyset\}$ be a collection of all indexsets $\alpha$, with 
 $|\alpha|\equiv d_\alpha\leq p$. Where $d_\alpha$ is the number of predictors in the compact model. Thus for any $\alpha\in\mathcal{A}$ and observation $i=1,...,n$ it is given by
 \begin{align*}
 	y_i=x_{i,\alpha}^\prime\beta_\alpha+\varepsilon_i
 \end{align*}
-which will be more easily denoted for observation $i$ as $\mathcal{M}_\alpha$. It has  $dim(\mathcal{M}_\alpha)=d_\alpha$, because $x_{i,\alpha}\in\mathbb{R}^{d_\alpha}$ and $\beta_\alpha\in\mathbb{R}^{d_\alpha}$ are both vectors which include all the components of the initial model which where indexed by $\alpha$.\footnote{There are $2^p-1$ different $\alpha's$ possible and therefore $2^p-1$ different forms of $\mathcal{M}_\alpha$ for one observation $i$. The $2^p-1$ is received by $2^p$ elements in the powerset of $\alpha$ minus 1 by leaving out the emptyset.}
+which will be more easily denoted for observation $i$ as $\mathcal{M}_\alpha$. It has  $dim(\mathcal{M}_\alpha)=d_\alpha$, because $x_{i,\alpha}\in\mathbb{R}^{d_\alpha}$ and $\beta_\alpha\in\mathbb{R}^{d_\alpha}$ are both vectors which include all the components of the initial model which where indexed by $\alpha$.\footnote{There are $2^p-1$ different $\alpha's$ possible and therefore $2^p-1$ different forms of $\mathcal{M}_\alpha$ for one observation $i$. The $2^p-1$ is received by $2^p$ elements in the powerset of $\alpha$ minus 1 by leaving out the emptyset.}\\\\
+One short example of how indexing works, might be for an $\alpha$ that consists for example of the positive integers $\{1,3,4,6\}$ such that it yields $\beta_\alpha=(\beta_1,\beta_3,\beta_4,\beta_6)^\prime$ and so on. This gives an illustration of what is meant by ``under model $\mathcal{M}_\alpha$''.
 
 \subsection{Compact Model Categories} \label{chapter_compact_model}
 %KANN man das so machen?/Keine eigenen worte, alles aus shao
@@ -31,8 +32,7 @@ Category~\RM{2}:& $\beta_\alpha$ contains \textit{all} $\beta_i\neq 0$
 \end{tabular}
 \end{align*}
 Where Category~\RM{1} contains all the wrong models and Category~\RM{2} contains all models which may be too large. If the components of $\beta$ in the initial model are known, then $\mathcal{M}_\alpha$ can be assigned to one of these two categories.\\\\
-One short example of how indexing works, might be for an $\alpha$ that consists for example of the positive integers $\{1,3,4,6\}$ such that it yields $\beta_\alpha=(\beta_1,\beta_3,\beta_4,\beta_6)^\prime$ and so on. This gives an illustration of what is meant by ``under model $\mathcal{M}_\alpha$''.\\\\
-The optimal model will be
+Thus the optimal model has to be a model out of Category \RM{2} and it will be denoted by
 \begin{align*}
 \mathcal{M}_\ast=\{\mathcal{M}_{\alpha_\ast}|\mathcal{M}_{\alpha_\ast}\in \text{Cat.~\RM{2}~and~} dim(\mathcal{M}_{\alpha_\ast})\leq dim(\mathcal{M}_{\alpha})\text{~for~any~}\mathcal{M}_{\alpha}\in \text{Cat.~\RM{2}} \}
 \end{align*}
@@ -59,27 +59,27 @@ If $\alpha=\{1,...,p\}$, then we have $d_\alpha=|\alpha|=p$ exactly when $X_\alp
 
 \subsection{Prediction Errors}
 %EINBASTELN (aus shao)
-%PRüfen ob diese equation eine nummer braucht????
-The \textit{Average Squared Prediction Error} under $\mathcal{M}_\alpha$ is given by
+
+In this section we give a preview to the different types of prediction errors, this is needed in the next chapter for constructing the estimator of the \textit{Cross-Validation}.\\\\
+For a given explanatory variable $x_i$, we denote $z_i$ as the \textit{future value} of the dependent variable as in \cite{shao}. Such that the \textit{Average Squared Prediction Error} under $\mathcal{M}_\alpha$ is given by
 \begin{align}
 ASPE(\mathcal{M}_\alpha)=\frac{1}{n}\sum_{i=1}^{n}(z_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2 \label{ASPE}
 \end{align}
-The \textit{Conditional Expected Squared Prediction Error} under $\mathcal{M}_\alpha$ is given by\footnote{Proof of $CESPE(\mathcal{M}_\alpha)$ is given in Appendix \RM{1}}
+Then we can use the $ASPE(\mathcal{M}_\alpha)$ for calcualting the \textit{Conditional Expected Squared Prediction Error} under $\mathcal{M}_\alpha$, which is given by\footnote{Proof of $CESPE(\mathcal{M}_\alpha)$ is given in Appendix \RM{1}}
 \begin{align*}
 CESPE(\mathcal{M}_\alpha)=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2
 \end{align*}
-
-The overall \textit{Unconditional Expected Squared Prediction Error} (unconditional on Y) is given by\footnote{Proof of $\Gamma_{\alpha,n}$ is given in Appendix \RM{1}} 
-\begin{align*}
-\Gamma_{\alpha,n}=\sigma^2+n^{-1}d_\alpha\sigma^2+\vartriangle_{\alpha,n}
-\end{align*}
+Thus we easily achive with the help of the formula above in the last step the overall \textit{Unconditional Expected Squared Prediction Error} (unconditional on Y), that is given by\footnote{Proof of $\Gamma_{\alpha,n}$ is given in Appendix \RM{1}} 
+\begin{align}
+\Gamma_{\alpha,n}=\sigma^2+n^{-1}d_\alpha\sigma^2+\vartriangle_{\alpha,n} 
+\end{align}
 with
 \begin{align*}
 \begin{tabular}{ll}
 $\vartriangle_{\alpha,n}$&$=n^{-1}(X\beta)^\prime(I_n-P_\alpha)X\beta$\\
 $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 \end{tabular}
-\end{align*}
+\end{align*} 
 Where $\vartriangle_{\alpha,n}$ shows the model misspecification which is more precisely given in Lemma \ref{Equation2.3-2.4} and $P_\alpha$ as the corresponding hat matrix under model $\mathcal{M}_\alpha.$ The first expression of $\Gamma_{\alpha,n}$ which is given by $\sigma^2$ is the error term variance and $n^{-1}d_\alpha\sigma^2+\vartriangle_{\alpha,n}$ is a mirror of the errors in estimation and model selection. This second error term vanishes if $n$ goes to infinity and $\vartriangle_{\alpha,n}=0$ by the correct model category. Thus now we introduce the following Lemma \ref{Equation2.3-2.4}\footnote{Proof of Lemma \ref{Equation2.3-2.4} is given in Appendix \RM{1}}
 and Lemma \ref{Equation2.5}\footnote{Proof of Lemma \ref{Equation2.5} is given in Appendix \RM{1}}.
 
@@ -115,9 +115,6 @@ and Lemma \ref{Equation2.5}\footnote{Proof of Lemma \ref{Equation2.5} is given i
 	\liminf_{n\rightarrow\infty}\Delta_{\alpha,n}=0.
 	\end{align*}
 Considering the condition (\ref{liminf_condition}) from an interpretational point of view we can say that
-this is a necessary condition that $CV(n_\nu)$ works correctly. Otherwise if the condition does not hold, the above described case in the Remark is possible. That means, the $CV(n_\nu)$ can't distinguish between $Category~\RM{1}$ and $Category~\RM{2}$ if condition (\ref{liminf_condition}) does not hold and therefore the usage of this method is useless.
-
-
-
+this is a necessary condition that $CV(n_\nu)$ works correctly. Otherwise if the condition does not hold, the above described case in the remark is possible. That means, the $CV(n_\nu)$ can't distinguish between $Category~\RM{1}$ and $Category~\RM{2}$ if condition (\ref{liminf_condition}) does not hold and therefore the usage of this method is useless.
 \end{document}
 	

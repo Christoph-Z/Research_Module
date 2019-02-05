@@ -1,11 +1,12 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \subsection{Theory of CV(1)}
-To compute the $CV(1)$ or \textit{Leave-one-Out Cross-Validtation} estimate one deletes one observation of the data set ($n_\nu\equiv1$) and uses the remaining to construct the estimator of the model. Then one uses this model to predict the
-%SATZ beenden
-deleted observation. ... bla bla bla\
+%NOch ausschreiben
+A special case of the \textit{CV($n_\nu$)} is the \textit{Leave-one-Out Cross-Validation}, which might be the most popular version in literature.
+To compute the $CV(1)$ estimate, one deletes one observation of the data set ($n_\nu\equiv1$) and uses the remaining to construct the estimator of the model. Then one uses this model to predict the
+deleted observation.
 
-$CV(1)$ is the computationally simplest \textit{Cross-Validation} estimator as only $n$ terms have to be estimated whereas in other $CV(n_v)$ estimators one has to compute $\binom{n}{n_v}$ terms.\
+Thus $CV(1)$ is the computationally simplest \textit{Cross-Validation} estimator as only $n$ terms have to be estimated whereas in other $CV(n_v)$ estimators one has to compute $\binom{n}{n_v}$ terms.\\
 
 We capture the asymptotic properties of $CV(1)$ in the following theorem of \cite{shao}, which we will prove in the appendix\footnote{Proof of Theorem \ref{THM_Consistency of $CV(1)$} is given in Appendix \RM{1}}.
 
@@ -22,9 +23,9 @@ the following holds
 \item If $\mathcal{M}_\alpha$ is in Category II, then $\hat{\Gamma}_{\alpha,n}^{CV} = \frac{1}{n}\varepsilon'\varepsilon + \frac{2}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon + o_P(n^{-1})$.
 \end{enumerate}
 If furthermore the following condition holds
-\begin{align*}
-\liminf_{n\to \infty} \Delta_{\alpha,n} > 0,
-\end{align*}
+\begin{itemize}
+\item[$(iii)$] $\liminf_{n\to \infty} \Delta_{\alpha,n} > 0,$
+\end{itemize}
 then 
 \begin{enumerate}
 \item[(III)] $\lim_{n\to\infty} P(\mathcal{M}_{CV}\textrm{ is in Category I})=0$,
@@ -50,7 +51,7 @@ The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac
 
 Under assumption $(i)$ one can show that assumption $(ii)$ is equivalent to 
 %HIERZU hätte ich gerne einen kurzen nachweis
-$\lim \max n^{-1}\lVert x_i\rVert^2=0$. That is, the observations are allowed to grow but not too fast. This condition is for example satisfied if the $x_i$ are bounded.\\
+$\lim \max n^{-1}\lVert x_i\rVert^2=0$. That is, the observations are allowed to grow but not too fast. This condition is for example satisfied if the $x_i$ are bounded.
 
 
 

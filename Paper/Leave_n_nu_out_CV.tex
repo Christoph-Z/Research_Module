@@ -6,7 +6,7 @@ In this chapter we describe the \textit{Leave-$n_\nu$-Out Cross-Validation} by \
 \begin{align*}
 CV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{CV}
 \end{align*}
-while $\hat{\Gamma}_{\alpha,n}^{CV}$ is the estimated \textit{Unconditional Expected Squared Prediction Error} of $\Gamma_{\alpha,n}$. It yields an $\alpha_{CV}$ for getting the chosen model $\mathcal{M}_{CV}$ for a given $n_\nu$, which is not necessarily the optimal model $\mathcal{M}_\ast$.\\\\
+while $\hat{\Gamma}_{\alpha,n}^{CV}$ is the estimated \textit{Unconditional Expected Squared Prediction Error} of $\Gamma_{\alpha,n-n_\nu}$. It yields an $\alpha_{CV}$ for getting the chosen model $\mathcal{M}_{CV}$ for a given $n_\nu$, which is not necessarily the optimal model $\mathcal{M}_\ast$.\\\\
 First thing to do is splitting the given data into two parts, the \textit{set of validation} with $\{(y_i,x_i), i\in s\}$ and a \textit{training set} with $\{(y_i,x_i), i\in s^c\}$, where $s\subset\{1,...,n\}$. We have that $|s|\equiv n_\nu$ (number of datapoints used for assessing the prediction ability) and $|s^c|=n-n_\nu$ (number of datapoints used for
 %ANDers gehts glaube ich nicht ohne n_c wieder reinzunehmen (anndere wortwahl)
 construction data) such that $n=|s|+|s^c|$. There are in total
@@ -27,14 +27,15 @@ For the construction of the estimator $\hat{\Gamma}_{\alpha,n}^{CV}$, we first h
 Under the usage of Lemma \ref{Equation3.1}, we have to calculate the $ASPE_{s}(\mathcal{M}_\alpha)$ for all subsets $s$  for a given $n_\nu$ in the corresponding set of partitions $\mathcal{R}^\ast$. And the last step is to average this expression by cardinality of $\mathcal{R}^\ast$, such that we achieve the following claim.
 
 \begin{claim}
-	For each model $\mathcal{M}_\alpha$ (and $n_\nu$ given), the estimate of $~\hat{\Gamma}_{\alpha,n}^{CV}$ of $~\Gamma_{\alpha,n}$ is received by
+	\label{estimator CV(n_v)}
+	For each model $\mathcal{M}_\alpha$ (and $n_\nu$ given), the estimate $~\hat{\Gamma}_{\alpha,n}^{CV}$ of $~\Gamma_{\alpha,n-n_\nu}$ is received by
 	\begin{align*}
 		\hat{\Gamma}_{\alpha,n}^{CV}&=|\mathcal{R}^\ast|^{-1}\sum_{s\in \mathcal{R}^\ast}n_\nu^{-1}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2\\
 		&=|\mathcal{R}^\ast|^{-1}n_\nu^{-1}\sum_{s\in \mathcal{R}^\ast}\parallel (I_{n_\nu}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\parallel^2
 	\end{align*}	
 	with $Q_{\alpha,s}=X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_{\alpha,s}^\prime$.
 \end{claim}
-
+In the next subsections we show the different variants of the \textit{Leave-$n_\nu$-Out Cross-Validation} and some asymptotic properties of these.
 
 \subfile{Consistency_of_CV1}	
 

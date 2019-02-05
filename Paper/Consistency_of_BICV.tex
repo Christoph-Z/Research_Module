@@ -1,7 +1,17 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \subsection{Consistency of $BICV(n_v)$}
-
+%SHao vllt. irgendwo zitieren?
+Another version is the \textit{Balanced Incomplete CV($n_\nu$)}, denoted for simplicity by $BICV(n_v)$. This variant uses only a subset $\mathcal{B}$ of the set of all possible partitions for a given $n_\nu$, which was given by $\mathcal{R}^\ast= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$. With $|\mathcal{B}|\equiv b$ as the number of partitions in the collection of partitions $\mathcal{B}$. This method does model selection by 
+\begin{align*}
+	BICV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{BICV}
+\end{align*}
+where $\hat{\Gamma}_{\alpha,n}^{BICV}$ is the estimator of $\Gamma_{\alpha,n-n_\nu}$. The structure of this estimator is the same as in Claim \ref{estimator CV(n_v)} by only using the subset $\mathcal{B}$ instead of $\mathcal{R}^\ast$, thus the estimator has the following form
+\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{BICV}=|\mathcal{B}|^{-1}n_\nu^{-1}\sum_{s\in\mathcal{B}}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2
+\end{align*}
+ and in the next step the reader will be introduced on how $BICV(n_v)$ chooses his partitions, namely by a combinatorical procedure such that the following \textit{balance conditions} hold.\\\\
+%VIelleicht ein Lemma daraus machen??
 Let $\mathcal{B}$ be a collection of $b$ subsets of $\{ 1,\dots,n\}$ that have size $n_v$ so that the following two conditions hold:
 \begin{enumerate}
 \item[(a)] every $i$, $1\le i \le n$, appears in the same number of subsets of $\mathcal{B}$
