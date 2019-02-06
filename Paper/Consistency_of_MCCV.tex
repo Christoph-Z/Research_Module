@@ -1,8 +1,17 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \subsection{The Monte Carlo CV($n_\nu$)}
-%FUelltext für Fußnote
-We consider the following Lemma\footnote{Proof of Lemma \ref{Lemma_MCCV} is given in Appendix \RM{1}}.
+
+%SHao vllt. irgendwo zitieren?
+The \textit{Monte Carlo CV($n_\nu$)}, written in short notation as \textit{MCCV($n_\nu$)} is another variant of the \textit{CV($n_\nu$)} method and heavily related to the $BICV(n_v)$. It only distinguish to $BICV(n_v)$ by the way how it chooses his set of partitions. Indeed it does not choose them by a combinatorical procedure as described in the section before, this process is subjected to a random choice. Therefore it draws his subset of all possible partitions for a given $n_\nu$, which is denoted by $\mathcal{R}$, randomly with or without a replacement. $\mathcal{R}$ is the a collection of subsets such that $|\mathcal{R}|\equiv b$. This reminds to the $BICV(n_v)$, but without selecting $\mathcal{R}$ according to the \textit{balance conditions} . Therefore the \textit{MCCV($n_\nu$)} can be used as an alternative, if the collection of partitions $\mathcal{B}$ with its certain properties that have to be fullfilled is not provided. The \textit{MCCV($n_\nu$)} method does model selection by 
+\begin{align*}
+MCCV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{MCCV}
+\end{align*}
+where $\hat{\Gamma}_{\alpha,n}^{MCCV}$ is the estimator of $\Gamma_{\alpha,n-n_\nu}$. While the estimator is reffering again to Claim \ref{estimator CV(n_v)} and constructed similar to $\hat{\Gamma}_{\alpha,n}^{BICV}$ with the only difference that it uses $\mathcal{R}$ instead of $\mathcal{B}$. Thus no we get the following form
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{MCCV}=|\mathcal{R}|^{-1}n_\nu^{-1}\sum_{s\in\mathcal{R}}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2
+\end{align*}
+Now we consider the following Lemma\footnote{Proof of Lemma \ref{Lemma_MCCV} is given in Appendix \RM{1}}.
 \begin{lemma}
 	\label{Lemma_MCCV}
 Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}\subseteq\mathcal{R}^\ast$. Then for any functions $a,b:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
@@ -13,9 +22,7 @@ Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\ma
 \item $\mathcal{R}^\ast$ is a balanced incomplete block design.
 \end{enumerate}
 \end{lemma}
-
-%FUElltext thm
-LALALA Theorem\footnote{Proof of Theorem \ref{THM_Consistency_MCCV} is given in Appendix \RM{1}}.
+Such that under the usage of this Lemma \ref{Lemma_MCCV} with the fact that $\mathcal{R}^\ast$ is a balanced incomplete block design, we can proof the following  Theorem\footnote{Proof of Theorem \ref{THM_Consistency_MCCV} is given in Appendix \RM{1}}. 
 
 
 \begin{thm}[Consistency of $MCCV(n_v)$]
@@ -41,7 +48,13 @@ Then the following holds
 where $\mathcal{M}_{MCCV}$ denotes the model selected by using $MCCV(n_v)$.
 \end{thm}
 
-
+~\\\\~
+\textbf{Überlegungen/Notizen}\\
+- wie be BICV wahl von $n_\nu$ unter den oben genannten bedingungen ( sowie $n_\nu$ large and $(n-n\nu)$ small)\\
+- zusätzlich, wenn $b$ die bedingung \begin{align*}
+\frac{n^2}{b(n-n_v)^2}\to 0.
+\end{align*}
+erfüllt, dann auch hier MCCV besser als CV(1) weil consistent
 
 
 

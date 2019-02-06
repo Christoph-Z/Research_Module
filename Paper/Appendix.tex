@@ -548,7 +548,7 @@
 	= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert (I_{n_v}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2\\
 	\ge \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2\\
 	\end{align*}
-	As $\mathcal{R}^\ast$ is a balanced incomplete block design it holds that
+	As $\mathcal{R}^\ast$ is a balanced incomplete block design by Lemma \ref{Lemma_MCCV}, it holds that
 	\begin{align*}
 	\mathrm{E}_\mathcal{R} \biggl[\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2 \biggr] 
 	= \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\sum_{i\in s}(y_i-x_{i,\alpha}'\hat{\beta}_\alpha)^2
