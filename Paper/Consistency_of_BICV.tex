@@ -47,5 +47,23 @@ Then the following holds
 \end{enumerate}
 where $\mathcal{M}_{BICV}$ denotes the model selected by using $BICV(n_v)$.
 \end{thm}
+~
+\\\\
+~
+%IRgendwie einen übergang und eine eiene Beschreibung schaffen(keine eigenen Worte, nur notizen hier benutzt und versucht zu sortieren)
+\textbf{NOTIZEN/Überlegungen}\\
+-explanation why $BICV(n_v)$ improves over CV(1):\\
+-$n_\nu$ should be choosen according to\\ \begin{align*}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
+\end{align*}
+-need a large $n_\nu$ (for assessing the prediction ability) and a relative small $n-n_\nu$ (for construction data) because then
+\begin{align*}
+	\Gamma_{\alpha,n-n_\nu}=\sigma^2+(n-n_\nu)^{-1}d_\alpha\sigma^2
+\end{align*}
+is not a flat function and therefore it is easier to find a minimum of $\Gamma_{\alpha,n-n_\nu}$ for a small $n-n_\nu$\\
+-But the difference (that has to be small in comparison to the number of data used for validation) has to fullfill $n-n_v \to \infty$ to ensure the consistency of the model fit\\
+-Need condition $\frac{n_v}{n}\to 1$ for the choice of $n_\nu$, because if this condition does not hold, $BICV(n_v)$ cannot distinguish in between the models in Category II and thus this method would be inconsistent (This is the main problem of CV(1) that occurs)\\
+%ICh denke das ist gemeint beim teleskop argument, BICV ist fähiger die unterschiede besser zu erkennen, also unter gegebenen umständen kann es sogar innerhalb der cat2 models unterscheiden, was cv1 einfach nicht kann- so habe ich es verstanden, damit ist die vorhersagegenauigkeit einfach besser bei bicv als bei cv1 (also bicv erkennt unterschiede noch besser als cv1 und gewährt somit eine bessere modelselection)
+-As we have seen, CV(1) is asymptotically inconsistent, it cannot distinugish in between category II models; if we choose $n_\nu$ such that these two conditions for $n_\nu$ in Theorem \ref{THM_Consistency_BICV} do hold, then $BICV(n_v)$ improves over CV(1) because it is able to distinguish and consistent
 
 \end{document}
