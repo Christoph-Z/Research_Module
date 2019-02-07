@@ -7,20 +7,20 @@ After the evaluation of the asymptotic properties of the different \textit{Cross
 \label{SimulationModel}
 y_i=\beta_1+x_{2i}\beta_2+x_{3i}\beta_3+x_{4i}\beta_4+x_{5i}\beta_5+\varepsilon_i
 \end{equation}
-where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid with $N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix II}. Moreover, we assume that
+where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid with $\varepsilon_1\sim N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix II}. Moreover, we assume that
 \[
 	\beta=(\beta_1,\beta_2,0,0,0)^\prime
 \]
 where $\beta_1,\beta_2$ are unequal to zero. So the model with the best predictive ability has to be chosen out of five possible regressors $\{x_1,\ldots,x_5\}$. \\
 \\
-For the different simulations we consider the five model selection methods: CV(1), MCCV($n_\nu$), BICV($n_\nu$) and since they are popular in praxis AIC, BIC as benchmark. Also note that $n_v=n-\lfloor n^{3/4}\rfloor$.
+For the different simulations we consider the four model selection methods: CV(1), MCCV($n_\nu$) and since they are popular in praxis AIC, BIC as benchmark. Also note that $n_v=n-\lfloor n^{3/4}\rfloor$.
 
 \subsection{Ability of distinguishing between Category I and II }
 In the first simulation we want to take a closer look at the probability given in Theorem \ref{THM_Consistency of $CV(1)$} (III). We saw that for $n\to\infty$ the different \textit{Cross-Validation} methods are perfectly able to distinguish between Category I and II, hence the probability of choosing a model from Category I equals zero. But how good will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
 \\
 Figure \ref{Simulation1} shows how the probability of choosing a Category II model behaves for different sample sizes. To calculate these probabilities, we repeated the procedure of model selection 2000 times for each sample size and plotted the relative frequencies.\footnote{Note that for each of the 200 iterations a completely new sample was generated.}
 
-As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all five methods. Moreover, all methods perform quite similar in distinguishing between the two models, only the MCCV seems to be slightly worse than the other ones. The purpose of this is the smaller trainings set of MCCV, which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, which is a less accurate estimate than $\Gamma_{\alpha,n}$, which is calculated by the other methods. 
+As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all five methods. Moreover, all methods perform quite similar in distinguishing between the two models, only the MCCV seems to be slightly worse than the other ones. The purpose of this is the smaller trainings set of MCCV, which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, this is a less accurate estimate than $\Gamma_{\alpha,n}$, which is calculated by the other methods. 
 \begin{figure}[!h]
 	\label{Simulation1}
 	\centering
@@ -28,11 +28,11 @@ As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Categ
 \caption{Probability of Choosing Cat II Models}
 \end{figure}
 \subsection{Ability of distinguishing  between Category II Models}
-In chapter \ref{Simulation1} we showed that all five methods of model selection are quite good in distinguishing between models from Category I and II, hence they all picked Category II models with large probabilities. \\
+In chapter \ref{Simulation1} we showed that all four methods of model selection are quite good in distinguishing between models from Category I and II, hence they all picked Category II models with large probabilities. \\
 \\
-For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption, we choose a large sample size of $n=500$, hence, as we have already mentioned, that for such large sample sizes the probability of choosing a Category II model is close to one.\\
+For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption, we choose a large sample size of $n=500$, hence, as already mentioned, the probability of choosing a Category II model is close to one for large sample sizes.\\
 \\
-Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all five methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one then the true models dimensionality by $M_\ast+1$.\\
+Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all four methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one then the true model by $M_\ast+1$.\\
 As we can see, both AIC and CV(1) perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that AIC and CV(1) are asymptotically equivalent} and tend to pick to large models. BIC and MCCV  perform better, both pick the true model with a probability close to one and they choose to large models in only a few cases. Within our 2000 simulations there was no single case where BIC and MCCV choose models with a dimensionality larger than $M_\ast+1$.
 \begin{figure}[!h]
 	\label{Simulation2}
@@ -45,7 +45,7 @@ Beside asymptotic analyses, the performance of the small sample properties is an
 \\
 Due to inefficiencies of our R code we had to spend weeks of computing time. Therefore one import part of our work was to find ways in order to speed up our R code and reduce it's computational complexity.\\
 \\
-The most time consuming aspect of our simulations is the process of models selection. As an example consider our CV-algorithm for the case of $n_\nu$=1\footnote{See Rcode in Appendix bla bla bla}: Table \ref{CValt} shows the amount of time used by different R functions within our algorithm.\\
+The most time consuming aspect of our simulations is the process of model selection. As an example consider our CV-algorithm for the case of $n_\nu$=1\footnote{See Appendix II: Cross-Validation Function}: Table \ref{CValt} shows the amount of time used by different R functions within our algorithm.\\
 \begin{table}[!h]
 	\label{CValt}
 	\centering
@@ -83,18 +83,18 @@ The most time consuming aspect of our simulations is the process of models selec
 		\scriptsize sampling.time : 2.08
 	\end{tabular}
 \end{table}
-The most time consuming aspects are {\itshape solved.default,\%*\%} and {\itshape t} . All these functions are used for the calculation of the OLS estimators of the diffrent Models in $\mathcal{A}$.
+The most time consuming aspects are {\itshape solved.default,\%*\%} and {\itshape t} . All these functions are used for the calculation of the OLS estimators of the different models in $\mathcal{A}$.
 \begin{align*}
 \hat{\beta_\alpha}=X_\alpha(X^\prime_\alpha X_\alpha)^{-1}X_\alpha^\prime y
 \end{align*}
-Note, that we repeat all model selections several times for any fixed $n$ in all simulations. Since in our simulation design the regressors are fixed, some parts of the OLS estimate doesn't change in the different simulation steps and hence could be pulled out of the CV function to reduce redundant computations. In each new simulation step we only draw new error terms and hence only the $y$ values differ. Thus we can give the matrix inverses and the set of possible models $\mathcal{A}$ directly to the function, instead of recomputing it over and over.
+Note that we repeat all model selections several times for any fixed $n$ in all simulations. Since in our simulation design the regressors are fixed, some parts of the OLS estimate doesn't change in the different simulation steps and hence could be pulled out of the CV function to reduce redundant computations. In each new simulation step we only draw new error terms and hence only the $y$ values differ. Thus we can give the matrix inverses and the set of possible models $\mathcal{A}$ directly to the function, instead of recomputing it over and over.
 \\
 Another point in order to save computing power is using an algebraic reformulation of the average squared prediction error as in \cite{shao}.
 \[
 	\hat{\Gamma}_{\alpha,n}=\frac{1}{n}\sum_i[(1-\omega_{i\alpha})^{-1}(y_i-x^\prime_{\alpha i}\hat{\beta_\alpha})]^2
 \]
 where $\omega_{i\alpha}$ is the $i$th diagonal element of the projection matrix $P_\alpha$.\\
-This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Code Appendix blabka}. Table \ref{CVneu} shows the time profiling of these new algorithm.\\
+This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix II: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm.\\
 \\
 \begin{table}[!h]
 	\caption{CV Algorithm Second Version Profiling }
