@@ -5,7 +5,7 @@ library(profvis)
 ##Generating data
 
 ##Sample size
-n <- 5000
+n <- 50000
 ##Number of regressors
 p <- 5
 ##Number of regressors unequal to zero
@@ -211,7 +211,6 @@ for (i in 1:length(A[1,])) {
   }
 }
 
-
 CV1 <- function(n,y,X,I,A,train){
   #Compute Prediction Errors for all sets in A
   MeanPred.Error <- c()
@@ -239,6 +238,59 @@ CV1(n,y,X,Pmatrix,A,train)
 Rprof(NULL)
 summaryRprof("CV1")
 
+##--------------------------------------------------------------------
+##CV1 Shao
+col.A <- 2^p-1
+gram <- t(X)%*%X
+
+proj_diag <- matrix(0L,nrow = n, ncol = col.A)
+for(j in 1:col.A){
+  for(i in 1:n){
+    alpha <- A[A[,j]!=0,j]
+    proj_diag[i,j] <- t(X[i,alpha])%*%solve(gram[alpha,alpha])%*%X[i,alpha]
+  }
+}
+
+LOOCV <- function(y,B,C,D, Alpha = A){
+  #this functions computes the regressors chosen by LOOCV
+  #
+  #y            Data for dependent variable
+  #B            Data for Regressors
+  #C            gram matrix of regressors
+  #D            diagonal elements of the projection matrix
+  #
+  #Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
+  #             (By Default use all possible Models)  
+  
+  p <- length(X[1,])#Number of Possible Regressors
+  n <- length(y)#Number of Observations
+  col.A <- length(A[1,])
+  
+  #compute the OLS estimates for model alpha
+  b <- matrix(0L, nrow = p, ncol = col.A)
+  for(j in 1:col.A){
+    b[A[A[,j]!=0,j],j]<- solve(C[A[A[,j]!=0,j],A[A[,j]!=0,j]])%*%t(B[,A[A[,j]!=0,j]])%*%y
+  }
+  
+  #Compute Prediction Errors for all sets in A
+  MeanPred.Error <- numeric(col.A)
+  for (i in 1:col.A) {
+    alpha <- A[A[,i]!=0,i]
+    if(length(alpha)==1){
+      MeanPred.Error[i] <- t((rep(1,n)-D[,i])^(-2))%*%((y - B[,alpha]*b[alpha,i])^2)/n
+    }else{
+      MeanPred.Error[i] <- t((rep(1,n)-D[,i])^(-2))%*%((y - B[,alpha]%*%b[alpha,i])^2)/n 
+    }
+  }
+  TheChosenOne <- which.min(MeanPred.Error)
+  return(A[,TheChosenOne])
+}
+
+Rprof("LOOCV")
+y <- X%*%beta + rnorm(n,0,1)
+LOOCV(y,X,gram,proj_diag,A)
+Rprof(NULL)
+summaryRprof("LOOCV")
 
 ##--------------------------------------------------------------------
 ##MCCV

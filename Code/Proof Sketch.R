@@ -2,7 +2,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-  ESP1 <- function(a,n){
+ESP1 <- function(a,n){
   return(1+a/n)
 }
 ESP2 <- function(a,n){

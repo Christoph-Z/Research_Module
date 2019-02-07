@@ -42,6 +42,8 @@ y <- Data[,1]
 X <- Data[,-1]
 
 Partion <- function(p.True,p){
+  ##p denotes the total number of possible regressors 
+  ##p.True denotes the number of true regressors
   ##For the CV we need to compute the set A of all possible models 
   #Creats the set {1,...,p} from which we want to generate the Powerset
   Index <- seq(1,p,1)                        
