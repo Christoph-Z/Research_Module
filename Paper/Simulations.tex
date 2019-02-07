@@ -32,9 +32,7 @@ In chapter \ref{Simulation1} we showed that all five methods of model selection 
 \\
 For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption, we choose a large sample size of $n=500$, hence, as we have already mentioned, that for such large sample sizes the probability of choosing a Category II model is close to one.\\
 \\
-Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all five methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$.
-%DER nachfolgende satz macht keinen sinn
-In this sense we denote a model with a dimensionality higher by $M_\ast+1$.\\
+Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all five methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one then the true models dimensionality by $M_\ast+1$.\\
 As we can see, both AIC and CV(1) perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that AIC and CV(1) are asymptotically equivalent} and tend to pick to large models. BIC and MCCV  perform better, both pick the true model with a probability close to one and they choose to large models in only a few cases. Within our 2000 simulations there was no single case where BIC and MCCV choose models with a dimensionality larger than $M_\ast+1$.
 \begin{figure}[!h]
 	\label{Simulation2}
