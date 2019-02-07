@@ -2,25 +2,25 @@
 \begin{document}
 \section{Simulations}
 \label{Simulation1}
-After the evaluation of the asymptotic properties of the different \textit{Cross-Validation} procedures we want to take a closer look to the finite sample performance. Therefore, we consider the following model:
+After the evaluation of the asymptotic properties of the different \textit{Cross-Validation} procedures, we want to take a closer look to the finite sample performance. Therefore, we consider the following model:
 \begin{equation}
 \label{SimulationModel}
 y_i=\beta_1+x_{2i}\beta_2+x_{3i}\beta_3+x_{4i}\beta_4+x_{5i}\beta_5+\varepsilon_i
 \end{equation}
-where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid form $N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix II}. Moreover, we assume that
+where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid with $N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix II}. Moreover, we assume that
 \[
 	\beta=(\beta_1,\beta_2,0,0,0)^\prime
 \]
-where $\beta_1,\beta_2$ are unequal to zero. So the Model with the best predictive ability have to be chosen out of five possible repressors $\{x_1,\ldots,x_5\}$. \\
+where $\beta_1,\beta_2$ are unequal to zero. So the model with the best predictive ability has to be chosen out of five possible regressors $\{x_1,\ldots,x_5\}$. \\
 \\
-For the different simulations we consider the five model section methods: CV(1), MCCV($n_\nu$),BICV($n_\nu$) and since they are popular in praxis AIC,BIC as benchmark. Also note that $n_v=n-\lfloor n^{3/4}\rfloor$.
+For the different simulations we consider the five model selection methods: CV(1), MCCV($n_\nu$), BICV($n_\nu$) and since they are popular in praxis AIC, BIC as benchmark. Also note that $n_v=n-\lfloor n^{3/4}\rfloor$.
 
 \subsection{Ability of distinguishing between Category I and II }
-In the first simulation we want to take a closer look at the probability given in Theorem (\ref{THM_Consistency of $CV(1)$} ) III. We saw that for $n\to\infty$ the different \textit{Cross-Validation} methods are perfectly able to distinguish between Category I and II, hence the probability of choosing a model from Category I equals zero. But how good will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
+In the first simulation we want to take a closer look at the probability given in Theorem \ref{THM_Consistency of $CV(1)$} (III). We saw that for $n\to\infty$ the different \textit{Cross-Validation} methods are perfectly able to distinguish between Category I and II, hence the probability of choosing a model from Category I equals zero. But how good will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
 \\
-Figure \ref{Simulation1} shows how the probability of choosing a Category II model behaves for different sample sizes. To calculate these probabilities we repeat the procedure of model selection 2000 times for each sample size and plot the relative frequencies.\footnote{Note that for each of the 200 iterations a completely new sample was generated.}
+Figure \ref{Simulation1} shows how the probability of choosing a Category II model behaves for different sample sizes. To calculate these probabilities, we repeated the procedure of model selection 2000 times for each sample size and plotted the relative frequencies.\footnote{Note that for each of the 200 iterations a completely new sample was generated.}
 
-As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all five methods. Moreover all methods perform quite similar in distinguishing between the two models, only the MCCV seems to be slightly worse then the other ones. The purpose of this is the smaller trainings set of MCCV which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, which is a less accurate estimate than $\Gamma_{\alpha,n}$ which is calculated by the other methods. 
+As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all five methods. Moreover, all methods perform quite similar in distinguishing between the two models, only the MCCV seems to be slightly worse than the other ones. The purpose of this is the smaller trainings set of MCCV, which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, which is a less accurate estimate than $\Gamma_{\alpha,n}$, which is calculated by the other methods. 
 \begin{figure}[!h]
 	\label{Simulation1}
 	\centering
@@ -28,12 +28,14 @@ As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Categ
 \caption{Probability of Choosing Cat II Models}
 \end{figure}
 \subsection{Ability of distinguishing  between Category II Models}
-In chapter \ref{Simulation1} we showed that all five methods of model section are quite good in distinguishing between models form Category I and II, hence they all picked Category II models with large probabilities. \\
+In chapter \ref{Simulation1} we showed that all five methods of model selection are quite good in distinguishing between models from Category I and II, hence they all picked Category II models with large probabilities. \\
 \\
-For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption we choose a large sample size of $n=500$, hence we already mentioned that for such large sample size the probability of choosing a Category II model is close to one.\\
+For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption, we choose a large sample size of $n=500$, hence, as we have already mentioned, that for such large sample sizes the probability of choosing a Category II model is close to one.\\
 \\
-Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all five methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be  the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one then the true models dimensionality with $M_\ast+1$.\\
-As we can see, both AIC and CV(1) perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that AIC and CV(1) are asymptotically equivalent} and tend to pick to large models. BIC and MCCV  perform better, both pick the true model with a probability close to one and they choose to large models in only few cases. Within our 2000 simulations there was not a single case where BIC and MCCV chooses models with a dimensionality larger then $M_\ast+1$.
+Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all five methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$.
+%DER nachfolgende satz macht keinen sinn
+In this sense we denote a model with a dimensionality higher by $M_\ast+1$.\\
+As we can see, both AIC and CV(1) perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that AIC and CV(1) are asymptotically equivalent} and tend to pick to large models. BIC and MCCV  perform better, both pick the true model with a probability close to one and they choose to large models in only a few cases. Within our 2000 simulations there was no single case where BIC and MCCV choose models with a dimensionality larger than $M_\ast+1$.
 \begin{figure}[!h]
 	\label{Simulation2}
 	\centering
