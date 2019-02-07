@@ -777,11 +777,205 @@
 %Programmcode-Umgebung im Anhang%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Überschrift ohne Nummer 
-\begin{lstlisting}[title={Algorithmus:~$m+1=6$ und $n=200$}]
+\begin{lstlisting}[title={Function inorder to calculate the set of category I and II models }]
+Partion <- function(p.True,p){
+	##p denotes the total number of possible regressors 
+	##p.True denotes the number of true regressors
+	##For the CV we need to compute the set A of all possible models 
+	#Creats the set {1,...,p} from which we want to generate the Powerset
+	Index <- seq(1,p,1)                        
 
+	#Denotes the number of Possible Models out of {1,...,p} Regressors 
+	col.A <- 2^p-1                                           
+
+	#Denote A as Powerset of {1,...,p}
+	A <- matrix(0L,nrow = p, ncol = col.A)      
+	k <- choose(p,1)
+	l <- 1
+	for (i in 1:p) {
+		#combn spits out all combinations of i elements in Index
+		A[1:i,l:k] <- combn(Index,i)             
+		k <-k + choose(p,i+1)
+		l <- l + choose(p,i)
+	}
+
+
+	##Split A into two dijoint subsets, ie, the set of Category I Models and Category II Models 
+	##
+	##To Compute the Set of CI and CII we assume a certain strurcture on the Data. We need X to be s.t all
+	##"TRUE" regrossers are in the first column of the X Matrix, i.e, if we have P "true" regressors, they
+	##are given throght X[1],...,X[P]. And evrey X[P+] is trash...
+	##
+	##We may need this sets later n for Simulation study's
+	coln <- c()
+	for (i in p.True:col.A) {
+		if(all(seq(1,p.True,1) %in% A[,i])){    
+		coln <- c(coln,i)
+		}
+	}
+	C2 <- A[,coln]           #Set of all Category II Models
+	C1 <-A[,-coln]           #Set of all Category I Models
+	return(C2)
+}
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lstlisting}[title={Cross-Validation Function}]
+CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, BICV = NULL ){  #n_v = #leaved out data points
+	#n_v          Number of leaved out data points
+	#y,X          Data for Regression
+	#Alpha        Set of possible Modelvaritaions for which the CV should be calculated, by Default use all possible Models
+	#MonteCarlo   Number of Subsets of {1,...,n} which is randomly drawn for a Monte Carlo CV, by Default do K-Fold CV
+	#Replacement  Replacement for Monte Carlo (Default False)
+	##BICV        Incidence Matrix for a BICV
+
+	##Change some Variable names to keep the code shorter
+	A <- Alpha
+	b <- MonteCarlo
+
+	##Number of Possible Regressors
+	p <- length(X[1,])                          
+
+	##Set of possible Models
+	if(is.null(A)){
+
+		#Creats the set {1,...,p} from which we want to generate the Powerset
+		Index <- seq(1,p,1)    
+
+		#Denotes the number of Possible Models out of {1,...,p}
+		col.A <- 2^p-1
+		#Denote A as Powerset of {1,...,p}
+		A <- matrix(0L,nrow = p, ncol = col.A)      
+		k <- choose(p,1)
+		l <- 1
+		for (i in 1:p) {
+			#combn spits out all combinations of i elements in Index 
+			A[1:i,l:k] <- combn(Index,i)             
+			k <-k + choose(p,i+1)
+			l <- l + choose(p,i)
+			}
+		}
+
+
+	##Number of Observations
+	n <- length(y)
+
+
+	##Combinations of Sample partions for fitting the model
+
+	##For the Mone Carlo CV with b subsets of {1,...,n}
+	if(!is.null(b)){
+		train <- matrix(ncol = b, nrow = n-n_v)
+		for (i in 1:b) {
+			train[,i] <- sample(seq(1,n,1),n-n_v,replace = Replacement)
+		}
+	}else if(!is.null(BICV)){
+		#Convert the Incedence matrix of BIBD in our Notation
+		train <- BICV * seq(1,n,1)
+	}else{
+		##For the general case with all subsets of {1,...,n} 
+		train <- combn(seq(1,n,1),n-n_v)
+	}
+
+
+	#Compute Prediction Errors for all sets in A
+	MeanPred.Error <- c()
+	for (i in 1:length(A[1,])) {
+		Pred.Error <- c()
+		for (j in 1:length(train[1,])) {
+			#To make the Code a bit shorter
+			train.j <- train[,j]                 
+			X.train <- X[train.j,A[,i]]    
+			#Prediction Error for a given alpha and a given subset
+			Pred.Error[j] <- norm(as.matrix(y[-train.j]-X[-train.j,A[,i]]%*%solve(t(X.train)%*%X.train)%*%t(X.train)%*%y[train.j]),"2")^2
+
+		}
+		MeanPred.Error[i] <- 1/length(train[1,])*sum(Pred.Error)
+	}
+	TheChosenOne <- which.min(MeanPred.Error)
+	return(A[,TheChosenOne])
+}
+\end{lstlisting}
+
+\begin{lstlisting}[title={Akaike and Schwarz Information Criterion}]
+InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
+	#Alpha        	Set of possible Modelvaritaions for which the CV should be calculated, by Default use all possible Models
+	#Criterion    	Decides if we want to use the Akaike or Bayesian information criterion
+
+	##Change some Variable names to keep the code shorter
+	A <- Alpha
+
+	##Number of Observations
+	n <- length(y)
+
+	##Set of possible Models
+	if(is.null(A)){
+
+		##Number of Possible Regressors
+		p <- length(X[1,])
+
+		##Creats the set {1,...,p} from which we want to generate the Powerset
+		Index <- seq(1,p,1)    
+
+		##Denotes the number of Possible Models out of {1,...,p} 
+		col.A <- 2^p-1     
+
+		##Denote A as Powerset of {1,...,p}
+		A <- matrix(0L,nrow = p, ncol = col.A)      
+		k <- choose(p,1)
+		l <- 1
+		for (i in 1:p) {
+			##combn spits out all combinations of i elements in Index
+			A[1:i,l:k] <- combn(Index,i)               
+			k <-k + choose(p,i+1)
+		l <- l + choose(p,i)
+		}
+	}
+
+	##Vector of Likelihood values for different Models
+	InfoCriterion <- c()
+	for (i in 1:length(A[1,])) {
+
+		##Number of regressors
+		k <- sum(A[,i] != 0)
+
+		##Data for the choosen Model
+		X.model <- X[,A[,i]] 
+
+		##Expectation observation i
+		mu <- X.model%*%solve(t(X.model)%*%X.model)%*%t(X.model)%*%y
+
+		error <- sum((y-mu)^2)
+
+		##Varianz
+		var <- 1/n*error
+
+		##Calculate Log Likelihood value
+		LogL <- -n/2*log(2*pi)-n/2*log(var)-1/(2*var)*error
+
+		##Calculate Information Criterion
+
+		##For AIC
+		if(Criterion == "AIC"){
+			InfoCriterion[i] <- 2*k-2*LogL
+		}
+
+		##For BIC
+		if(Criterion == "BIC"){
+			InfoCriterion[i] <- log(n)*k - 2*LogL
+		}
+
+	}
+
+	#Choose the Model which minimze the Information Criterion
+	TheChosenOne <- which.min(InfoCriterion)
+	return(A[,TheChosenOne])
+}
+\end{lstlisting}
+
+\begin{lstlisting}[title={Simulation 1}]
+Inhalt...
+\end{lstlisting}
 
 
 \end{document}
