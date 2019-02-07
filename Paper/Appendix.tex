@@ -973,8 +973,410 @@ InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
 }
 \end{lstlisting}
 
+\begin{lstlisting}[title={Data Generating Process}]
+##Function that Generates Data
+#The only purpose of this function is to save some lines of code. Hence that the function
+#is not very general
+DataGen <- function(n,p,p.True){
+	##Data for True Regression Model
+	#Intercept
+	x_1 <- rep(1,n)         
+	x_2 <- rnorm(n,2,1)
+	x_3 <- rnorm(n,0,1)
+	x_4 <- rnorm(n,5,2)
+	x_5 <- rnorm(n,4,1)
+
+	eps <- rnorm(n,0,1)     #Errorterm
+
+	##Possible values for Beta and X
+	beta.pos <- c(1.5,3,2,5,3)
+	X.pos <- cbind(x_1,x_2,x_3,x_4,x_5)
+
+	beta.vec <- c(beta.pos[1:p.True],rep(0,p-p.True)) 
+	X<- X.pos[,1:p]
+
+	##Genereta dependent variables acording to the Above statet Model
+	y <- X%*%beta.vec + eps    #True Model
+	return(cbind(y,X))
+}
+
+\end{lstlisting}
+
 \begin{lstlisting}[title={Simulation 1}]
-Inhalt...
+##Simulation I
+##Simulation of P(M_CV is in Cat II) 
+
+##Number of True regressors 
+p.True<- 2
+
+##Number of Regressors
+p <- 5
+
+##Vector of diffrent Sample sizes
+N <- seq(15,300,2)
+
+##Number of Repetitions of the Experiment
+m <- 500
+
+##Vector of probabilties of frequencys of choosing a Cat II Model for each samplezize by m repetations 
+BIC <- rep(0,length(N))
+AIC <- rep(0,length(N))
+CV1 <- rep(0,length(N))
+MCV <- rep(0,length(N))
+
+for (i in 1:length(N)) {
+	n <- N[i]
+	n_v <- floor(n-n^(3/4))
+
+	##Number of Samplepartions
+	b <- 5*n
+
+	for (j in 1:m) {
+		##Generating Data
+		Data <- DataGen(n,p,p.True)
+		y <- Data[,1]
+		X <- Data[,-1]
+
+		#Define some temporary Variables, i.e, define for a given Method the in iteration i choosed Model
+		temp.BIC <- InfoCrit(y,X,Criterion = "BIC")
+		temp.AIC <- InfoCrit(y,X) 
+		temp.CV1 <- CV(1,y,X)
+		temp.MCV <- CV(n_v,y,X,MonteCarlo = b)
+
+		##Counting how many times a Cat II Model is picked for n= N[i] in m interations
+		BIC[i] <- BIC[i] + (sum( temp.BIC < (p.True+1) & temp.BIC >0) == p.True)
+		AIC[i] <- AIC[i] + (sum( temp.AIC < (p.True+1) & temp.AIC > 0) == p.True)
+		CV1[i] <- CV1[i] + (sum( temp.CV1 < (p.True+1) & temp.CV1 > 0) == p.True)
+		MCV[i] <- MCV[i] + (sum( temp.MCV < (p.True+1) & temp.MCV > 0) == p.True)
+	}
+}
+
+##Plot Simulation 1
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+MCV <- MCV/m
+AIC <- AIC/m
+CV1 <- CV/m
+BIC <- BIC/m
+N <- N
+
+d <- data.frame("Samplesize"=N,"MCCV"=MCV,"AIC"=AIC,"CV1"=CV1,"BIC"=BIC)
+d1 <-d %>% gather(key,value,MCCV,AIC,BIC,CV1)
+
+ggplot(d1,aes(x=Samplesize,y=value,colour=key)) +
+	geom_line(size=1.2) +
+	coord_cartesian(ylim = c(0.5,1), xlim = c(13, 200)) +
+	ylab("Prob of choosing a Cat. II Model") + ggtitle("Probability of Cat. II Model") +
+	theme_bw() +
+	theme(text = element_text(size=15),
+	plot.title = element_text(size = 20,hjust = 0.5,face="bold")) +
+	theme(axis.title.x = element_text(size = 15)) +
+	theme(axis.title.y = element_text(size = 15)) +
+	theme(axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0))) +
+	theme(axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0))) +
+	theme(plot.title = element_text(margin = margin(t = 0, r = 0 , b = 20, l = 0))) +
+	theme(legend.title=element_blank(),legend.text = element_text(size = 13)) +
+	theme(legend.position = c(0.1,0.8))
+\end{lstlisting}
+
+\begin{lstlisting}[title={Simulation II}]
+##Simulation II 
+##based on the Simulations in Shao
+
+##Samplesize
+n <- 500
+
+##Number of Repetitions of the Experiment
+m <- 2000
+
+##Number of True regressors 
+p.True<- 2
+
+##Number of Regressors
+p <- 5
+
+##Calculate the set of Category II Models
+C2 <- Partion(p.True,p)
+
+##Gives the Dimenson of the choosen Model for each iteration
+BIC <- c()
+AIC <- c()
+CV1 <- c()
+MCV <- c()
+BICV <- c()
+
+##Number of leaved out data and number of samplepartions
+n_v <- 394
+b <- 5*n
+
+for (i in 1:m) {
+	##Generating Data
+	Data <- DataGen(n,p,p.True)
+	y <- Data[,1]
+	X <- Data[,-1]
+
+	BIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "BIC") != 0)
+	AIC[i] <- sum( InfoCrit(y,X,C2,Criterion = "AIC") != 0)
+	CV1[i] <- sum( CV(1,y,X,C2) != 0)
+	MCV[i] <- sum( CV(n_v,y,X, MonteCarlo = b) != 0)
+}
+
+##Computes the probability for a Criterion to Chooses a Cat II Model of a given size.
+Probabilities <- matrix(0L,4,p-p.True+1)
+for(i in 0:(p-p.True)){
+	Probabilities[,i+1] <- c(sum( BIC == (p.True + i)), sum( AIC == (p.True + i)),  sum( CV1 == (p.True + i)) , sum( MCV == (p.True + i)) )/m
+}
+Probabilities
+
+##Plot Simulation II
+
+library(ggplot2)
+Crit <- rep(c("CV(1)","AIC","MCCV","BIC"),4)
+Model <- c(rep("M*",4),rep("M*+1",4),rep("M*+2",4),rep("M*+3",4))
+Prob <- t(matrix(c(0.5980,0.336,0.0590,0.0070,0.6015,0.3320,0.0590,0.0075,0.9510,0.048988,0,0,0.9690,0.305,0.0005,0),4,4))
+d <-data.frame("C"=Crit,"M"=Model,
+	"P"=c(0.5980,0.6015,0.9510,0.9690,0.3366,0.3320,0.048988,0.0305,0.0590,0.0590,0,0.0005,0.007,0.007,0,0),
+	"COL"=rep("blue",16),"Prozent"=c("60%","60%","95%","97%","34%","33%","4%","3%","6%","6%","0%","0%","0.7%","0.8%","0%","0%"))
+
+ggplot(d,aes(x=C,y=M,size=P,label=P)) +
+	geom_point(alpha=0.8,stat="identity",color ='skyblue3') +
+	xlab("Selection Method") + ylab("Model Dimensionality") + ggtitle("Probability of Predicting Cat. II Model") +
+	scale_size_continuous(range = c(1, 35)) +
+	theme_bw() +
+	guides(colour = FALSE,size = FALSE) +
+	theme(text = element_text(size=15),
+	plot.title = element_text(size = 20,hjust = 0.5,face="bold")) +
+	theme(axis.title.x = element_text(size = 15)) +
+	theme(axis.title.y = element_text(size = 15)) +
+	theme(axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0))) +
+	theme(axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0))) +
+	theme(plot.title = element_text(margin = margin(t = 0, r = 0 , b = 20, l = 0))) +
+	geom_text(size =5,aes(label=ifelse(P>0.04,as.character(Prozent),''))) +
+	geom_text(size =5,aes(label=ifelse(P<0.04,as.character(Prozent),'')),hjust=-0.5,vjust=0.5)
+
+\end{lstlisting}
+
+\begin{lstlisting}[title={Leave-one-Out Cross-Validation Function}]
+#Creats the set {1,...,p} from which we want to generate the Powerset
+Index <- seq(1,p,1)    
+
+#Denotes the number of Possible Models out of {1,...,p}
+col.A <- 2^p-1
+#Denote A as Powerset of {1,...,p}
+A <- matrix(0L,nrow = p, ncol = col.A)      
+k <- choose(p,1)
+l <- 1
+for (i in 1:p) {
+	#combn spits out all combinations of i elements in Index 
+	A[1:i,l:k] <- combn(Index,i)             
+	k <-k + choose(p,i+1)
+	l <- l + choose(p,i)
+}
+#generate the diagonal elements of the projection matrices corresponding to model alpha
+proj_diag <- matrix(0L,nrow = n, ncol = col.A)
+for(j in 1:col.A){
+	for(i in 1:n){
+		alpha <- A[A[,j]!=0,j]
+		proj_diag[i,j] <- t(X[i,alpha])%*%solve(gram[alpha,alpha])%*%X[i,alpha]
+	}
+}
+
+LOOCV <- function(y,B,C,D, Alpha = A){
+	#this functions computes the regressors chosen by LOOCV
+	#
+	#y            Data for dependent variable
+	#B            Data for Regressors
+	#C            gram matrix of regressors
+	#D            diagonal elements of the projection matrix
+	#
+	#Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
+	#             (By Default use all possible Models)  
+
+	p <- length(X[1,])#Number of Possible Regressors
+	n <- length(y)#Number of Observations
+	col.A <- length(A[1,])
+
+	#compute the OLS estimates for model alpha
+	b <- matrix(0L, nrow = p, ncol = col.A)
+	for(j in 1:col.A){
+	b[A[A[,j]!=0,j],j]<- solve(C[A[A[,j]!=0,j],A[A[,j]!=0,j]])%*%t(B[,A[A[,j]!=0,j]])%*%y
+	}
+
+	#Compute Prediction Errors for all sets in A
+	MeanPred.Error <- numeric(col.A)
+	for (i in 1:col.A) {
+		alpha <- A[A[,i]!=0,i]
+		if(length(alpha)==1){
+			MeanPred.Error[i] <- t((rep(1,n)-D[,i])^(-2))%*%((y - B[,alpha]*b[alpha,i])^2)/n
+		}else{
+			MeanPred.Error[i] <- t((rep(1,n)-D[,i])^(-2))%*%((y - B[,alpha]%*%b[alpha,i])^2)/n 
+		}
+	}
+	TheChosenOne <- which.min(MeanPred.Error)
+	return(A[,TheChosenOne])
+}
+\end{lstlisting}
+
+\begin{lstlisting}[title={Monte Carlo Cross-Validation Function (Speeded up Version)}]
+#Creats the set {1,...,p} from which we want to generate the Powerset
+Index <- seq(1,p,1)    
+
+#Denotes the number of Possible Models out of {1,...,p}
+col.A <- 2^p-1
+#Denote A as Powerset of {1,...,p}
+A <- matrix(0L,nrow = p, ncol = col.A)      
+k <- choose(p,1)
+l <- 1
+for (i in 1:p) {
+	#combn spits out all combinations of i elements in Index 
+	A[1:i,l:k] <- combn(Index,i)             
+	k <-k + choose(p,i+1)
+	l <- l + choose(p,i)
+	}
+#generate the diagonal elements of the projection matrices corresponding to model alpha
+proj_diag <- matrix(0L,nrow = n, ncol = col.A)
+for(j in 1:col.A){
+	for(i in 1:n){
+		alpha <- A[A[,j]!=0,j]
+		proj_diag[i,j] <- t(X[i,alpha])%*%solve(gram[alpha,alpha])%*%X[i,alpha]
+	}
+}
+
+#b is the number of samplepartions
+
+##Combination of Samplesplits
+train.MCCV <- matrix(ncol = b, nrow = n-n_v)
+for (i in 1:b) {
+	train[,i] <- sample(seq(1,n,1),n-n_v,replace = FALSE)
+}
+
+##Pmatrix
+Pmatrix_MCCV <- list()
+k <- 0
+for (i in 1:length(A[1,])) {
+	A.i <- A[,i]
+		for (j in 1:length(train.MCCV[1,])) {
+		k <- k+1
+		train.j <- train.MCCV[,j]
+		X.train <- X[train.j,A.i] 
+		Pmatrix_MCCV[[paste0("element",k)]] <- X[-train.j,A.i]%*%(solve(t(X.train)%*%X.train)%*%t(X.train))
+	}
+}
+
+MCCV.v2 <- function(n,n_v, y, X,I, A, b,train, Replacement = FALSE){  #n_v = #leaved out data points
+	#Compute Prediction Errors for all sets in A
+	MeanPred.Error <- c()
+	k <- 0
+	for (i in 1:length(A[1,])) {
+		Pred.Error <- c()
+		for (j in 1:length(train[1,])) {
+			k <- k+1
+			#To make the Code a bit shorter
+			train.j <- train[,j]                 
+			#Prediction Error for a given alpha and a given subset
+			for(v in I[k]){
+				Error.temp <- y[-train.j]-v%*%y[train.j]
+				Pred.Error[j] <- t(Error.temp)%*%Error.temp
+			}
+		}
+	MeanPred.Error[i] <- 1/length(n_v)*sum(Pred.Error)
+	}
+	TheChosenOne <- which.min(MeanPred.Error)
+	return(A[,TheChosenOne])
+}
+
+\end{lstlisting}
+
+\begin{lstlisting}[title={Schwarz and Akaike Information Criterion (Speeded up Version)}]
+#Creats the set {1,...,p} from which we want to generate the Powerset
+Index <- seq(1,p,1)    
+
+#Denotes the number of Possible Models out of {1,...,p}
+col.A <- 2^p-1
+#Denote A as Powerset of {1,...,p}
+A <- matrix(0L,nrow = p, ncol = col.A)      
+k <- choose(p,1)
+l <- 1
+for (i in 1:p) {
+	#combn spits out all combinations of i elements in Index 
+	A[1:i,l:k] <- combn(Index,i)             
+	k <-k + choose(p,i+1)
+	l <- l + choose(p,i)
+}
+#generate the diagonal elements of the projection matrices corresponding to model alpha
+proj_diag <- matrix(0L,nrow = n, ncol = col.A)
+for(j in 1:col.A){
+	for(i in 1:n){
+		alpha <- A[A[,j]!=0,j]
+		proj_diag[i,j] <- t(X[i,alpha])%*%solve(gram[alpha,alpha])%*%X[i,alpha]
+	}
+}
+
+Pmatrix <- list()
+for (i in 1:length(A[1,])) {
+	X.train <- X[,A[,i]]
+	X.train.transpos <- t(X.train)
+	Pmatrix[[paste0("element",i)]] <- X.train%*%(solve(X.train.transpos%*%X.train)%*%X.train.transpos)
+}
+
+
+
+##AIC/BIC
+InfoCrit <- function(y,X,I,A,Criterion = "AIC"){
+	##Calculate Information Criterion
+
+	##For AIC
+	if(Criterion == "AIC"){
+
+		j <- 0
+		InfoCriterion <- c()
+		for (i in I) {
+			j <- j+1
+
+			##Number of regressors
+			k <- sum(A[,j] != 0)
+
+			##Expectation observation j
+			mu <- i%*%y
+
+			##Varianz
+			var <- 1/n*sum((y-mu)^2)
+
+			##Calculate Log Likelihood value
+			LogL <- -n/2*(log(2*pi)+log(var)+1)
+
+			InfoCriterion[j] <- 2*k-2*LogL
+		}
+	}
+	##For BIC
+	if(Criterion == "BIC"){
+		j <- 0
+		InfoCriterion <- c()
+		for (i in I) {
+			j <- j+1
+
+			##Number of regressors
+			k <- sum(A[,j] != 0)
+
+			##Expectation observation j
+			mu <- i%*%y
+
+			##Varianz
+			var <- 1/n*sum((y-mu)^2)
+
+			##Calculate Log Likelihood value
+			LogL <- -n/2*(log(2*pi)+log(var)+1)
+
+			InfoCriterion[j] <- log(n)*k - 2*LogL
+		}
+	}
+
+	#Choose the Model which minimze the Information Criterion
+	TheChosenOne <- which.min(InfoCriterion)
+	return(A[,TheChosenOne])
+}
 \end{lstlisting}
 
 
