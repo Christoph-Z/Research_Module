@@ -87,10 +87,13 @@ The most time consuming aspects are {\itshape solved.default,\%*\%} and {\itshap
 \begin{align*}
 \hat{\beta_\alpha}=X_\alpha(X^\prime_\alpha X_\alpha)^{-1}X_\alpha^\prime y
 \end{align*}
-Note, that we repeat all model selections several times for any fixed $n$ in all simulations. Since in our simulation design the regressors are fixed, some parts of the OLS estimate doesn't change in the different simulation steps and hence could be pulled out of the CV function to reduce redundant computations. In each new simulation step we only draw new error terms and hence only the y values differ. Thus we can give the matrix inverses and the set of Alphas directly to the function instead recomputing it over and over.
+Note, that we repeat all model selections several times for any fixed $n$ in all simulations. Since in our simulation design the regressors are fixed, some parts of the OLS estimate doesn't change in the different simulation steps and hence could be pulled out of the CV function to reduce redundant computations. In each new simulation step we only draw new error terms and hence only the $y$ values differ. Thus we can give the matrix inverses and the set of possible models $\mathcal{A}$ directly to the function, instead of recomputing it over and over.
 \\
-Another point where we want to save computing power is by using an algebraic reformulation of the average squared prediction error as in \cite{shao}.
-\\
+Another point in order to save computing power is using an algebraic reformulation of the average squared prediction error as in \cite{shao}.
+\[
+	\hat{\Gamma}_{\alpha,n}=\frac{1}{n}\sum_i[(1-\omega_{i\alpha})^{-1}(y_i-x^\prime_{\alpha i}\hat{\beta_\alpha})]^2
+\]
+where $\omega_{i\alpha}$ is the $i$th diagonal element of the projection matrix $P_\alpha$.\\
 This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Code Appendix blabka}. Table \ref{CVneu} shows the time profiling of these new algorithm.\\
 \\
 \begin{table}[!h]
