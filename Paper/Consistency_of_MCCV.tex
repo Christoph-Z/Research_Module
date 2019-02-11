@@ -54,7 +54,16 @@ where $\mathcal{M}_{MCCV}$ denotes the model selected by using $MCCV(n_v)$.
 - zusätzlich, wenn $b$ die bedingung \begin{align*}
 \frac{n^2}{b(n-n_v)^2}\to 0.
 \end{align*}
-erfüllt, dann auch hier MCCV besser als CV(1) weil consistent
+erfüllt, dann auch hier MCCV besser als CV(1) weil consistent, je kleiner $(n-n_v)$ , desto mehr splits werden gebraucht, d.h. desto größer muss $b$ sein\\
+- conditions
+\begin{align*}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
+\end{align*}
+ und die obige bedingung 
+ \begin{align*}
+ \frac{n^2}{b(n-n_v)^2}\to 0.
+ \end{align*}
+ implizieren, dass $b\to \infty$ as $n\to\infty$
 
 
 
