@@ -1,18 +1,44 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \subsection{The Analytic Approximate CV($n_\nu$)}
+%NOTIZEN keine ahnung wie man das ausformulieren soll und am besten zeigen soll mit hilfe eines nachweises (evtl den special case aus shao zitieren und die umformungen die er gemacht hat falls wir es schaffen noch nachholen) sonst sieht der estimator aus als sei er aus der luft gegriffen
+The third variant of CV($n_\nu$) we want to mention in this work is the so called \textit{Analytic Approximate CV($n_\nu$)} of \cite{shao}. We will write it for simplicity as \textit{APCV($n_\nu$)}. This method does also model selection by 
+\begin{align*}
+APCV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{APCV}
+\end{align*}
+As the \textit{MCCV($n_\nu$)}, we can make a relation to the \textit{BICV($n_\nu$)}. Under the
+%SEite  489 in shao Gleichung (3.17) die unter der condition (3.16) erzeugt werde kann (und den bedingungen des examples ....)
+case of the example \cite{shao} has given in his part to the \textit{BICV($n_\nu$)}, where the condition that $\mathcal{B}$ can be chosen such that
+\begin{align}
+\label{Bedingung_BICV_example}
+	n_\nu^{-1}\sum_{i\in s}x_i x_i^\prime=(n-n_\nu)^{-1}\sum_{i\in s^c}x_i x_i^\prime~~~\forall s\in\mathcal{B}
+\end{align}
+holds, we can derive a special expression for the estimator of $\hat{\Gamma}_{\alpha,n}^{BICV}$. This special representation for $\hat{\Gamma}_{\alpha,n}^{BICV}$ under this certain condition is chosen to be the estimator $\hat{\Gamma}_{\alpha,n}^{APCV}$ of $\Gamma_{\alpha,n-n_\nu}$ and denoted by
+%NAchweis wie er drauf kommt einfügen, falls noch zeit ist
 \begin{align*}
 \hat{\Gamma}_{\alpha,n}^{APCV}=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2
+\end{align*} 
+Thus only under (\ref{Bedingung_BICV_example}) we have that 
+$\hat{\Gamma}_{\alpha,n}^{APCV}=\hat{\Gamma}_{\alpha,n}^{BICV}$. Under the condition (\ref{liminf_condition}) and Theorem \ref{THM_Consistency of $CV(1)$} (i) and (ii) and the condition for the choice of $n_\nu$, which was
+\begin{align*}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
 \end{align*}
-
-%FUElltext Fußnote
-LALA corollary\footnote{Proof of Corollary \ref{Consistency_APCV} is given in Appendix \RM{1}}.
-
+the following Corollary holds\footnote{Proof of Corollary \ref{Consistency_APCV} is given in Appendix \RM{1}}..
 \begin{coro}[Consistency of APCV($n_v$)]
 \label{Consistency_APCV}
-Under the conditions of Theorem \ref{THM_Consistency_BICV}, the statments $(I)-(III)$ hold for the approximate $CV(n_v)$.
+%UND unter den oben genannten conditions
+Under the conditions of Theorem \ref{THM_Consistency_BICV}, the statments $(I)-(III)$ hold for the Analytic Approximate $CV(n_v)$.
+%FUER den estimator \hat{\Gamma}_{\alpha,n}^{APCV}.
 \end{coro}
 
+\textbf{NOTIZEN/ Überlegungen}
+%DIE letzte Gleichung APCV abschnitt noch einbasteln, beweis dazu?
+-APCV wie Corollary \ref{Consistency_APCV} shows, APCV is consistent\\
+-requires less computations than BICV oder MCCV (warum noch angeben)\\
+-APCV depends on special nature of linear models , im gegensatz zu BICV und MCCV\\
+-extension zu anderen models nicht so leicht wie bei BICV und MCCV (vgl. dazu Kap 4.5)\\
+-APCV performt nicht so gut wie MCCV\\
+-Für eine gute Performance APCV needs a larger $n$ than MCCV
 
 
 
