@@ -2,6 +2,14 @@
 \begin{document}
 \section{Introduction}	
 %NOTIZEN
+In this work we consider a model selection method  called \textit{Cross-Validation}, which is used for assesing the prediction ability of models.
+In theory it is often used the \textit{Leave-one-Out Cross-Validation}
+for example...., but as we will show in the next chapters, this method is asymptotically incorrect.
+%ANdere formulierung
+That means the probability of choosing the model with the best prediction ability is not converging to 1.
+To rectify this problem, \cite{shao} presents the \textit{Leave-$n_\nu$-out Cross-Validation} that does model selection and is asymptotically correct. But for this computational more complex version, he introduces different variants of this method, for example the \textit{Balanced Incomplete Cross-Validation} and the \textit{Monte-Carlo Cross-Validation}, which use less data and are computational more effective. In the following chapters we will describe how \textit{Cross-Validation} works and show some theory. Therefore we use mainly the structure of the paper of \cite{shao} and his approaches to show the theoretical part. After that we investigate this method on how good it works, by doing some simulations and compare it to some well known other model selection methods as the \textit{Akaike information Criterion} and the \textit{Baysian information Criterion}.\\\\
+
+
 -Paper shows: \textit{Leave-one-out Cross-Validation} (CV(1)) is asymptotically inconsistent\\
 -says: inconsistency can be rectified by using \textit{Leave-$n_\nu$-out Cross-Validation} (CV($n_\nu$))
 $~~\Rightarrow$ deficiency of CV(1) with $n_\nu\equiv 1$ can be rectified by large $n_\nu$, depending on $n$
