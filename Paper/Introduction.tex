@@ -1,8 +1,30 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \section{Introduction}	
-%NOTIZEN
--Paper shows: \textit{Leave-one-out Cross-Validation} (CV(1)) is asymptotically inconsistent\\
--says: inconsistency can be rectified by using \textit{Leave-$n_\nu$-out Cross-Validation} (CV($n_\nu$))
-$~~\Rightarrow$ deficiency of CV(1) with $n_\nu\equiv 1$ can be rectified by large $n_\nu$, depending on $n$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Cross validation is a technique to select models due to their predictive ability. Therefore a dataset of $n$ observations is split into $n-n_v$ data points for fitting the model and $n_v$ data points to obtain it's predictive ability.  \\
+\\
+Because of a low computational complexity the most popular variation of Cross validation is the leave one out Cross Validation, where $n_\nu$=1.
+This is problematic, since one can show that this variation of Cross Validation is asymptotically incorrect. We will  show that this incorrectness can be rectified by using another $n_v$ which fulfils certain properties. 
+
+
+
+
 \end{document}
