@@ -20,7 +20,7 @@ In the first simulation we want to take a closer look at the probability given i
 \\
 Figure \ref{Simulation1} shows how the probability of choosing a Category II model behaves for different sample sizes. To calculate these probabilities, we repeated the procedure of model selection 2000 times for each sample size and plotted the relative frequencies.\footnote{Note that for each of the 200 iterations a completely new sample was generated.}
 
-As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all five methods. Moreover, all methods perform quite similar in distinguishing between the two models, only the MCCV seems to be slightly worse than the other ones. The purpose of this is the smaller trainings set of MCCV, which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, this is a less accurate estimate than $\Gamma_{\alpha,n}$, which is calculated by the other methods. 
+As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all four methods. Moreover, all methods perform quite similar in distinguishing between the two models, only the MCCV seems to be slightly worse than the other ones. The purpose of this is the smaller trainings set of MCCV, which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, this is a less accurate estimate than $\Gamma_{\alpha,n}$, which is calculated by the other methods. 
 \begin{figure}[!h]
 	\label{Simulation1}
 	\centering
@@ -91,7 +91,7 @@ Note that we repeat all model selections several times for any fixed $n$ in all 
 \\
 Another point in order to save computing power is using an algebraic reformulation of the average squared prediction error as in \cite{shao}.
 \[
-	\hat{\Gamma}_{\alpha,n}=\frac{1}{n}\sum_i[(1-\omega_{i\alpha})^{-1}(y_i-x^\prime_{\alpha i}\hat{\beta_\alpha})]^2
+	\hat{\Gamma}_{\alpha,n}=\frac{1}{n}\sum_i[(1-p_{ii\alpha})^{-1}(y_i-x^\prime_{\alpha i}\hat{\beta_\alpha})]^2
 \]
 where $\omega_{i\alpha}$ is the $i$th diagonal element of the projection matrix $P_\alpha$.\\
 This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix II: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm.\\
