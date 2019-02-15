@@ -10,13 +10,16 @@ where $\hat{\Gamma}_{\alpha,n}^{BICV}$ is the estimator of $\Gamma_{\alpha,n-n_\
 \begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{BICV}=|\mathcal{B}|^{-1}n_\nu^{-1}\sum_{s\in\mathcal{B}}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2
 \end{align*}
- and in the next step the reader will be introduced on how $BICV(n_v)$ chooses his partitions, namely by a combinatorical procedure such that the following \textit{balance conditions} hold.\\\\
+ and in the next step the reader will be introduced on how $BICV(n_v)$ chooses his partitions, namely by a combinatorical procedure such that the following \textit{balance conditions} hold.
 %VIelleicht ein Lemma daraus machen??
+\begin{defi}
+\label{balance_property}
 Let $\mathcal{B}$ be a collection of $b$ subsets of $\{ 1,\dots,n\}$ that have size $n_v$ so that the following two conditions hold:
 \begin{enumerate}
 \item[(a)] every $i$, $1\le i \le n$, appears in the same number of subsets of $\mathcal{B}$
 \item[(b)] every pair $(i,j)$, $1\le i < j \le n$, appears in the same number of subsets of $\mathcal{B}$
 \end{enumerate}
+\end{defi}
 
 Thus we get the following claim\footnote{Proof of Claim \ref{Claim_BICV} is given in Appendix \RM{1}}.
 
@@ -42,9 +45,9 @@ Under the conditions of Theorem \ref{THM_Consistency of $CV(1)$} and
 \lim_{n\to\infty} \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =0.
 \end{align*}
 Suppose furthermore that $n_v$ is selected such that
-\begin{align*}
-\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
-\end{align*}
+\begin{align}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty. \label{growth_rates_nv_BICV}
+\end{align}
 Then the following holds
 \begin{enumerate}[(I)]
 \item If $\mathcal{M}_\alpha$ is in Category I, then there exists $R_n \ge 0$ such that $\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{1}{n}\varepsilon'\varepsilon + \Delta_{\alpha,n} + R_n + o_P(1)$.

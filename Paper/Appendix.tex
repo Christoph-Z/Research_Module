@@ -518,12 +518,12 @@
 	= \frac{1}{b^2}\underbrace{\sum_{s\in \mathcal{R}}V_\mathcal{R} [a(s)]}_{=bV_\mathcal{R} [a(s)]}
 	\le \frac{1}{b}\mathrm{E}_\mathcal{R}\bigl[a(s)^2\bigr].
 	\end{align*}
-	(3.) Using that for any two real numbers $a,b$ it holds that $(a+b)^2\le 2(a^2+b^2)$ yields
+	(3.) Using that for any two real numbers $a,c$ it holds that $(a+c)^2\le 2(a^2+c^2)$ yields
 	\begin{align*}
-	V_\mathcal{R}\bigl(a(s)+b(s)\bigr) 
-	&= \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] + b(s) - \mathrm{E}_\mathcal{R}[b(s)]\bigr)^2\bigr]\\
-	&\le 2 \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] \bigr)^2+\bigl(b(s) - \mathrm{E}_\mathcal{R}[b(s)]\bigr)^2\bigr]\\
-	&= 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(b(s)\bigr)\bigr]. 
+	V_\mathcal{R}\bigl(a(s)+c(s)\bigr) 
+	&= \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] + c(s) - \mathrm{E}_\mathcal{R}[c(s)]\bigr)^2\bigr]\\
+	&\le 2 \mathrm{E}_\mathcal{R}\bigl[\bigl(a(s)-\mathrm{E}_\mathcal{R}[a(s)] \bigr)^2+\bigl(c(s) - \mathrm{E}_\mathcal{R}[c(s)]\bigr)^2\bigr]\\
+	&= 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(c(s)\bigr)\bigr]. 
 	\end{align*}
 	(4.) At first note that $\mathcal{R}^\ast$ has $b=\binom{n}{n_v}$ elements. Fix some $i$ and $j$ in $\{1,\dots, n\}$ such that $j>i$. To count the number of sets which contain $i$, we can count the number of subsets of $\{1,\dots, n\}\backslash\{i\}$ that have $n_v-1$ elements, i.e.
 	\begin{align*}
@@ -534,7 +534,7 @@
 	\#\{s\in \mathcal{R}^\ast|i,j\in s , j>i\} &= \#\{s \subseteq \{1,\dots, n\}\backslash\{i,j\} | \# s =n_v-2\} \\
 	&= \binom{n-2}{n_v-2} = \frac{n_v(n_v-1)}{n(n-1)}\binom{n}{n_v}.
 	\end{align*}
-	Hence, $\mathcal{R}^\ast$ is a balanced incomlete block design. \\
+	Hence, $\mathcal{R}^\ast$ fulfills the conditions of definition \ref{balance_property}. \\
 \end{proof}
 
 
@@ -544,19 +544,40 @@
 	
 	Analogously as in the proof of Theorem \ref{THM_Consistency of $CV(1)$}, we can bound $\hat{\Gamma}_{\alpha,n}^{MCCV}$ by
 	\begin{align*}
-	\hat{\Gamma}_{\alpha,n}^{MCCV}= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-\hat{y}_{\alpha,s^c}\rVert^2
+	\hat{\Gamma}_{\alpha,n}^{MCCV}&= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-\hat{y}_{\alpha,s^c}\rVert^2
 	= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert (I_{n_v}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2\\
-	\ge \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2\\
+	&\ge \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2\\
 	\end{align*}
 	As $\mathcal{R}^\ast$ is a balanced incomplete block design by Lemma \ref{Lemma_MCCV}, it holds that
 	\begin{align*}
 	\mathrm{E}_\mathcal{R} \biggl[\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2 \biggr] 
 	= \frac{1}{n_v}\binom{n}{n_v}^{-1}\sum_{s\in \mathcal{R}^\ast}\sum_{i\in s}(y_i-x_{i,\alpha}'\hat{\beta}_\alpha)^2
-	= \frac{1}{n}\sum_{i\in s}(y_i-x_{i,\alpha}'\hat{\beta}_\alpha)^2.
+	= \frac{1}{n}\sum_{i=1}^n(y_i-x_{i,\alpha}'\hat{\beta}_\alpha)^2,
 	\end{align*}
-	%NOCH bearbeiten!
-	And by the strong law of large numbers (NOT STRONG LAW! I NEED TO USE A TRUNCATION TECHNIQUE WRT THE RANDOM SAMPLING MEASURE!!)
-	we can establish that $\hat{\Gamma}_{\alpha,n}^{MCCV} = \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2 + o_P(1)$.Finally let
+	where we only used property $(a)$ in definition \ref{balance_property}.
+	Therefore if $\mathcal{R}$ has this property, then $\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2$ and its expectation will coincide. 
+	
+	To see that $\mathcal{R}$ has property $(a)$ of definition \ref{balance_property} with probability converging to one, denote by $\mathcal{R}\in \{ 0,1\}^{n\times b}$ a matrix representation of the random sampling, where $\mathcal{R}_{i,j}=1$ is interpreted as $i$ is an element of the $j$-th sample.
+	Under random sampling with replacement the columns of $\mathcal{R}$, denoted by $\mathcal{R}_j$, are independent and each element $\mathcal{R}_{i,j}$ is Bernoulli distributed with $P(\mathcal{R}_{i,j}=1)=\frac{n_v}{n}$.
+	
+	By claim \ref{Claim_BICV}, we can express the probability that $\mathcal{R}$ has property $(a)$ of definition \ref{balance_property} as
+	\begin{align*}
+	&P\biggl( \sum_{j=1}^b \mathcal{R}_{i,j} = \frac{n_v}{n}b \quad\forall 1\le i \le n\biggr)
+	= P\biggl( \frac{1}{b}\sum_{j=1}^b \mathcal{R}_{i,j} = \underbrace{\frac{n_v}{n}}_{\mathrm{E}[\mathcal{R}_{i,j}]} \quad\forall 1\le i \le n\biggr)\\
+	=&P\biggl(\biggl\lVert\frac{1}{b}\sum_{j=1}^b \mathcal{R}_{i,j}-\mathrm{E}[\mathcal{R}_{i,j}]\biggr\rVert^2=0\biggr)
+	\end{align*}
+	Next, by using the Markov and the triangle inequality, we can establish for any $\varepsilon >0$
+	\begin{align*}
+	P\biggl(\biggl\lVert\frac{1}{b}\sum_{j=1}^b \mathcal{R}_{i,j}&-\mathrm{E}[\mathcal{R}_{i,j}]\biggr\rVert^2>\varepsilon\biggr)
+	\le \frac{1}{\varepsilon}\mathrm{E}\biggl[\biggl\lvert \sum_{i=1}^n\biggl(\frac{1}{b}\sum_{j=1}^b \mathcal{R}_{i,j}-\mathrm{E}[\mathcal{R}_{i,j}]\biggr)^2\biggr\rvert\biggr]\\
+	\le&\frac{1}{b^2\varepsilon}\sum_{i=1}^n\mathrm{E}\biggl[\biggl(\sum_{j=1}^b \mathcal{R}_{i,j}-\mathrm{E}[\mathcal{R}_{i,j}]\biggr)^2\biggr]\\
+	= &\frac{1}{b^2\varepsilon}\sum_{i=1}^n\biggl[\sum_{j=1}^b\underbrace{\mathrm{Var}(\mathcal{R}_{i,j})}_{=\frac{n_v}{n}\frac{n-n_v}{n}}+\sum_{j=1}^b\sum_{k\neq j}^b\underbrace{\mathrm{Cov}(\mathcal{R}_{i,j},\mathcal{R}_{i,k})}_{=0}\biggr]\\
+	=&\frac{1}{\varepsilon}\frac{n}{b}\frac{n_v}{n}\frac{n-n_v}{n},
+	\end{align*}
+	which converges to zero, because of (\ref{growth_rates_nv_MCCV}) and since by assumption $b\ge n$.
+	Hence, we have shown that $\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2 = \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2 + o_P(1)$.
+	
+	Finally, let
 	\begin{align*}
 	R_n= \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-\hat{y}_{\alpha,s^c}\rVert^2- \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\lVert y_s-X_{\alpha,s}\hat{\beta}_\alpha\rVert^2 \ge 0
 	\end{align*} 

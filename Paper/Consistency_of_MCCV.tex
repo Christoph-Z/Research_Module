@@ -14,12 +14,12 @@ where $\hat{\Gamma}_{\alpha,n}^{MCCV}$ is the estimator of $\Gamma_{\alpha,n-n_\
 Now we consider the following Lemma\footnote{Proof of Lemma \ref{Lemma_MCCV} is given in Appendix \RM{1}}.
 \begin{lemma}
 	\label{Lemma_MCCV}
-Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}\subseteq\mathcal{R}^\ast$. Then for any functions $a,b:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
+Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}\subseteq\mathcal{R}^\ast$. Then for any functions $a,c:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
 \begin{enumerate}
 \item $\mathrm{E}_\mathcal{R} \bigl[ b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr] = \binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s)$
 \item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$
-\item $V_\mathcal{R}\bigl(a(s)+b(s)\bigr) \le 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(b(s)\bigr)\bigr]$
-\item $\mathcal{R}^\ast$ is a balanced incomplete block design.
+\item $V_\mathcal{R}\bigl(a(s)+c(s)\bigr) \le 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(c(s)\bigr)\bigr]$
+\item $\mathcal{R}^\ast$ fulfills the \textit{balance conditions} of definition \ref{balance_property}.
 \end{enumerate}
 \end{lemma}
 Such that under the usage of this Lemma \ref{Lemma_MCCV} with the fact that $\mathcal{R}^\ast$ is a balanced incomplete block design, we can proof the following  Theorem\footnote{Proof of Theorem \ref{THM_Consistency_MCCV} is given in Appendix \RM{1}}. 
@@ -36,9 +36,9 @@ where $\mathcal{R}$ contains $b$ subsets selected randomly with $b$ satisfying
 \frac{n^2}{b(n-n_v)^2}\to 0.
 \end{align*}
 Suppose furthermore that $n_v$ is selected such that
-\begin{align*}
-\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
-\end{align*}
+\begin{align}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.\label{growth_rates_nv_MCCV}
+\end{align}
 Then the following holds
 \begin{enumerate}[(I)]
 \item If $\mathcal{M}_\alpha$ is in Category I, then there exists $R_n \ge 0$ such that $\hat{\Gamma}_{\alpha,n}^{MCCV} = \frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s + \Delta_{\alpha,n} + R_n + o_P(1)$.
