@@ -334,6 +334,124 @@
 	establishing that $\sum_{i=1}^n p_{ii\alpha}\varepsilon_i^2= d_\alpha \sigma^2 + o_P(1)$.
 	Combining the results from (1.) and (2.) we obtain $\hat{\Gamma}_{\alpha,n}^{CV} =\frac{1}{n}\varepsilon'\varepsilon- \frac{1}{n}\varepsilon'P_\alpha\varepsilon + \frac{2}{n}d_\alpha\sigma^2 +o_P(n^{-1})$
 	proving the second claim.\\
+
+\textbf{Proof of $(III)$:}
+Since $(I)$ and $(II)$ imply that $\hat{\Gamma}_{\alpha,n}^{CV}$ consistently estimates $\Gamma_{\alpha,n}$, it suffices to show that $CV(1)$ asymptotically wouldn't choose any model in Category $I$, if we compare the $\Gamma_{\alpha,n}$. 
+Note that for any model in Category $II$ holds
+\begin{align*}
+\lim_{n\to \infty} \Gamma_{\alpha,n} = \sigma^2 
+\end{align*}
+and for any model in Category $I$
+\begin{align*}
+\liminf_{n\to \infty} \Gamma_{\alpha,n} = \sigma^2 + \liminf_{n \to \infty} \Delta_{\alpha,n} >  \sigma^2,
+\end{align*}
+by condition (\ref{liminf_condition}). Hence, the expected squared prediction error for any model in Category $I$ is larger than the expected squared prediction error for models in category $II$. Or put differently, $CV(1)$ won't choose any model in Category $I$ asymptotically with probability approaching one.\\
+
+\textbf{Proof of $(IV)$:}
+Suppose that $\mathcal{M}_\ast$ is not of size $p$, i.e. $d_\ast < p$.
+By $(II)$ 
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{CV} = \frac{1}{n}\varepsilon'\varepsilon + \frac{2}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon + o_P\biggl(\frac{1}{n}\biggr)
+\end{align*}
+By $(III)$ it suffices to look at models in Category $II$.
+Furthermore 
+\begin{align*}
+&\{ \exists\alpha\in \textrm{Cat. $II$} \textrm{ s.t. $\mathcal{M}_\alpha$ is preferable to $\mathcal{M}_\ast$ w.r.t. $CV(1)$ at step $n$ }\} \\
+= &\{ \exists\alpha\in \textrm{Cat. $II$}: \hat{\Gamma}_{\alpha,n}^{CV} < \hat{\Gamma}_{\ast,n}^{CV} \} \\
+= &\biggl\{ \exists\alpha\in \textrm{Cat. $II$}: \frac{2}{n}(d_\alpha-d_\ast)\sigma^2 < \frac{1}{n}\varepsilon'(P_\alpha-P_\ast)\varepsilon + o_P\biggl(\frac{1}{n}\biggr) \biggr\}\\
+= &\{ \exists\alpha\in \textrm{Cat. $II$}: 2(d_\alpha-d_\ast)\sigma^2 <\varepsilon'(P_\alpha-P_\ast)\varepsilon + o_P(1) \}
+\end{align*}
+And hence, 
+\begin{align*}
+&P(\mathcal{M}_{CV}\neq \mathcal{M}_\ast) \\
+= &P\bigl(\exists\alpha\in \textrm{Cat. $II$} \textrm{ s.t. $\mathcal{M}_\alpha$ is preferable to $\mathcal{M}_\ast$ w.r.t. $CV(1)$ at step $n$ }\bigr)\\
+= &P\bigl(\exists\alpha\in \textrm{Cat. $II$}: 2(d_\alpha-d_\ast)\sigma^2 <\varepsilon'(P_\alpha-P_\ast)\varepsilon\bigr) + o(1)\\
+\ge &P\bigl(2(d_\alpha-d_\ast)\sigma^2 <\varepsilon'(P_\alpha-P_\ast)\varepsilon\bigr) + o(1), 
+\end{align*}
+for some arbitrary but fixed $\alpha\in \textrm{Cat. $II$}$.
+
+To see that this probability doesn't converge to zero, assume for a moment that $\varepsilon\sim \mathcal{N}(0,\sigma^2\mathrm{I}_n)$. In equations (\ref{projection_start})-(\ref{projection_end}) we will show that $P_\alpha-P_\ast$ is an orthogonal projection onto $\mathrm{span}(X_\alpha)\cap \mathrm{span}(X_\ast)^\bot$. Hence, for any $n\in \mathbb{N}$, $\sigma^{-2}\varepsilon'(P_\alpha-P_\ast)\varepsilon$ is chi-squared distributed with $d_\alpha-d_\ast$ degrees of freedom and expected value $d_\alpha-d_\ast$. Therefore this probability will be strictly positive for any $n$.
+
+To show that the same holds in our setting, we will show that $\sigma^{-2}\varepsilon'(P_\alpha-P_\ast)\varepsilon$ converges in distribution to a chi-square distributed random variable. To simplify our notation, we assume that all limits of the used matrix sequences exist.\footnote{Otherwise, because of condition $(i)$ of Theorem \ref{THM_Consistency of $CV(1)$}, we could argue for arbitrary clusterpoints along converging subsequences.}
+
+Because of the conditions $(i)$ and $(ii)$, we can establish that
+\begin{align*}
+\underbrace{\left(
+\begin{array}{c}
+(X_\alpha'X_\alpha)^{-0.5} X_\alpha'\\
+(X_\ast'X_\ast)^{-0.5}X_\ast'\\
+\end{array}
+\right)}_{\equiv B}
+\varepsilon \overset{d}{\longrightarrow} Y \sim \mathcal{N}\left(0,\sigma^2 \lim_{n\to\infty}BB'\right)
+\end{align*}
+by using the Lindeberg-Feller central limit theorem.\footnote{cf. \cite{vandervaart}, Example 2.28, p.21}
+
+By the continuous mapping theorem for the function
+\begin{align*}
+g(x) = x'\mathrm{diag}(\underbrace{1,\dots,1}_{\textrm{$d_\alpha$ times}},\underbrace{-1,\dots,-1}_{\textrm{$d_\ast$ times}})x,
+\end{align*}
+and by using that $B'\mathrm{diag}(1,\dots,1,-1,\dots,-1)B=P_\alpha-P_\ast$, we achieve 
+\begin{align*}
+\varepsilon'(P_\alpha-P_\ast)\varepsilon = g(B\varepsilon) \overset{d}{\longrightarrow} g(Y).
+\end{align*}
+Hence, it remains to show, that $g(Y)$ is chi-square distributed. 
+Since we can obtain $Y$ as the limit of $Y_n=\sigma BZ_n$, where $Z_n\sim \mathcal{N}(0,\mathrm{I}_{2n})$, we will derive the distribution of $g(Y)$ as the limit distribution of 
+\begin{align*}
+g(Y_n) = g(\sigma BZ_n) = \sigma ^2 Z_n'B'\mathrm{diag}(1,\dots,1,-1,\dots,-1)BZ_n %\\
+%=\sigma^2 Z'
+%\left(
+%\begin{array}{cc}
+%X_\alpha(X_\alpha'X_\alpha)^{-0.5}  &
+%X_\ast'(X_\ast'X_\ast)^{-0.5}
+%\end{array}
+%\right)
+%\mathrm{diag}(1,\dots,1,-1,\dots,-1)
+%\left(
+%\begin{array}{c}
+%(X_\alpha'X_\alpha)^{-0.5} X_\alpha'\\
+%(X_\ast'X_\ast)^{-0.5}X_\ast'\\
+%\end{array}
+%\right)
+%Z\\
+= \sigma^2 Z_n'(P_\alpha-P_\ast)Z_n.
+\end{align*}
+If we can show that $P_\alpha-P_\ast$ is an orthogonal projection onto a linear subspace, whose dimension does not depend on $n$, then it would follow that\footnote{cf. \cite{vandervaart}, Lemma 17.1, p.242}
+\begin{align}
+\sigma^2\chi_{\mathrm{dim}}^2 \sim g(Y_n) \overset{d}{\longrightarrow}g(Y) \sim \sigma^2\chi_{\mathrm{dim}}^2.\label{lim_dist}
+\end{align}
+To see that $P_\alpha-P_\ast$ is an orthogonal projection, note that
+\begin{align}
+(P_\alpha-P_\ast)' = P_\alpha'-P_\ast'=P_\alpha-P_\ast \label{projection_start}
+\end{align}
+and 
+\begin{align}
+(P_\alpha-P_\ast)(P_\alpha-P_\ast) 
+&= P_\alpha P_\alpha-P_\alpha P_\ast-P_\ast P_\alpha+P_\ast P_\ast \nonumber\\
+&=P_\alpha - \underbrace{P_\alpha X_\ast}_{=X_\ast}(X_\ast'X_\ast)^{-1}X_\ast' - X_\ast (X_\ast'X_\ast)^{-1}\underbrace{X_\ast'P_\alpha}_{=(P_\alpha X_\ast=X_\ast} +P_\ast\\
+&=P_\alpha-P_\ast,\nonumber
+\end{align}
+where we exploited that $\mathrm{span}(X_\ast)\subseteq \mathrm{span} (X_\alpha)$ and hence $P_\alpha X_\ast=X_\ast$.
+
+Furthermore, $P_\alpha-P_\ast$ projects onto $\mathrm{span}(X_\alpha)\cap \mathrm{span}(X_\ast)^\bot$, since $\mathbb{R}^n$ can be partitioned into
+\begin{align}
+\mathbb{R}^n&=\mathrm{span}(X_\alpha)^\bot \cup\mathrm{span}(X_\alpha)\nonumber\\
+&=\mathrm{span}(X_\alpha)^\bot \cup\bigl[\mathrm{span}(X_\alpha)\cap \bigl(\mathrm{span}(X_\ast)\cap \mathrm{span}(X_\ast)^\bot\bigr)\bigr]\\
+&=\mathrm{span}(X_\alpha)^\bot \cup \mathrm{span}(X_\ast) \cup \bigl[\mathrm{span}(X_\alpha)\cap \mathrm{span}(X_\ast)^\bot\bigr]\nonumber
+\end{align} 
+and
+\begin{align}
+\forall y\in \mathrm{span}(X_\alpha)^\bot: && (P_\alpha-P_\ast)y=\underbrace{P_\alpha y}_{=0}-\underbrace{P_\ast y}_{=0}=0\nonumber\\
+\forall y\in \mathrm{span}(X_\ast): && (P_\alpha-P_\ast)y=\underbrace{P_\alpha y}_{=y}-\underbrace{P_\ast y}_{=y}=0\label{projection_end}\\
+\forall y\in \mathrm{span}(X_\alpha)\cap \mathrm{span}(X_\ast)^\bot: && (P_\alpha-P_\ast)y=\underbrace{P_\alpha y}_{=y}-\underbrace{P_\ast y}_{=0}=y.\nonumber
+\end{align}
+Moreover $d_\alpha-d_\ast$, the dimension of $\mathrm{span}(X_\alpha)\cap \mathrm{span}(X_\ast)^\bot$, does not depend on $n$.
+
+According to (\ref{lim_dist}), we have established that $\sigma^{-2}g(Y)$ is chi-square distributed with $d_\alpha-d_\ast$ degrees of freedo, and hence
+\begin{align*}
+P\bigl(2(d_\alpha-d\ast)\sigma^2 < \varepsilon'(P_\alpha-P-\ast)\varepsilon\bigr)
+=P\bigl(2(d_\alpha-d_\ast)<\chi_{d_\alpha-d_\ast}^2\bigr)+o(1),
+\end{align*}
+proving $(IV)$.
 \end{proof}
 
 \begin{proof}[Proof of Claim \ref{Claim_BICV}]~\\
