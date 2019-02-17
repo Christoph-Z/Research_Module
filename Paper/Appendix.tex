@@ -172,7 +172,7 @@
 	&=(X_\alpha^\prime X_\alpha)^{-1}[(X_{\alpha,s}^\prime X_{\alpha,s}) \hat{\beta}_{\alpha,s}+(X_{\alpha,s^c}^\prime X_{\alpha,s^c})\hat{\beta}_{\alpha,s^c}]
 	\label{beta_alpha_hat_decomposition}
 	\end{align}
-	The Average squared prediction error for split $s$ satisfies
+	The average squared prediction error for split $s$ satisfies
 	\begin{align*}
 	ASPE_{s}(\mathcal{M}_\alpha)&=\frac{1}{n_\nu}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2\\
 	&=\frac{1}{n_\nu}\parallel y_s-X_{\alpha,s}\hat{\beta}_{\alpha,s^c}\parallel^2\\
@@ -195,9 +195,9 @@
 
 \begin{proof}[Proof of Theorem \ref{THM_Consistency of $CV(1)$}]~\\
 	\textbf{Proof of $(I)$:} A first order Taylor expansion of $(1-x)^{-2}$ in $x$ around $0$ yields 
-	\begin{align*}
-	(1- x)^{-2} = 1+ 2 x + o(x^2) \quad \textrm{as} \quad x\to 0 .
-	\end{align*}
+	\begin{align}
+	(1- x)^{-2} = 1+ 2 x + o(x^2) \quad \textrm{as} \quad x\to 0 .\label{proof_CV(1)_1}
+	\end{align}
 	By condition $(ii)$ and as
 	\begin{align*}
 	2p_{ii\alpha} + o(p_{ii\alpha}^2) 
@@ -212,14 +212,14 @@
 	
 	%DEN CV(1) estimator auch so gekennzeichnet, eventuell vor das THM 4.1.1 packen, damit er nicht so vom himmel fällt
 	Using this expression to rewrite $\hat{\Gamma}_{\alpha,n}^{CV(1)}$ yields
-	\begin{align*}
-	\hat{\Gamma}_{\alpha,n}^{CV(1)} &= \frac{1}{n}\sum_{i=1}^n (1- p_{ii\alpha})^{-2}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2\\
-	&= (1+o(1))\frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2\\
-	&= (1+o(1))\frac{1}{n}\lVert (I_n-P_\alpha) y\rVert^2\\
-	&= (1+o(1))\frac{1}{n}\lVert (I_n-P_\alpha) X_\alpha\beta_\alpha +(I_n-P_\alpha)\varepsilon \rVert^2\\
-	&= (1+o(1))\biggl[\frac{1}{n}\lVert(I_n-P_\alpha)\varepsilon \rVert^2+ \underbrace{\frac{1}{n}\lVert (I_n-P_\alpha) X_\alpha\beta_\alpha\rVert^2}_{=\Delta_{\alpha,n}} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha\biggr]\\
-	&= (1+o(1)) \biggl[\frac{\varepsilon'\varepsilon}{n} + \Delta_{\alpha,n} - \frac{\varepsilon'P_\alpha\varepsilon}{n} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha\biggr]. \quad (\ast)
-	\end{align*}
+	\begin{align}
+	\hat{\Gamma}_{\alpha,n}^{CV(1)} &= \frac{1}{n}\sum_{i=1}^n (1- p_{ii\alpha})^{-2}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2\nonumber\\
+	&= (1+o(1))\frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2\nonumber\\
+	&= (1+o(1))\frac{1}{n}\lVert (I_n-P_\alpha) y\rVert^2\nonumber\\
+	&= (1+o(1))\frac{1}{n}\lVert (I_n-P_\alpha) X_\alpha\beta_\alpha +(I_n-P_\alpha)\varepsilon \rVert^2\nonumber\\
+	&= (1+o(1))\biggl[\frac{1}{n}\lVert(I_n-P_\alpha)\varepsilon \rVert^2+ \underbrace{\frac{1}{n}\lVert (I_n-P_\alpha) X_\alpha\beta_\alpha\rVert^2}_{=\Delta_{\alpha,n}} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha\biggr]\nonumber\\
+	&= (1+o(1)) \biggl[\frac{\varepsilon'\varepsilon}{n} + \Delta_{\alpha,n} - \frac{\varepsilon'P_\alpha\varepsilon}{n} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha\biggr]. \label{proof_CV(1)_2}
+	\end{align}
 	
 	Since the $\varepsilon_i$ are iid with finite second moments it follows by the law of large numbers that
 	$\frac{\varepsilon'\varepsilon}{n} = \sigma^2 + o_P(1)$.
@@ -244,13 +244,15 @@
 	Combining $\frac{\varepsilon'\varepsilon}{n} = \sigma^2 + o_P(1)$, $\frac{1}{n}\varepsilon'P_\alpha\varepsilon = o_P(1)$ and $\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha=o_P(1)$ with $(\ast)$ yields $\hat{\Gamma}_{\alpha,n}^{CV} = \sigma^2 + \Delta_{\alpha,n} + o_P(1)$ which is asymptotically equivalent to $\Gamma_{\alpha,n}$.This proves the first assertion.\\
 	
 	\textbf{Proof of $(II)$:} To show the second statement, assume that $\mathcal{M}_\alpha$ is in Category II.
-	Using the linearization of the proof of $(I)$ we get
+	Using the linearization in (\ref{proof_CV(1)_1}) we get
 	%ZEIGEN wie der zweite term zustande kommt
 	\begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{CV(1)} &= \frac{1}{n}\sum_{i=1}^n (1- p_{ii\alpha})^{-2}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2\\
+	&= \frac{1}{n}\sum_{i=1}^n (1+2p_{ii\alpha} + o(p_{ii\alpha}^2))(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2\\
+	&=\frac{1}{n}\sum_{i=1}^n (1 + \underbrace{o(p_{ii\alpha}^2)}_{=o(1)})(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2+\frac{2}{n}\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2\\
 	&= (1+o(1))\frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2 + \frac{2}{n}\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2. 
 	\end{align*}
-	Repeating the same calculations as in $(\ast)$ and using that for all $\alpha$ in Category II holds $\Delta_{\alpha,n}=0$ and $\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha =0$, yields
+	Repeating the same calculations as in (\ref{proof_CV(1)_2}) and using that for all $\alpha$ in Category II holds $\Delta_{\alpha,n}=0$ and $\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha =0$, yields
 	\begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{CV} &=\frac{\varepsilon'\varepsilon}{n} + \Delta_{\alpha,n} - \frac{\varepsilon'P_\alpha\varepsilon}{n} +\frac{2}{n}\varepsilon'(I_n-P_\alpha) X_\alpha\beta_\alpha+ \frac{2}{n}\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2 +o(1)\\
 	&= \frac{\varepsilon'\varepsilon}{n}- \frac{\varepsilon'P_\alpha\varepsilon}{n} + \frac{2}{n}\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2 +o(1).
@@ -284,7 +286,7 @@
 	\end{align*}
 	Where we used that for the projection matrix $P_\alpha$ holds that
 	%ANGeben warum das untere hält, wegen idempotenz und symmetrie von P_\alpha
-	$\sum_{j}p_{ij\alpha}^2=p_{ii\alpha}$.\\
+	$\sum_{j}p_{ij\alpha}^2=p_{ii\alpha}$, due to idempotency and symmetry.\\
 	
 	The last part in $(\Delta)$ is asymptotically negligible as well since
 	\begin{align*}
@@ -489,19 +491,29 @@ proving $(IV)$.
 %THM proof of (III) fehlt noch
 \begin{proof}[Proof of Theorem \ref{THM_Consistency_BICV}]~\\
 	\textbf{Proof of $(I)$:}\\
-	From Theorem \ref{THM_Consistency of $CV(1)$} and the balance property of $\mathcal{B}$ out of Claim \ref{Claim_BICV} (II),
+	At first, we will bound $\hat{\Gamma}_{\alpha,n}^{BICV}$ from below in the following way
 	\begin{align*}
-	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (I_{n_v}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 \ge \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 = \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2.
+	\hat{\Gamma}_{\alpha,n}^{BICV} 
+	= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (I_{n_v}-Q_{\alpha,s})^{-1}(y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 
+	\ge \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 
+	%= \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2.
 	\end{align*}
-	Why does the inequality hold?
-	%ZUM letzten min bei der Dimension eine notiz
-	%MEintest du einfach z\in \mathbb{R}^{n_v} ???
+	To see that this bound is valid, note that we can bound  
 	\begin{align*}
-	\min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z 
+	0=\min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z 
 	\le \min_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
-	= \min_{z\in \mathbb{R}^n_v : \lVert z\rVert=1}z'Q_{\alpha,s}z
+	= \min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
 	\end{align*}
-	Hence the maximal eigenvalue of $(I_{n_v}-Q_{\alpha,s})$ is below or equal to one or equivalently 
+	and analogously
+	\begin{align*}
+	\max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
+	= \max_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
+	\le \max_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z =1.
+	\end{align*}
+	Hence the maximal eigenvalue of $(I_{n_v}-Q_{\alpha,s})$ is bounded by one or equivalently 
+	\begin{align*}
+	\max_{z\in \mathbb{R}^{n_v}: \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})z
+	\end{align*}
 	\begin{align*}
 	\lVert (I_{n_v}-Q_{\alpha,s})^{-1}a\rVert ^2 \ge \lVert a\rVert ^2 \quad \forall a\in \mathbb{R}^{n_v}.
 	\end{align*}
@@ -514,70 +526,142 @@ proving $(IV)$.
 	
 	%DER proof-teil ist unübersichtlich, eventuelle einigen bereichen eine nummer geben und beschreiben mit ein bisschen text was gerade gemacht wird
 	\textbf{Proof of $(II)$:} \\
-	We conduct the proof of the second statement in three steps. First we decompose $\hat{\Gamma}_{\alpha,n}^{BICV} = A_\alpha + B_\alpha$. In the second step we show that $A_\alpha=\frac{1}{n}\varepsilon'\varepsilon + \frac{1}{n-n_v}d_\alpha\sigma^2 + o_P((n-n_v)^{-1})$ and in the last step we prove $B_\alpha = o_P((n-n_v)^{-1})$. \\
-	(1.) Decompose $\hat{\Gamma}_{\alpha,n}^{BICV} = A_\alpha + B_\alpha$, where
+	To prove the second statement, we use a similar argument as in the proof of Theorem \ref{THM_Consistency of $CV(1)$} $(II)$, i.e. we will show that
+	\begin{align}
+	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{\varepsilon'\varepsilon}{n}-\frac{\varepsilon'P_\alpha\varepsilon}{n}+\frac{1}{n-n_v}\sum_{i=1}^np_{ii\alpha}e_i^2+o_P\left(\frac{1}{n-n_v}\right) \quad \forall \alpha\in \textrm{Cat. $II$}. \label{proof_BICV_1}
+	\end{align}
+	Since we have already shown that $\sum_{i=1}^np_{ii\alpha}e_i^2=d_\alpha\sigma^2 +o_P(1)$ (see the proof of Theorem \ref{THM_Consistency of $CV(1)$} $(II)$), we can further simplify to
 	\begin{align*}
-	A_\alpha=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}U_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}e_s,\\
-	B_\alpha=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s
+	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{\varepsilon'\varepsilon}{n}-\frac{\varepsilon'P_\alpha\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n-n_v}+o_P\left(\frac{1}{n-n_v}\right) \quad \forall \alpha\in \textrm{Cat. $II$},
 	\end{align*}
-	and
+	which is already quite close to the statement. It only differs in the $\varepsilon'P_\alpha\varepsilon$ term. But this term converges to zero, even if we multiply it with $n-n_v$. This can be seen by using the Markov inequality and the growth rate requirements in condition \ref{growth_rates_nv_BICV} as follows
 	\begin{align*}
-	e_s=\varepsilon_s-X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime\varepsilon\\
-	U_{\alpha,s} = (I_{n_v}-Q_{\alpha,s})(I_{n_v}+c_n P_{\alpha,s})(I_{n_v}-Q_{\alpha,s})\\
-	c_n = \frac{n_v(2n-n_v)}{(n-n_v)^2}\\
-	P_{\alpha,s}= X_{\alpha,s}(X_{\alpha,s}'X_{\alpha,s})^{-1}X_{\alpha,s}'
+	P\left(\left\lvert \frac{n-n_v}{n}\varepsilon'P_\alpha\varepsilon\right\rvert > \delta\right)\le \frac{n-n_v}{n}\frac{1}{\delta}\mathrm{E}[\varepsilon'P_\alpha\varepsilon]=\frac{n-n_v}{n}\frac{d_\alpha\sigma^2}{\delta}\to 0,\quad\forall \delta >0
 	\end{align*}
-	(2.)
+	i.e. $n^{-1}\varepsilon'P_\alpha\varepsilon=o_P((n-n_v)^{-1})$. This yields the statement
 	\begin{align*}
-	A_\alpha&= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-Q_{\alpha,s})(I_{n_v}+c_n P_{\alpha,s})(I_{n_v}-Q_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s\\
-	&=  \underbrace{\frac{1}{n_vb}\sum_{s\in \mathcal{B}} e_s'e_s}_{=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2} + \frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}\lVert P_{\alpha,s}e_s\rVert^2
+	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{\varepsilon'\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n-n_v}+o_P\left(\frac{1}{n-n_v}\right). \quad \forall \alpha\in \textrm{Cat. $II$}
 	\end{align*}
-	Under the conditions of the theorem and as $X_\alpha'X_\alpha =X_{\alpha,s}'X_{\alpha,s}+X_{\alpha,s^c}'X_{\alpha,s^c}$,it holds for any $s\in \mathcal{B}$ that
+	Thus it only remains to show that (\ref{proof_BICV_1}) holds true. Since the argument is quite lengthy, we split it into the following parts: 	
+	First we will decompose $\hat{\Gamma}_{\alpha,n}^{BICV}$ to 
+	\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{\varepsilon'\varepsilon}{n}-\frac{\varepsilon'P_\alpha\varepsilon}{n}+\frac{c_n}{n_v b}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s+B_\alpha,
+	\end{align*}
+	where $B_\alpha$ is the remainder term.
+	Second we will show that $\frac{c_n}{n_v b}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s$ is close to $\frac{1}{n-n_v}\sum_{i=1}^np_{ii\alpha}e_i^2$ and in the last step we will show that the remainder term $B_\alpha$ is vanishing.
+	
+	(1.) Denote by $e_s=\varepsilon_s-X_{\alpha,s}(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime\varepsilon$ the OLS residuals on the validation set $s$. Then by using Lemma \ref{Equation3.1} we can rewrite $\hat{\Gamma}_{\alpha,n}^{BICV}$ as
+	\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-Q_{\alpha,s})^{-1}e_s.
+	\end{align*}
+	Adding a zero and rearranging yields
+	\begin{align}
+	\hat{\Gamma}_{\alpha,n}^{BICV} = &\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(U_{\alpha,s} + I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s\nonumber\\
+	= &\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}U_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}e_s\label{proof_BICV_2}\\
+	&+\underbrace{\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s}_{\equiv B_\alpha},\nonumber
+	\end{align}
+	where $B_\alpha$ is the aforementioned remainder term, 
+	\begin{align*}
+	U_{\alpha,s}=(I_{n_v}-Q_{\alpha,s})(I_{n_v}+c_n P_{\alpha,s})(I_{n_v}-Q_{\alpha,s}),\\
+	c_n = \frac{n_v(2n-n_v)}{(n-n_v)^2}\quad \textrm{and} \quad
+	P_{\alpha,s}= X_{\alpha,s}(X_{\alpha,s}'X_{\alpha,s})^{-1}X_{\alpha,s}'.
+	\end{align*}
+	Inserting the definition of $U_{\alpha,s}$ into (\ref{proof_BICV_2}), yields
+	\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{BICV}&=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}}_{=I_{n_v}}e_s +B_\alpha\\
+	&=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'e_s + \frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s+B_\alpha.
+	\end{align*}
+	Furthermore, by using the balance property of $\mathcal{B}$ and claim \ref{Claim_BICV}, we can simplify the first sum to
+	\begin{align*}
+	\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'e_s
+	= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\sum_{i\in s}e_i^2 
+	= \frac{1}{n_vb}\frac{n_v}{n}b \sum_{i=1}^ne_i^2 = \frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2.
+	\end{align*}
+	Finally, if we use the same calculations as in (\ref{proof_CV(1)_2}), we obtain the desired representation
+	\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{\varepsilon'\varepsilon}{n}-\frac{\varepsilon'P_\alpha\varepsilon}{n}+\frac{c_n}{n_v b}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s+B_\alpha.
+	\end{align*}
+	
+	(2.) Next, we want to show that
+	\begin{align*}
+	\frac{c_n}{n_vb}\sum_{s\in\mathcal{B}}e_s'P_{\alpha,s}e_s \approx \frac{1}{n-n_v}\sum_{i=1}^np_{ii\alpha}e_i^2+o_P\left(\frac{1}{n-n_v}\right).
+	\end{align*}
+	To do so, we will first argue that, due to (\ref{gram_matrix_condition_BICV}), $P_{\alpha,s}$ is approximately $Q_{\alpha,s}$ and hence
+	\begin{align*}
+	\sum_{s\in\mathcal{B}}e_s'P_{\alpha,s}e_s
+	\approx \sum_{s\in\mathcal{B}}e_s'Q_{\alpha,s}e_s
+	= \sum_{s\in \mathcal{B}}\sum_{i\in s}\sum_{j\in s}p_{ij\alpha}e_ie_j,
+	\end{align*}
+	which itself is proportional to $\sum_{i=1}^n p_{ii\alpha}e_i^2$, due to the balance property of $\mathcal{B}$.
+	
+	To make this argument rigorous, consider the difference
 	\begin{align*}
 	\frac{1}{n}X_\alpha'X_\alpha - \frac{1}{n_v}X_{\alpha,s}'X_{\alpha,s}
-	&=\frac{1}{n}X_{\alpha,s^c}'X_{\alpha,s^c}-\frac{n-n_v}{n_vn}X_{\alpha,s}'X_{\alpha,s}\\
-	&= \frac{n-n_v}{n}\biggl[\frac{1}{n-n_v}X_{\alpha,s^c}'X_{\alpha,s^c}-\frac{1}{n_v}X_{\alpha,s}'X_{\alpha,s}\biggr] 
-	= o\biggl(\frac{n-n_v}{n}\biggr).
+	&=\frac{1}{n}X_{\alpha,s}'X_{\alpha,s} + \frac{1}{n}X_{\alpha,s^c}'X_{\alpha,s^c} - \frac{1}{n_v}X_{\alpha,s}'X_{\alpha,s}\\
+	&=\frac{1}{n}X_{\alpha,s^c}'X_{\alpha,s^c} - \frac{n-n_v}{n}\frac{1}{n_v}X_{\alpha,s}'X_{\alpha,s}\\
+	&=\frac{n-n_v}{n}\underbrace{\left[\frac{1}{n-n_v}X_{\alpha,s^c}'X_{\alpha,s^c} - \frac{1}{n_v}X_{\alpha,s}'X_{\alpha,s}\right]}_{=o(1)\textrm{, by (\ref{gram_matrix_condition_BICV})}}=o\left(\frac{n-n_v}{n}\right),
 	\end{align*}
-	together with $(X'X)^{-1}=O(n^{-1})\Rightarrow (X_\alpha'X_\alpha)^{-1}=O(n^{-1})$ it follows
-	%ZWEiter schritt ist  zu schnell
+	where we used that $X_\alpha'X_\alpha =X_{\alpha,s}'X_{\alpha,s}+X_{\alpha,s^c}'X_{\alpha,s^c}$. Left multiplying $(X_{\alpha,s}'X_{\alpha,s})^{-1}$ and right multiplying $n(X_{\alpha}'X_{\alpha})^{-1}$ yields
 	\begin{align*}
-	(X_{\alpha,s}'X_{\alpha,s})^{-1}-\frac{n}{n_v}\underbrace{(X_{\alpha}'X_{\alpha})^{-1}}_{=O(n^{-1})} = \biggl[1-\frac{n}{n_vn}O(1)\biggr](X_{\alpha,s}'X_{\alpha,s})^{-1} \\
-	= o\biggl(\frac{n-n_v}{n}\biggr)(X_{\alpha,s}'X_{\alpha,s})^{-1}\\
-	%VIelleicht deutlicher machen, warum wir das brauchen
-	\Rightarrow P_{\alpha,s}=\frac{n}{n_v}Q_{\alpha,s}+o\biggl(\frac{n-n_v}{n}\biggr)P_{\alpha,s}\\
-	\iff Q_{\alpha,s} = \biggl[\frac{n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\underbrace{\frac{n_v}{n}}_{\to 1}\biggr]P_{\alpha,s}
-	=\biggl[\frac{n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]P_{\alpha,s}
+	(X_{\alpha,s}'X_{\alpha,s})^{-1}-\frac{n}{n_v}(X_{\alpha}'X_{\alpha})^{-1} = o\left(\frac{n-n_v}{n}\right) (X_{\alpha,s}'X_{\alpha,s})^{-1} n (X_{\alpha}'X_{\alpha})^{-1}.
 	\end{align*}
-	%AB hier verliert der Leser komplett den überblick
+	Furthermore, condition $(i)$ of Theorem \ref{THM_Consistency of $CV(1)$} implies $(X_{\alpha}'X_{\alpha})^{-1}=O(n^{-1})$, by which we can simplify the right hand side to
 	\begin{align*}
+	(X_{\alpha,s}'X_{\alpha,s})^{-1}-\frac{n}{n_v}(X_{\alpha}'X_{\alpha})^{-1} 
+	&= o\left(\frac{n-n_v}{n}\right)O(1) (X_{\alpha,s}'X_{\alpha,s})^{-1}\\
+	&= o\left(\frac{n-n_v}{n}\right)(X_{\alpha,s}'X_{\alpha,s})^{-1}.
+	\end{align*}
+	After solving for $(X_{\alpha}'X_{\alpha})^{-1}$, we obtain
+	\begin{align*}
+	(X_{\alpha}'X_{\alpha})^{-1} = \frac{n_v}{n}\left[1+o\left(\frac{n-n_v}{n}\right)\right](X_{\alpha,s}'X_{\alpha,s})^{-1}.
+	\end{align*}
+	Next, we left multiply $X_{\alpha,s}$ and right multiply $X_{\alpha,s}'$:
+	\begin{align*}
+	X_{\alpha,s}(X_{\alpha}'X_{\alpha})^{-1}X_{\alpha,s}' &= \frac{n_v}{n}\left[1+o\left(\frac{n-n_v}{n}\right)\right] X_{\alpha,s} (X_{\alpha,s}'X_{\alpha,s})^{-1}X_{\alpha,s}' ,
+	\end{align*}
+	which is by definition equivalent to
+	\begin{align}
+	Q_{\alpha,s} &= \frac{n_v}{n}\left[1+o\left(\frac{n-n_v}{n}\right)\right] P_{\alpha,s}.\label{proof_BICV_3}
+	\end{align}
+	Now, inserting (\ref{proof_BICV_3}) into $\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s$ yields
+	\begin{align}
+	\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s
+	&=\left[1+o\left(\frac{n-n_v}{n}\right)\right]^{-1}\frac{n}{n_v}\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s\nonumber\\
+	&=\left[1+o\left(\frac{n-n_v}{n}\right)\right]\frac{n}{n_v}\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s. \label{proof_BICV_4}
+	\end{align}
+	
+	Nex, we clarify what we mean by $\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s$ being proportional to $\sum_{i=1}^np_{ii\alpha}e_i^2$. To do so, spell out the sum and simplify in the following way:
+	\begin{align}
 	\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s
-	= \frac{1}{n_vb}\sum_{s\in \mathcal{B}} \sum_{i\in s}\sum_{j\in s}p_{i,j,\alpha}e_ie_j\\
-	=\frac{1}{n_vb}\underbrace{\sum_{s\in \mathcal{B}} \sum_{i\in s}}_{\frac{bn_v}{n}\sum_{i=1}^n} p_{i,i,\alpha}e_i^2 + 2\frac{1}{n_vb}\underbrace{\sum_{s\in \mathcal{B}} \sum_{i\in s}\sum_{j\in s, j>i }}_{n_vb\frac{n_v-1}{n(n-1)}\sum_{i=1}^n\sum_{j>1}^n} p_{i,j,\alpha}e_ie_j
-	\end{align*}
-	As
+	&= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\sum_{i\in s}\sum_{j\in s}p_{ij\alpha}e_ie_j\nonumber\\
+	&=\frac{1}{n_vb}\underbrace{\sum_{s\in \mathcal{B}} \sum_{i\in s}}_{\frac{n_v}{n}b\sum_{i=1}^n} p_{ii\alpha}e_i^2 
+	+ 2\frac{1}{n_vb}\underbrace{\sum_{s\in \mathcal{B}} \sum_{i\in s}\sum_{j\in s, j>i }}_{\frac{n_v}{n}
+	b\frac{n_v-1}{n-1}\sum_{i=1}^n\sum_{j>1}^n} p_{ij\alpha}e_ie_j\nonumber\\
+	&=\frac{1}{n}\sum_{i=1}^np_{ii\alpha}e_i^2 + \frac{1}{n}\frac{n_v-1}{n-1}\sum_{i=1}^n\sum_{j\neq i}^np_{ij\alpha}e_ie_j\label{proof_BICV_5}
+	\end{align}
+	Where we used the balance property of $\mathcal{B}$ and Claim \ref{Claim_BICV}. 
+	One can further simplify the second sum in the last line, since
 	\begin{align*}
-	2\sum_{i=1}^n\sum_{j>1}^np_{i,j,\alpha}e_ie_j= \sum_{i=1}^n\sum_{j\neq i}^np_{i,j,\alpha}e_ie_j \\
-	= \sum_{i=1}^n\sum_{j=1}^np_{i,j,\alpha}e_ie_j - \sum_{i=1}^np_{i,i,\alpha}e_i^2
+	\sum_{i=1}^n\sum_{j\neq i}^np_{ij\alpha}e_ie_j 
+	&= \sum_{i=1}^n\sum_{j=1}^np_{ij\alpha}e_ie_j - \sum_{i=1}^np_{ii\alpha}e_i^2\\
+	&= \sum_{i=1}^n\sum_{j=1}^np_{ij\alpha}(y_i-x_{\alpha,i}'\hat{\beta}_\alpha)(y_j-x_{\alpha,j}'\hat{\beta}_\alpha) - \sum_{i=1}^np_{ii\alpha}e_i^2\\
+	&=\underbrace{(y-X_\alpha\hat{\beta}_\alpha)'P_\alpha(y-X_\alpha\hat{\beta}_\alpha)}_{=0} - \sum_{i=1}^np_{ii\alpha}e_i^2.
 	\end{align*}
-	we obtain
+	After inserting this back into (\ref{proof_BICV_5}) and using that $c_n=\frac{n(2n-n_v)}{(n-n_v)^2}$, we obtain
+	\begin{align}
+	\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s 
+	= \frac{c_n}{n}\left(1-\frac{n_v-1}{n-1}\right)\sum_{i=1}^np_{ii\alpha}e_i^2
+	= \frac{1}{n-n_v}\frac{n_v}{n}\frac{2n-n_v}{n-1}\sum_{i=1}^np_{ii\alpha}e_i^2.\label{proof_BICV_6}
+	\end{align}
+	
+	Finally, combining (\ref{proof_BICV_6}) with (\ref{proof_BICV_4}), yields the final result
 	\begin{align*}
-	\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s=\biggl[\frac{1}{n}-\frac{n_v-1}{n(n-1)}\biggr] \sum_{i=1}^np_{i,i,\alpha}e_i^2
+	\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s
+	&=\left[1+o\left(\frac{n-n_v}{n}\right)\right]\frac{n}{n_v}\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s\\
+	&=\left[\underbrace{1+o\left(\frac{n-n_v}{n}\right)}_{=1+o(1)\textrm{, by (\ref{growth_rates_nv_BICV})}}\right]\frac{n}{n_v}\frac{1}{n-n_v}\frac{n_v}{n}\underbrace{\frac{2n-n_v}{n-1}}_{=1+o(1)\textrm{, by (\ref{growth_rates_nv_BICV})}}\sum_{i=1}^np_{ii\alpha}e_i^2\\
+	&=\frac{1}{n-n_v}\sum_{i=1}^np_{ii\alpha}e_i^2 + o_P\left(\frac{1}{n-n_v}\right),
 	\end{align*}
-	Putting things together
-	\begin{align*}
-	\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}\lVert P_{\alpha,s}e_s\rVert^2
-	&= \biggl[\frac{n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^{-1}\underbrace{\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}}_{c_n\frac{n-n_v}{n(n-1)}\sum_{i=1}^n}e_s'Q_{\alpha,s}e_s\\ 
-	&=  \biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]\frac{n}{n_v}\frac{n_v(2n-n_v)}{n(n-n_v)(n-1)} \sum_{i=1}^np_{i,i,\alpha}e_i^2\\
-	&=\biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]\frac{2n-n_v}{(n-n_v)(n-1)} \sum_{i=1}^np_{i,i,\alpha}e_i^2
-	\end{align*}
-	Hence we have shown that
-	\begin{align*}
-	A_\alpha&= \frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]\frac{2n-n_v}{(n-n_v)(n-1)} \underbrace{\sum_{i=1}^np_{i,i,\alpha}e_i^2}_{d_\alpha\sigma^2+o_P(1)}\\
-	&= \frac{\varepsilon'(I_n-P_\alpha)\varepsilon}{n} +\underbrace{\biggl[1+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]}_{=1+o(1)}\underbrace{\frac{2n-n_v}{(n-n_v)(n-1)}}_{=\frac{1}{n-n_v}(1+o(1))} [d_\alpha\sigma^2+o_P(1)]\\
-	&=\frac{\varepsilon'\varepsilon }{n}- \underbrace{\frac{\varepsilon'P_\alpha\varepsilon}{n}}_{=\frac{d_\alpha\sigma^2}{n}+o_P(\frac{1}{n})} + \frac{d_\alpha\sigma^2}{n-n_v}+o_P\biggl(\frac{1}{n-n_v}\biggr)\\
-	&=\frac{\varepsilon'\varepsilon }{n}+\frac{d_\alpha\sigma^2}{n-n_v}+o_P\biggl(\frac{1}{n-n_v}\biggr)
-	\end{align*}
+	where we used that $\sum_{i=1}^np_{ii\alpha}e_i^2=d_\alpha\sigma^2+o_P(1)$ and hence $\frac{1}{n-n_v}o(1)\sum_{i=1}^np_{ii\alpha}e_i^2=o_P(\frac{1}{n-n_v})$.\\\\
 	
 	(3.) It remains to show that $B_\alpha = o_P((n-n_v)^{-1})$.
 	\begin{align*}
