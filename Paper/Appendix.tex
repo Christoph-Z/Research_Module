@@ -481,7 +481,7 @@ proving $(IV)$.
 	\sum_{k=1}^b\sum_{i=1}^n\sum_{j=1}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k} &= \sum_{k=1}^b\underbrace{\sum_{i=1}^n\mathcal{B}_{i,k}^2}_{=n_v} +\sum_{k=1}^b\sum_{i=1}^n\sum_{j\neq i}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k}\\
 	\Rightarrow \quad \sum_{k=1}^b\sum_{i=1}^n\sum_{j\neq i}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k} &= bn_v(n_v-1).
 	\end{align*}
-	Finally, by the balance property $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}$ is independent of $i$ and $j$ and therefore it holds that
+	Finally, by the balance property, $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}$ is independent of $i$ and $j$ and therefore it holds that
 	\begin{align*}
 	bn_v(n_v-1) = \sum_{i=1}^n\sum_{j\neq i}^n\underbrace{\sum_{k=1}^b\mathcal{B}_{i,k}\mathcal{B}_{j,k}}_{\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}}&=\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}\underbrace{\sum_{i=1}^n\sum_{j\neq i}^n}_{n(n-1)}\\
 	\iff \#\{s\in\mathcal{B}|(i,j)\in s, j>i\}&=n_vb\frac{n_v-1}{n(n-1)}.
@@ -498,26 +498,59 @@ proving $(IV)$.
 	\ge \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 
 	%= \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2.
 	\end{align*}
-	To see that this bound is valid, note that we can bound  
+	To see that this bound is valid, fix some arbitrary $a\in \mathbb{R}^{d_\alpha}\setminus \{ 0\}$ and note that by definition of the minimum
+	\begin{align}
+	\lVert (I_{n_v}-Q_{\alpha,s})^{-1} a\rVert ^2 
+	&\ge \min_{z\in \mathbb{R}^n : \lVert z\rVert=\lVert a\rVert}z'(I_{n_v}-Q_{\alpha,s})^{-2}z \nonumber\\
+	&= \lVert a\rVert^2 \min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})^{-2}z. \label{proof_BICV_7}
+	\end{align}
+	There is a close relation between the minimum problem on the right and the maximal eigenvalue of $I_{n_v}-Q_{\alpha,s}$, denoted by $\lambda_{\max}(I_{n_v}-Q_{\alpha,s})$, namely \footnote{see e.g. \cite{ryabenkii}, THM 5.2, p.130}
+	\begin{align}
+	\min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})^{-2}z = \frac{1}{(\lambda_{\max}(I_{n_v}-Q_{\alpha,s}))^2}\label{proof_BICV_8}
+	\end{align}
+	and 
 	\begin{align*}
-	0=\min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z 
-	\le \min_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
-	= \min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
+	\max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})z=\lambda_{\max}(I_{n_v}-Q_{\alpha,s}).
 	\end{align*}
-	and analogously
+	We can bound $\lambda_{\max}(I_{n_v}-Q_{\alpha,s})$ by rewriting this maximum problem as
 	\begin{align*}
-	\max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
-	= \max_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
-	\le \max_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z =1.
+	\max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})z 
+	= \max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'z - z'(Q_{\alpha,s})z 
+	= 1- \min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(Q_{\alpha,s})z 
 	\end{align*}
-	Hence the maximal eigenvalue of $(I_{n_v}-Q_{\alpha,s})$ is bounded by one or equivalently 
+	and using the relation between $Q_{\alpha,s}$ and the projection matrix $P_\alpha$
 	\begin{align*}
-	\max_{z\in \mathbb{R}^{n_v}: \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})z
+	\min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
+	= \min_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
+	\ge \min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z = 0.
 	\end{align*}
+	Combining these results, yield the upper bound
 	\begin{align*}
-	\lVert (I_{n_v}-Q_{\alpha,s})^{-1}a\rVert ^2 \ge \lVert a\rVert ^2 \quad \forall a\in \mathbb{R}^{n_v}.
+	\lambda_{\max}(I_{n_v}-Q_{\alpha,s})
+	=1- \min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(Q_{\alpha,s})z \le 1.
 	\end{align*}
-	And by the proof of statement $(I)$ in Theorem \ref{THM_Consistency of $CV(1)$} this is equivalent to
+	After inserting this and (\ref{proof_BICV_8}) back into (\ref{proof_BICV_7}), we obtain
+	\begin{align*}
+	\lVert (I_{n_v}-Q_{\alpha,s})^{-1} a\rVert ^2 
+	&\ge \lVert a\rVert^2 \min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})^{-2}z\\
+	&=  \lVert a\rVert^2\frac{1}{(\lambda_{\max}(I_{n_v}-Q_{\alpha,s}))^2} 
+	\ge \lVert a\rVert^2.
+	\end{align*}
+	Thus, the claimed bound is valid.
+	
+	Next, we use the balance property of $\mathcal{B}$ and Claim \ref{Claim_BICV} to rewrite the lower bound of $\hat{\Gamma}_{\alpha,n}^{BICV}$ 
+	\begin{align*}
+	\frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2
+	&= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\sum_{i \in s} (y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2\\
+	&= \frac{1}{n_vb}\sum_{i=1}^n \underbrace{\#\{s\in \mathcal{B}| i\in s\}}_{=\frac{n_v}{n}b} (y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2\\
+	&=\frac{1}{n}\sum_{i=1}^n(y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2\\
+	&= \frac{1}{n} \lVert y-X_\alpha\hat{\beta}_\alpha\rVert ^2
+	\end{align*}
+	and hence
+	\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{BICV} \ge \frac{1}{n} \lVert y-X_\alpha\hat{\beta}_\alpha\rVert ^2.
+	\end{align*}
+	Finally, by the proof of statement $(I)$ in Theorem \ref{THM_Consistency of $CV(1)$} this is equivalent to
 	\begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{BICV} \ge \frac{1}{n}\varepsilon'\varepsilon + \Delta_{\alpha,n} + o_P(1).
 	\end{align*}
