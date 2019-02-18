@@ -696,36 +696,60 @@ proving $(IV)$.
 	\end{align*}
 	where we used that $\sum_{i=1}^np_{ii\alpha}e_i^2=d_\alpha\sigma^2+o_P(1)$ and hence $\frac{1}{n-n_v}o(1)\sum_{i=1}^np_{ii\alpha}e_i^2=o_P(\frac{1}{n-n_v})$.\\\\
 	
-	(3.) It remains to show that $B_\alpha = o_P((n-n_v)^{-1})$.
+	(3.) It remains to show that  
 	\begin{align*}
-	\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=[1-\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}} P_{\alpha,s}\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=[1-\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}} =\biggl[\frac{n-n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2 P_{\alpha,s}.
+	B_\alpha
+	=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s
+	= o_P\left(\frac{1}{n-n_v}\right),
 	\end{align*}
-	Hence for any $s\in \mathcal{B}$ and $n$ sufficiently large
+	where $U_{\alpha,s} = (I_{n_v}-Q_{\alpha,s})(I_{n_v}+c_n P_{\alpha,s})(I_{n_v}-Q_{\alpha,s})$.
+	
+	Unlike in the second part of this proof, the $(I_{n_v}-Q_{\alpha,s})$ terms don't cancel themselves. 
+	Therefore we use equation (\ref{proof_BICV_3}), i.e. $Q_{\alpha,s} = \left[\frac{n_v}{n}+o\left(\frac{n-n_v}{n}\right)\right] P_{\alpha,s}$, and expand the product 
+	\begin{align*}
+	U_{\alpha,s} 
+	=& \underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}\\
+	%= (I_{n_v}+c_n P_{\alpha,s})\left(I_{n_v}-\left[\frac{n_v}{n}+o(\frac{n-n_v}{n})\right]P_{\alpha,s}\right) \\
+	%- \left[\frac{n_v}{n}+o(\frac{n-n_v}{n})\right]P_{\alpha,s}	(I_{n_v}+c_n P_{\alpha,s})\left(I_{n_v}-\left[\frac{n_v}{n}+o(\frac{n-n_v}{n})\right]P_{\alpha,s}\right)\\
+	=&\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)(I_{n_v}+c_n P_{\alpha,s})\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)
+	+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s} \\
+	&+ 2o\biggl(\frac{n-n_v}{n}\biggr)\biggl(1-\frac{n_v}{n}\biggr)(1+c_n)P_{\alpha,s}\\
+	=&\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)^2+\underbrace{c_n\biggl(1-\frac{n_v}{n}\biggr)^2}_{=\frac{n_v}{n}(2-\frac{n_v}{n})}P_{\alpha,s}+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}\\
+	&+ 2o\biggl(\frac{n-n_v}{n}\biggr)\biggl(1-\frac{n_v}{n}\biggr)(1+c_n)P_{\alpha,s}\\
+	=&I_{n_v} +o(1)\left(\frac{n-n_v}{n}\right)^2(1+c_n)P_{\alpha,s}.
+	\end{align*}
+	Inserting this into $B_\alpha$ yields
+	\begin{align}
+	B_\alpha
+	=o(1)\left(\frac{n-n_v}{n}\right)^2(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}e_s\label{proof_BICV_9}
+	\end{align}
+	Next, we bound the matrix product in the sum. Therefore we first use again the relation between $Q_{\alpha,s}$ and $P_{\alpha,s}$ to obtain
+	\begin{align*}
+	(I_{n_v}-Q_{\alpha,s})P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})
+	&= \left[1-\frac{n_v}{n}+o\left(\frac{n-n_v}{n}\right)\right] P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})\\
+	&=\left[1-\frac{n_v}{n}+o\left(\frac{n-n_v}{n}\right)\right]^2 P_{\alpha,s}\\
+	&=\biggl[\frac{n-n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2 P_{\alpha,s}\\
+	&=\left(\frac{n-n_v}{n}\right)^2[1+o(1)]^2 P_{\alpha,s}.
+	\end{align*}
+	Then for any $s\in \mathcal{B}$ and $n$ sufficiently large, we can bound
 	\begin{align*}
 	\biggl(\frac{n}{n-n_v}\biggr)^2 (I_{n_v}-Q_{\alpha,s})P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})=[1+o(1)]^2P_{\alpha,s}\ge \frac{1}{2}P_{\alpha,s}.
 	\end{align*}
-	And after rearrangement
+	And after rearrangement, we obtain 
 	%HIER noch weiter ausformulieren
 	\begin{align*}
 	(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}\le 2 \biggl(\frac{n}{n-n_v}\biggr)^2P_{\alpha,s}.
 	\end{align*}
+	Using this bound on (\ref{proof_BICV_9}), yields
 	\begin{align*}
-	U_{\alpha,s} = \underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}\\
-	=\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)(I_{n_v}+c_n P_{\alpha,s})\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)
-	+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s} \\
-	+ 2o\biggl(\frac{n-n_v}{n}\biggr)\biggl(1-\frac{n_v}{n}\biggr)(1+c_n)P_{\alpha,s}\\
-	=\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)^2+\underbrace{c_n\biggl(1-\frac{n_v}{n}\biggr)^2}_{=\frac{n_v}{n}(2-\frac{n_v}{n})}P_{\alpha,s}+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}\\
-	=I_{n_v} +\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}
+	B_\alpha
+	&=o(1)\left(\frac{n-n_v}{n}\right)^2(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}}_{\le 2(\frac{n}{n-n_v})^2P_{\alpha,s}}e_s\\
+	&\le 2o(1)(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s.
 	\end{align*}
+	From the previous proof we know that $(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s=O_P((n-n_v)^{-1})$ and thus we achieve the desired result
 	\begin{align*}
-	(I_{n_v}-Q_{\alpha,s})^{-1}\underbrace{(I_{n_v}-U_{\alpha,s})}_{=[o(\frac{n-n_v}{n})]^2(1+c_n)P_{\alpha,s}}(I_{n_v}-Q_{\alpha,s})^{-1}\\
-	=\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}}_{\le 2(\frac{n}{n-n_v})^2P_{\alpha,s}}\\
-	\le o(1)(1+c_n)P_{\alpha,s}
+	B_\alpha\le 2o(1)O_P\left(\frac{1}{n-n_v}\right)=o_P\left(\frac{1}{n-n_v}\right).
 	\end{align*}
-	\begin{align*}
-	B_\alpha \le o(1)\underbrace{(1+c_n)\biggl(\frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert P_{\alpha,s}e_s\rVert^2\biggr)}_{=O_P(\frac{1}{n-n_v})}=o_P\biggl(\frac{1}{n-n_v}\biggr).
-	\end{align*}
-	this proves statement $(II)$.\\
 	
 	\textbf{Proof of $(III)$:} \\
 \end{proof}
