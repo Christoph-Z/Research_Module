@@ -481,7 +481,7 @@ proving $(IV)$.
 	\sum_{k=1}^b\sum_{i=1}^n\sum_{j=1}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k} &= \sum_{k=1}^b\underbrace{\sum_{i=1}^n\mathcal{B}_{i,k}^2}_{=n_v} +\sum_{k=1}^b\sum_{i=1}^n\sum_{j\neq i}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k}\\
 	\Rightarrow \quad \sum_{k=1}^b\sum_{i=1}^n\sum_{j\neq i}^n\mathcal{B}_{i,k}\mathcal{B}_{j,k} &= bn_v(n_v-1).
 	\end{align*}
-	Finally, by the balance property $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}$ is independent of $i$ and $j$ and therefore it holds that
+	Finally, by the balance property, $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}$ is independent of $i$ and $j$ and therefore it holds that
 	\begin{align*}
 	bn_v(n_v-1) = \sum_{i=1}^n\sum_{j\neq i}^n\underbrace{\sum_{k=1}^b\mathcal{B}_{i,k}\mathcal{B}_{j,k}}_{\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}}&=\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}\underbrace{\sum_{i=1}^n\sum_{j\neq i}^n}_{n(n-1)}\\
 	\iff \#\{s\in\mathcal{B}|(i,j)\in s, j>i\}&=n_vb\frac{n_v-1}{n(n-1)}.
@@ -498,26 +498,59 @@ proving $(IV)$.
 	\ge \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2 
 	%= \frac{1}{n}\lVert y-X_{\alpha}\hat{\beta}_\alpha\rVert^2.
 	\end{align*}
-	To see that this bound is valid, note that we can bound  
+	To see that this bound is valid, fix some arbitrary $a\in \mathbb{R}^{d_\alpha}\setminus \{ 0\}$ and note that by definition of the minimum
+	\begin{align}
+	\lVert (I_{n_v}-Q_{\alpha,s})^{-1} a\rVert ^2 
+	&\ge \min_{z\in \mathbb{R}^n : \lVert z\rVert=\lVert a\rVert}z'(I_{n_v}-Q_{\alpha,s})^{-2}z \nonumber\\
+	&= \lVert a\rVert^2 \min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})^{-2}z. \label{proof_BICV_7}
+	\end{align}
+	There is a close relation between the minimum problem on the right and the maximal eigenvalue of $I_{n_v}-Q_{\alpha,s}$, denoted by $\lambda_{\max}(I_{n_v}-Q_{\alpha,s})$, namely \footnote{see e.g. \cite{ryabenkii}, THM 5.2, p.130}
+	\begin{align}
+	\min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})^{-2}z = \frac{1}{(\lambda_{\max}(I_{n_v}-Q_{\alpha,s}))^2}\label{proof_BICV_8}
+	\end{align}
+	and 
 	\begin{align*}
-	0=\min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z 
-	\le \min_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
-	= \min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
+	\max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})z=\lambda_{\max}(I_{n_v}-Q_{\alpha,s}).
 	\end{align*}
-	and analogously
+	We can bound $\lambda_{\max}(I_{n_v}-Q_{\alpha,s})$ by rewriting this maximum problem as
 	\begin{align*}
-	\max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
-	= \max_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
-	\le \max_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z =1.
+	\max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})z 
+	= \max_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'z - z'(Q_{\alpha,s})z 
+	= 1- \min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(Q_{\alpha,s})z 
 	\end{align*}
-	Hence the maximal eigenvalue of $(I_{n_v}-Q_{\alpha,s})$ is bounded by one or equivalently 
+	and using the relation between $Q_{\alpha,s}$ and the projection matrix $P_\alpha$
 	\begin{align*}
-	\max_{z\in \mathbb{R}^{n_v}: \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})z
+	\min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'Q_{\alpha,s}z
+	= \min_{z\in \mathbb{R}^n : \lVert z\rVert=1, z_{s^c}=0}z'P_\alpha z
+	\ge \min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'P_\alpha'z = 0.
 	\end{align*}
+	Combining these results, yield the upper bound
 	\begin{align*}
-	\lVert (I_{n_v}-Q_{\alpha,s})^{-1}a\rVert ^2 \ge \lVert a\rVert ^2 \quad \forall a\in \mathbb{R}^{n_v}.
+	\lambda_{\max}(I_{n_v}-Q_{\alpha,s})
+	=1- \min_{z\in \mathbb{R}^{n_v} : \lVert z\rVert=1}z'(Q_{\alpha,s})z \le 1.
 	\end{align*}
-	And by the proof of statement $(I)$ in Theorem \ref{THM_Consistency of $CV(1)$} this is equivalent to
+	After inserting this and (\ref{proof_BICV_8}) back into (\ref{proof_BICV_7}), we obtain
+	\begin{align*}
+	\lVert (I_{n_v}-Q_{\alpha,s})^{-1} a\rVert ^2 
+	&\ge \lVert a\rVert^2 \min_{z\in \mathbb{R}^n : \lVert z\rVert=1}z'(I_{n_v}-Q_{\alpha,s})^{-2}z\\
+	&=  \lVert a\rVert^2\frac{1}{(\lambda_{\max}(I_{n_v}-Q_{\alpha,s}))^2} 
+	\ge \lVert a\rVert^2.
+	\end{align*}
+	Thus, the claimed bound is valid.
+	
+	Next, we use the balance property of $\mathcal{B}$ and Claim \ref{Claim_BICV} to rewrite the lower bound of $\hat{\Gamma}_{\alpha,n}^{BICV}$ 
+	\begin{align*}
+	\frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert (y_s-X_{\alpha,s}\hat{\beta}_\alpha)\rVert^2
+	&= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\sum_{i \in s} (y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2\\
+	&= \frac{1}{n_vb}\sum_{i=1}^n \underbrace{\#\{s\in \mathcal{B}| i\in s\}}_{=\frac{n_v}{n}b} (y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2\\
+	&=\frac{1}{n}\sum_{i=1}^n(y_i-x_{\alpha,i}'\hat{\beta}_\alpha)^2\\
+	&= \frac{1}{n} \lVert y-X_\alpha\hat{\beta}_\alpha\rVert ^2
+	\end{align*}
+	and hence
+	\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{BICV} \ge \frac{1}{n} \lVert y-X_\alpha\hat{\beta}_\alpha\rVert ^2.
+	\end{align*}
+	Finally, by the proof of statement $(I)$ in Theorem \ref{THM_Consistency of $CV(1)$} this is equivalent to
 	\begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{BICV} \ge \frac{1}{n}\varepsilon'\varepsilon + \Delta_{\alpha,n} + o_P(1).
 	\end{align*}
@@ -663,36 +696,60 @@ proving $(IV)$.
 	\end{align*}
 	where we used that $\sum_{i=1}^np_{ii\alpha}e_i^2=d_\alpha\sigma^2+o_P(1)$ and hence $\frac{1}{n-n_v}o(1)\sum_{i=1}^np_{ii\alpha}e_i^2=o_P(\frac{1}{n-n_v})$.\\\\
 	
-	(3.) It remains to show that $B_\alpha = o_P((n-n_v)^{-1})$.
+	(3.) It remains to show that  
 	\begin{align*}
-	\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=[1-\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}} P_{\alpha,s}\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=[1-\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}} =\biggl[\frac{n-n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2 P_{\alpha,s}.
+	B_\alpha
+	=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-U_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}e_s
+	= o_P\left(\frac{1}{n-n_v}\right),
 	\end{align*}
-	Hence for any $s\in \mathcal{B}$ and $n$ sufficiently large
+	where $U_{\alpha,s} = (I_{n_v}-Q_{\alpha,s})(I_{n_v}+c_n P_{\alpha,s})(I_{n_v}-Q_{\alpha,s})$.
+	
+	Unlike in the second part of this proof, the $(I_{n_v}-Q_{\alpha,s})$ terms don't cancel themselves. 
+	Therefore we use equation (\ref{proof_BICV_3}), i.e. $Q_{\alpha,s} = \left[\frac{n_v}{n}+o\left(\frac{n-n_v}{n}\right)\right] P_{\alpha,s}$, and expand the product 
+	\begin{align*}
+	U_{\alpha,s} 
+	=& \underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}\\
+	%= (I_{n_v}+c_n P_{\alpha,s})\left(I_{n_v}-\left[\frac{n_v}{n}+o(\frac{n-n_v}{n})\right]P_{\alpha,s}\right) \\
+	%- \left[\frac{n_v}{n}+o(\frac{n-n_v}{n})\right]P_{\alpha,s}	(I_{n_v}+c_n P_{\alpha,s})\left(I_{n_v}-\left[\frac{n_v}{n}+o(\frac{n-n_v}{n})\right]P_{\alpha,s}\right)\\
+	=&\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)(I_{n_v}+c_n P_{\alpha,s})\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)
+	+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s} \\
+	&+ 2o\biggl(\frac{n-n_v}{n}\biggr)\biggl(1-\frac{n_v}{n}\biggr)(1+c_n)P_{\alpha,s}\\
+	=&\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)^2+\underbrace{c_n\biggl(1-\frac{n_v}{n}\biggr)^2}_{=\frac{n_v}{n}(2-\frac{n_v}{n})}P_{\alpha,s}+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}\\
+	&+ 2o\biggl(\frac{n-n_v}{n}\biggr)\biggl(1-\frac{n_v}{n}\biggr)(1+c_n)P_{\alpha,s}\\
+	=&I_{n_v} +o(1)\left(\frac{n-n_v}{n}\right)^2(1+c_n)P_{\alpha,s}.
+	\end{align*}
+	Inserting this into $B_\alpha$ yields
+	\begin{align}
+	B_\alpha
+	=o(1)\left(\frac{n-n_v}{n}\right)^2(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}e_s\label{proof_BICV_9}
+	\end{align}
+	Next, we bound the matrix product in the sum. Therefore we first use again the relation between $Q_{\alpha,s}$ and $P_{\alpha,s}$ to obtain
+	\begin{align*}
+	(I_{n_v}-Q_{\alpha,s})P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})
+	&= \left[1-\frac{n_v}{n}+o\left(\frac{n-n_v}{n}\right)\right] P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})\\
+	&=\left[1-\frac{n_v}{n}+o\left(\frac{n-n_v}{n}\right)\right]^2 P_{\alpha,s}\\
+	&=\biggl[\frac{n-n_v}{n}+o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2 P_{\alpha,s}\\
+	&=\left(\frac{n-n_v}{n}\right)^2[1+o(1)]^2 P_{\alpha,s}.
+	\end{align*}
+	Then for any $s\in \mathcal{B}$ and $n$ sufficiently large, we can bound
 	\begin{align*}
 	\biggl(\frac{n}{n-n_v}\biggr)^2 (I_{n_v}-Q_{\alpha,s})P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})=[1+o(1)]^2P_{\alpha,s}\ge \frac{1}{2}P_{\alpha,s}.
 	\end{align*}
-	And after rearrangement
+	And after rearrangement, we obtain 
 	%HIER noch weiter ausformulieren
 	\begin{align*}
 	(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}\le 2 \biggl(\frac{n}{n-n_v}\biggr)^2P_{\alpha,s}.
 	\end{align*}
+	Using this bound on (\ref{proof_BICV_9}), yields
 	\begin{align*}
-	U_{\alpha,s} = \underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}-[\frac{n_v}{n}+o(\frac{n-n_v}{n})]P_{\alpha,s}}\\
-	=\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)(I_{n_v}+c_n P_{\alpha,s})\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)
-	+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s} \\
-	+ 2o\biggl(\frac{n-n_v}{n}\biggr)\biggl(1-\frac{n_v}{n}\biggr)(1+c_n)P_{\alpha,s}\\
-	=\biggl(I_{n_v}-\frac{n_v}{n}P_{\alpha,s}\biggr)^2+\underbrace{c_n\biggl(1-\frac{n_v}{n}\biggr)^2}_{=\frac{n_v}{n}(2-\frac{n_v}{n})}P_{\alpha,s}+\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}\\
-	=I_{n_v} +\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)P_{\alpha,s}
+	B_\alpha
+	&=o(1)\left(\frac{n-n_v}{n}\right)^2(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}}_{\le 2(\frac{n}{n-n_v})^2P_{\alpha,s}}e_s\\
+	&\le 2o(1)(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s.
 	\end{align*}
+	From the previous proof we know that $(1+c_n)\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s=O_P((n-n_v)^{-1})$ and thus we achieve the desired result
 	\begin{align*}
-	(I_{n_v}-Q_{\alpha,s})^{-1}\underbrace{(I_{n_v}-U_{\alpha,s})}_{=[o(\frac{n-n_v}{n})]^2(1+c_n)P_{\alpha,s}}(I_{n_v}-Q_{\alpha,s})^{-1}\\
-	=\biggl[o\biggl(\frac{n-n_v}{n}\biggr)\biggr]^2(1+c_n)\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}P_{\alpha,s}(I_{n_v}-Q_{\alpha,s})^{-1}}_{\le 2(\frac{n}{n-n_v})^2P_{\alpha,s}}\\
-	\le o(1)(1+c_n)P_{\alpha,s}
+	B_\alpha\le 2o(1)O_P\left(\frac{1}{n-n_v}\right)=o_P\left(\frac{1}{n-n_v}\right).
 	\end{align*}
-	\begin{align*}
-	B_\alpha \le o(1)\underbrace{(1+c_n)\biggl(\frac{1}{n_vb}\sum_{s\in \mathcal{B}}\lVert P_{\alpha,s}e_s\rVert^2\biggr)}_{=O_P(\frac{1}{n-n_v})}=o_P\biggl(\frac{1}{n-n_v}\biggr).
-	\end{align*}
-	this proves statement $(II)$.\\
 	
 	\textbf{Proof of $(III)$:} \\
 \end{proof}
