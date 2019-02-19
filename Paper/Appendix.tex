@@ -752,6 +752,42 @@ proving $(IV)$.
 	\end{align*}
 	
 	\textbf{Proof of $(III)$:} \\
+	We will prove this statement in the same way as in the case of $CV(1)$. 
+	First note that $\hat{\Gamma}_{\alpha,n}^{BICV} \ge \Gamma_{\alpha,n}+o_P(1)$ for any $\mathcal{M}_\alpha \in $ Category $I$ and that $\hat{\Gamma}_{\alpha,n}^{BICV} = \sigma^2+o_P(1)$ for any $\mathcal{M}_\alpha \in $ Category $II$ . 
+	Hence, by the same argument as in Theorem \ref{THM_Consistency of $CV(1)$} $(III)$ one can show that 
+	\begin{align*}
+	\lim_{n\to\infty} P(\mathcal{M}_{BICV}\textrm{ is in Category I})=0
+	\end{align*}
+	Therefore, without loss of generality, we only consider models in Category $II$ for the remainder of the proof.
+	Next, the event that BICV doesn't choose the true model at step $n$, i.e. $\{ \mathcal{M}_{BICV}\neq \mathcal{M}_\alpha\}$, can be represented by
+	\begin{align*}
+	&\{ \exists\alpha\in \textrm{Cat. $II$} \textrm{ s.t. $\mathcal{M}_\alpha$ is preferable to $\mathcal{M}_\ast$ w.r.t. $BICV$ at step $n$ }\} \\
+	= &\{ \exists\alpha\in \textrm{Cat. $II$}: \hat{\Gamma}_{\alpha,n}^{BICV} < \hat{\Gamma}_{\ast,n}^{BICV} \} \\
+	= &\underset{\alpha\in \textrm{Cat. $II$}}{\bigcup}\{\hat{\Gamma}_{\alpha,n}^{BICV} < \hat{\Gamma}_{\ast,n}^{BICV} \}.
+\end{align*}
+	By using a union bound, we obtain
+	\begin{align*}
+	P(\mathcal{M}_{BICV}\neq \mathcal{M}_\alpha) \le \sum_{\alpha\in \textrm{Cat. $II$}}P\left(\hat{\Gamma}_{\alpha,n}^{BICV} < \hat{\Gamma}_{\ast,n}^{BICV}\right)
+	\end{align*}
+	Next, we want to evaluate the event $\hat{\Gamma}_{\alpha,n}^{BICV} < \hat{\Gamma}_{\ast,n}^{BICV}$ by using Theorem \ref{THM_Consistency_BICV} $(II)$. To clarify our notation, define the remainder terms
+	\begin{align*}
+	R_\alpha := \hat{\Gamma}_{\alpha,n}^{BICV} - \frac{\varepsilon'\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n-n_v}
+	\quad \textrm{ and } \quad
+	R_\ast := \hat{\Gamma}_{\ast,n}^{BICV} - \frac{\varepsilon'\varepsilon}{n}+\frac{d_\ast\sigma^2}{n-n_v}.
+	\end{align*}
+	By Theorem \ref{THM_Consistency_BICV} $(II)$ both terms satisfy $R_\alpha=o_P((n-n_v)^{-1})$ and $R_\ast=o_P((n-n_v)^{-1})$. Now the event $\hat{\Gamma}_{\alpha,n}^{BICV} < \hat{\Gamma}_{\ast,n}^{BICV}$ can be rephrased as
+	\begin{align*}
+	\frac{\varepsilon'\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n-n_v} +R_\alpha
+	&< \frac{\varepsilon'\varepsilon}{n}+\frac{d_\ast\sigma^2}{n-n_v} +R_\ast\\
+	\iff \quad \frac{(d_\alpha-d_\ast)\sigma^2}{n-n_v} &< R_\ast -R_\alpha\\
+	\iff \quad(d_\alpha-d_\ast)\sigma^2 &< (n-n_v)(R_\ast -R_\alpha).
+	\end{align*}
+	Since $(n-n_v)(R_\ast -R_\alpha)=o_P(1)$, we conclude that 
+	\begin{align*}
+	\lim_{n\to\infty} P\left(\hat{\Gamma}_{\alpha,n}^{BICV} < \hat{\Gamma}_{\ast,n}^{BICV}\right) 
+	=\lim_{n\to\infty}P\left((d_\alpha-d_\ast)\sigma^2 < (n-n_v)(R_\ast -R_\alpha)\right) = 0 
+	\end{align*}
+	and therefore $\lim_{n\to\infty}P(\mathcal{M}_{BICV}\neq \mathcal{M}_\alpha) = 0$.
 \end{proof}
 
 
