@@ -10,19 +10,22 @@ where $\hat{\Gamma}_{\alpha,n}^{BICV}$ is the estimator of $\Gamma_{\alpha,n-n_\
 \begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{BICV}=|\mathcal{B}|^{-1}n_\nu^{-1}\sum_{s\in\mathcal{B}}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2
 \end{align*}
- and in the next step the reader will be introduced on how $BICV(n_v)$ chooses his partitions, namely by a combinatorical procedure such that the following \textit{balance conditions} hold.
+%Passive Voice
+% and in the next step the reader will be introduced on how $BICV(n_v)$ chooses his partitions, namely by a combinatorical procedure such that the following \textit{balance conditions} hold.
+Note that $\mathcal{B}$ is a \textit{balanced incomplete block design} of the set of validation data. We construct $\mathcal{B}$ as follows: 
 %VIelleicht ein Lemma daraus machen??
 \begin{defi}
 \label{balance_property}
-Let $\mathcal{B}$ be a collection of $b$ subsets of $\{ 1,\dots,n\}$ that have size $n_v$ so that the following two conditions hold:
+Let $\mathcal{B}$ be a collection of $b$ subsets of $\{ 1,\dots,n\}$ that have size $n_v$ such that the following two conditions hold:
 \begin{enumerate}
 \item[(a)] every $i$, $1\le i \le n$, appears in the same number of subsets of $\mathcal{B}$
 \item[(b)] every pair $(i,j)$, $1\le i < j \le n$, appears in the same number of subsets of $\mathcal{B}$
 \end{enumerate}
 \end{defi}
+The idea behind using \textit{BIBD}'s is to reduce the computational complexity of \textit{Cross Validation}, hence $\mathcal{B}$ includes only a subset of the feasible partitions in $\mathcal{R}^\ast$. To avoid crating a bias, definition \ref{balance_property} ensures that $\mathcal{B}$ has the same moment conditions as $\mathcal{R}^\ast$. \\
 
 Thus we get the following claim\footnote{Proof of Claim \ref{Claim_BICV} is given in Appendix \RM{1}}.
-
+%%Den claim hier würd ich gerene in den Appendix verschieben.  
 \begin{claim}~
 	\label{Claim_BICV}
 	\begin{enumerate}[(I)]
@@ -30,14 +33,9 @@ Thus we get the following claim\footnote{Proof of Claim \ref{Claim_BICV} is give
 	\item $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}=n_vb\frac{n_v-1}{n(n-1)}$
 	\end{enumerate}
 \end{claim}
-
-
-%HIER vielleicht was zur BLock desing matrix schreiben?
-
-
-
 %FUelltext für die Fußnote
-And the following Theorem\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix \RM{1}}
+%And the following Theorem\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix \RM{1}}
+By choosing $b=O_p(n)$ we can show that $BICV(n_v)$ is asymptomatically correct, under the following conditions :\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix \RM{1}}
 \begin{thm}[Consistency of $BICV(n_v)$]
 	\label{THM_Consistency_BICV}
 Under the conditions of Theorem \ref{THM_Consistency of $CV(1)$} and
@@ -56,23 +54,32 @@ Then the following holds
 \end{enumerate}
 where $\mathcal{M}_{BICV}$ denotes the model selected by using $BICV(n_v)$.
 \end{thm}
+~\\~
+The most important difference between $CV(1)$ and the $BICV$ is the choice of $n_\nu$. Assumption \ref{growth_rates_nv_BICV} implies that $n_\nu$ and $n$ should grow with the same rate to infinity. Otherwise we would end up,asymptotically, in the same case as in $CV(1)$.\\
+
+In general the validation sample $n_\nu$ should be selected relatively large in comparison to the construction data. Because if $n-n_\nu$ is large, then 
+\begin{align*}
+\Gamma_{\alpha,n-n_\nu}=\sigma^2+\frac{1}{n-n_\nu}~d_\alpha\sigma^2+O\left(\frac{1}{n-n_\nu}\right)
+\end{align*}
+is flat, in $\alpha$, such that it is difficult to find the minimum. But also we have to make sure that $n_nu$ is not to large, since we need $n-n_\nu\to\infty$ such that the last term of above equation vanishes.
+
 ~
 \\\\
 ~
 %IRgendwie einen übergang und eine eiene Beschreibung schaffen(keine eigenen Worte, nur notizen hier benutzt und versucht zu sortieren)
-\textbf{NOTIZEN/Überlegungen}\\
--explanation why $BICV(n_v)$ improves over CV(1):\\
--$n_\nu$ should be choosen according to\\ \begin{align*}
-\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
-\end{align*}
--need a large $n_\nu$ (for assessing the prediction ability) and a relative small $n-n_\nu$ (for construction data) because then
-\begin{align*}
-	\Gamma_{\alpha,n-n_\nu}=\sigma^2+(n-n_\nu)^{-1}d_\alpha\sigma^2
-\end{align*}
-is not a flat function and therefore it is easier to find a minimum of $\Gamma_{\alpha,n-n_\nu}$ for a small $n-n_\nu$\\
--But the difference (that has to be small in comparison to the number of data used for validation) has to fullfill $n-n_v \to \infty$ to ensure the consistency of the model fit\\
--Need condition $\frac{n_v}{n}\to 1$ for the choice of $n_\nu$, because if this condition does not hold, $BICV(n_v)$ cannot distinguish in between the models in Category II and thus this method would be inconsistent (This is the main problem of CV(1) that occurs)\\
+%\textbf{NOTIZEN/Überlegungen}\\
+%-explanation why $BICV(n_v)$ improves over CV(1):\\
+%-$n_\nu$ should be choosen according to\\ \begin{align*}
+%\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
+%\end{align*}
+%-need a large $n_\nu$ (for assessing the prediction ability) and a relative small $n-n_\nu$ (for construction data) because then
+%\begin{align*}
+%	\Gamma_{\alpha,n-n_\nu}=\sigma^2+(n-n_\nu)^{-1}d_\alpha\sigma^2
+%\end{align*}
+%is not a flat function and therefore it is easier to find a minimum of $\Gamma_{\alpha,n-n_\nu}$ for a small $n-n_\nu$\\
+%-But the difference (that has to be small in comparison to the number of data used for validation) has to fullfill $n-n_v \to \infty$ to ensure the consistency of the model fit\\
+%-Need condition $\frac{n_v}{n}\to 1$ for the choice of $n_\nu$, because if this condition does not hold, $BICV(n_v)$ cannot distinguish in between the models in Category II and thus this method would be inconsistent (This is the main problem of CV(1) that occurs)\\
 %ICh denke das ist gemeint beim teleskop argument, BICV ist fähiger die unterschiede besser zu erkennen, also unter gegebenen umständen kann es sogar innerhalb der cat2 models unterscheiden, was cv1 einfach nicht kann- so habe ich es verstanden, damit ist die vorhersagegenauigkeit einfach besser bei bicv als bei cv1 (also bicv erkennt unterschiede noch besser als cv1 und gewährt somit eine bessere modelselection)
--As we have seen, CV(1) is asymptotically inconsistent, it cannot distinugish in between category II models; if we choose $n_\nu$ such that these two conditions for $n_\nu$ in Theorem \ref{THM_Consistency_BICV} do hold, then $BICV(n_v)$ improves over CV(1) because it is able to distinguish and consistent
+%-As we have seen, CV(1) is asymptotically inconsistent, it cannot distinugish in between category II models; if we choose $n_\nu$ such that these two conditions for $n_\nu$ in Theorem \ref{THM_Consistency_BICV} do hold, then $BICV(n_v)$ improves over CV(1) because it is able to distinguish and consistent
 
 \end{document}
