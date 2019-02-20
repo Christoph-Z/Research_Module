@@ -38,13 +38,13 @@ However the second statement gives a more precise description of the behavior of
 
 But consistency isn't enough to ensure that $CV(1)$ will detect the true model. 
 %INDEED ist falsch getrennt, warum weiß ich leider nicht
-Indeed, for any model in Category II the average squared prediction error reduces to the variance of the error term and hence are asymptotically indestinguishable. 
+Indeed, for any model in Category II the average squared prediction error reduces to the variance of the error term and hence the models asymptotically indistinguishable. 
 %DAZU vielleicht noch $\Gamma_{\alpha,n}\rightarrow\sigma^2$ angeben, als formale komponente ausgeschrieben?
-This idea is made precise by the statement $(IV)$ that the there exists some positive probability that the true model isn't chosen. On the other hand Shao shows in statement $(III)$ that the selected model is with probability approaching one in Category II.\\
+This idea is made precise by the statement $(IV)$ that there exists some positive probability that the true model isn't chosen. On the other hand \cite{shao} shows in statement $(III)$ that the selected model is with probability approaching to one in Category II.\\
 
 A heuristic explanation for this incorrectness is delivered by statement $(II)$. The model defining terms are $\frac{1}{n}d_\alpha\sigma^2$ and the difference $\frac{1}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon$. This difference has mean zero and is of the same order of magnitude as the first term. This gives an explanation why $CV(1)$ tends to select to large models.\\
 
-The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the assumptotic invertibility of this matrix. If the $x_i$ are stochastic, it is fulfilled for example if the $x_i$ are iid and if the matrix $\mathrm{E}[x_ix_i']$ is invertible.\\
+The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the asymptotic invertibility of this matrix. If for example the $x_i$ are iid and if the matrix $\mathrm{E}[x_ix_i']$ is invertible, then assumption $(i)$ is fulfilled.\\
 
 One can show that $(ii)$ is equivalent to 
 %HIERZU hätte ich gerne einen kurzen nachweis

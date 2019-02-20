@@ -456,6 +456,34 @@ P\bigl(2(d_\alpha-d\ast)\sigma^2 < \varepsilon'(P_\alpha-P-\ast)\varepsilon\bigr
 proving $(IV)$.
 \end{proof}
 
+\begin{claim}
+	If $X'X=O(n)$ and $(X'X)^{-1}=O(n^{-1})$, then for any $\alpha \in \mathcal{A}$
+	\begin{align*}
+		\lim_{n\to \infty} \max_{1\le i \le p} p_{ii\alpha}=0  \quad \iff \quad 
+		 \lim_{n\to \infty} n^{-1}\max_{1\le i \le n} \lVert x_{\alpha,i}\rVert ^2 = 0.
+	\end{align*}
+\end{claim}
+\begin{proof}
+	For arbitrary $\alpha \in \mathcal{A}$ holds
+	\begin{align*}
+	\lim_{n\to\infty} \max_{1\le i\le n} p_{ii\alpha} &= \lim_{n\to\infty} \max_{1\le i\le n} x_{i,\alpha}'(X_\alpha'X_\alpha)^{-1} x_{i,\alpha} \\
+	&= \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} x_{i,\alpha}'\biggl(\frac{X_\alpha'X_\alpha}{n}\biggr)^{-1} x_{i,\alpha} \\
+	&\le \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\max_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\le C^\ast < \infty \textrm{ for sufficiently large $n$} }  \lVert x_{i,\alpha} \rVert ^2 \\
+	&\le C^\ast \lim_{n\to \infty} \max_{1\le i \le n} \frac{\lVert x_{i,\alpha}\rVert ^2}{n}
+	\end{align*}
+	and 
+	\begin{align*}
+	\lim_{n\to \infty} \max_{1\le i \le n} p_{ii\alpha} &=  \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} x_{i,\alpha}'\biggl(\frac{X_\alpha'X_\alpha}{n}\biggr)^{-1} x_{i,\alpha} \\
+	&\ge \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\min_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\ge C_\ast > 0 \textrm{ for $n$ sufficiently large}} \lVert x_{i,\alpha} \rVert ^2\\
+	&\ge C_\ast \lim_{n\to\infty} \max_{1\le i\le n} \frac{\lVert x_{i,\alpha}\rVert^2}{n}.
+	\end{align*}
+	Hence, 
+	\begin{align*}
+	\lim_{n\to \infty} \max_{1\le i \le n} p_{ii\alpha} = 0 \iff \lim_{n\to\infty} \max_{1\le i\le n} \frac{\lVert x_{i,\alpha}\rVert^2}{n} = 0.
+	\end{align*}
+\end{proof}
+
+
 \begin{proof}[Proof of Claim \ref{Claim_BICV}]~\\
 	\textbf{Proof of $(I)$:}\\
 	$\mathcal{B}$ can be represented as a $n\times b$ matrix containing only zeros and ones. Then one interprets each column as a subset of $\{ 1,\dots,n\}$. Since these subsets have size $n_v$, it follows that $\sum_i^n \mathcal{B}_{i,j}=n_v$ for any $j= 1, \dots ,b$, where $\mathcal{B}_{i,j}$ denotes the $(i,j)$ element of $\mathcal{B}$. Hence
@@ -487,6 +515,15 @@ proving $(IV)$.
 	\iff \#\{s\in\mathcal{B}|(i,j)\in s, j>i\}&=n_vb\frac{n_v-1}{n(n-1)}.
 	\end{align*}
 \end{proof} 
+
+For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
+\begin{claim}~
+	\label{Claim_BICV}
+	\begin{enumerate}[(I)]
+		\item $\#\{s\in \mathcal{B}| i\in s\} = \frac{n_v}{n} b$ 
+		\item $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}=n_vb\frac{n_v-1}{n(n-1)}$
+	\end{enumerate}
+\end{claim}
 
 %THM proof of (III) fehlt noch
 \begin{proof}[Proof of Theorem \ref{THM_Consistency_BICV}]~\\
