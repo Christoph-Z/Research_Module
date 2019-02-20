@@ -1,16 +1,16 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
-\subsection{Theory of CV(1)}
+\subsection{The Leave-one-Out Cross-Validation}
 %NOch ausschreiben
-A special case of the \textit{CV($n_\nu$)} is the \textit{Leave-one-Out Cross-Validation}, which might be the most popular version in literature.
+A special case of the \textit{CV($n_\nu$)} is the \textit{Leave-one-Out Cross-Validation}, which might be the most popular version in the literature.
 To compute the $CV(1)$ estimate, one deletes one observation of the data set ($n_\nu\equiv1$) and uses the remaining to construct the estimator of the model. Then one uses this model to predict the
 deleted observation.
 
-Thus $CV(1)$ is the computationally simplest \textit{Cross-Validation} estimator as only $n$ terms have to be estimated whereas in other $CV(n_v)$ estimators one has to compute $\binom{n}{n_v}$ terms.\\
+$CV(1)$ is the computationally simplest \textit{Cross-Validation} estimator as only $n$ terms have to be estimated, whereas in other $CV(n_v)$ estimators one has to compute $\binom{n}{n_v}$ terms.\\
 
-We capture the asymptotic properties of $CV(1)$ in the following theorem of \cite{shao}, which we will prove in the appendix\footnote{Proof of Theorem \ref{THM_Consistency of $CV(1)$} is given in Appendix \RM{1}}.
+We capture the asymptotic properties of $CV(1)$ in the following theorem of \cite{shao}\footnote{Proof of Theorem \ref{THM_Consistency of $CV(1)$} is given in Appendix \RM{1}}.
 
-\begin{thm}[Consistency of $CV(1)$]
+\begin{thm}[Asymptotic Properties of $CV(1)$]
 Under the conditions 
 \label{THM_Consistency of $CV(1)$}
 \begin{enumerate}[(i)]
