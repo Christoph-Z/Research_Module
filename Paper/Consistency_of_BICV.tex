@@ -2,11 +2,11 @@
 \begin{document}
 \subsection{Consistency of $BICV(n_v)$}
 %SHao vllt. irgendwo zitieren?
-Another version is the \textit{Balanced Incomplete CV($n_\nu$)}, denoted for simplicity by $BICV(n_v)$. This variant uses only a subset $\mathcal{B}$ of the set of all possible partitions for a given $n_\nu$, which was given by $\mathcal{R}^\ast= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$. With $|\mathcal{B}|\equiv b$ as the number of partitions in the collection of partitions $\mathcal{B}$. This method does model selection by 
+Another version is the \textit{Balanced Incomplete CV($n_\nu$)}, denoted by $BICV(n_v)$. This variant uses only a subset $\mathcal{B}$ of the set of all possible partitions for a given $n_\nu$, which was given by $\mathcal{R}^\ast= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$. With $|\mathcal{B}|\equiv b$ as the number of partitions in the collection of partitions $\mathcal{B}$. This method does model selection by 
 \begin{align*}
 	BICV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{BICV}
 \end{align*}
-where $\hat{\Gamma}_{\alpha,n}^{BICV}$ is the estimator of $\Gamma_{\alpha,n-n_\nu}$. The structure of this estimator is the same as in Claim \ref{estimator CV(n_v)} by only using the subset $\mathcal{B}$ instead of $\mathcal{R}^\ast$, thus the estimator has the following form
+where $\hat{\Gamma}_{\alpha,n}^{BICV}$ is the estimator of the \textit{Expected Squared Prediction Error}. The structure of this estimator is the same as in Definition \ref{estimator CV(n_v)} by using the subset $\mathcal{B}$ instead of $\mathcal{R}^\ast$, thus the estimator has the following form
 \begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{BICV}=|\mathcal{B}|^{-1}n_\nu^{-1}\sum_{s\in\mathcal{B}}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2
 \end{align*}
@@ -22,9 +22,8 @@ Let $\mathcal{B}$ be a collection of $b$ subsets of $\{ 1,\dots,n\}$ that have s
 \item[(b)] every pair $(i,j)$, $1\le i < j \le n$, appears in the same number of subsets of $\mathcal{B}$
 \end{enumerate}
 \end{defi}
-The idea behind using \textit{BIBD}'s is to reduce the computational complexity of \textit{Cross Validation}, hence $\mathcal{B}$ includes only a subset of the feasible partitions in $\mathcal{R}^\ast$. To avoid crating a bias, definition \ref{balance_property} ensures that $\mathcal{B}$ has the same moment conditions as $\mathcal{R}^\ast$. \\
+The idea behind using \textit{BIBD}'s is to reduce the computational complexity of \textit{Cross-Validation}, hence $\mathcal{B}$ includes only a subset of the feasible partitions in $\mathcal{R}^\ast$. To avoid creating a bias, Definition \ref{balance_property} ensures that $\mathcal{B}$ has the same moment conditions as $\mathcal{R}^\ast$. \\
 
-Thus we get the following claim\footnote{Proof of Claim \ref{Claim_BICV} is given in Appendix \RM{1}}.
 %%Den claim hier würd ich gerene in den Appendix verschieben.  
 \begin{claim}~
 	\label{Claim_BICV}
@@ -35,7 +34,7 @@ Thus we get the following claim\footnote{Proof of Claim \ref{Claim_BICV} is give
 \end{claim}
 %FUelltext für die Fußnote
 %And the following Theorem\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix \RM{1}}
-By choosing $b=O_p(n)$ we can show that $BICV(n_v)$ is asymptomatically correct, under the following conditions :\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix \RM{1}}
+By choosing $b=O(n)$ we can show that $BICV(n_v)$ is asymptotically correct.\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix \RM{1}}
 \begin{thm}[Consistency of $BICV(n_v)$]
 	\label{THM_Consistency_BICV}
 Under the conditions of Theorem \ref{THM_Consistency of $CV(1)$} and
@@ -55,17 +54,14 @@ Then the following holds
 where $\mathcal{M}_{BICV}$ denotes the model selected by using $BICV(n_v)$.
 \end{thm}
 ~\\~
-The most important difference between $CV(1)$ and the $BICV$ is the choice of $n_\nu$. Assumption \ref{growth_rates_nv_BICV} implies that $n_\nu$ and $n$ should grow with the same rate to infinity. Otherwise we would end up,asymptotically, in the same case as in $CV(1)$.\\
+The most important difference between $CV(1)$ and the $BICV(n_\nu)$ is the choice of $n_\nu$. Assumption (\ref{growth_rates_nv_BICV}) implies that $n_\nu$ and $n$ grow with the same rate to infinity. Otherwise we end up asymptotically in the same case as in $CV(1)$.\\
 
 In general the validation sample $n_\nu$ should be selected relatively large in comparison to the construction data. Because if $n-n_\nu$ is large, then 
 \begin{align*}
-\Gamma_{\alpha,n-n_\nu}=\sigma^2+\frac{1}{n-n_\nu}~d_\alpha\sigma^2+O\left(\frac{1}{n-n_\nu}\right)
+\hat{\Gamma}^{BICV}_{\alpha,n-n_\nu}=\sigma^2+\frac{1}{n-n_\nu}~d_\alpha\sigma^2+o_p\left(\frac{1}{n-n_\nu}\right)
 \end{align*}
-is flat, in $\alpha$, such that it is difficult to find the minimum. But also we have to make sure that $n_nu$ is not to large, since we need $n-n_\nu\to\infty$ such that the last term of above equation vanishes.
+is flat such that it is difficult to find the minimum $\alpha$. But also we have to make sure that $n_\nu$ is not to large, since we need $n-n_\nu\to\infty$ such that the last term of above equation vanishes.
 
-~
-\\\\
-~
 %IRgendwie einen übergang und eine eiene Beschreibung schaffen(keine eigenen Worte, nur notizen hier benutzt und versucht zu sortieren)
 %\textbf{NOTIZEN/Überlegungen}\\
 %-explanation why $BICV(n_v)$ improves over CV(1):\\
