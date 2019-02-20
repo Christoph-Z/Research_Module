@@ -8,7 +8,7 @@ deleted observation.
 
 $CV(1)$ is the computationally simplest \textit{Cross-Validation} estimator as only $n$ terms have to be estimated, whereas in other $CV(n_v)$ estimators one has to compute $\binom{n}{n_v}$ terms.\\
 
-We capture the asymptotic properties of $CV(1)$ in the following theorem of \cite{shao}\footnote{Proof of Theorem \ref{THM_Consistency of $CV(1)$} is given in Appendix \RM{1}}.
+We capture the asymptotic properties of $CV(1)$ in the following theorem based on \cite{shao}\footnote{Proof of Theorem \ref{THM_Consistency of $CV(1)$} is given in Appendix \RM{1}}.
 
 \begin{thm}[Asymptotic Properties of $CV(1)$]
 Under the conditions 
@@ -22,14 +22,11 @@ the following holds
 \item If $\mathcal{M}_\alpha$ is in Category I, then $\hat{\Gamma}_{\alpha,n}^{CV} = \Gamma_{\alpha,n} + o_P(1)$.
 \item If $\mathcal{M}_\alpha$ is in Category II, then $\hat{\Gamma}_{\alpha,n}^{CV} = \frac{1}{n}\varepsilon'\varepsilon + \frac{2}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon + o_P(n^{-1})$.
 \end{enumerate}
-If furthermore the following condition holds
-\begin{itemize}
-\item[$(iii)$] $\liminf_{n\to \infty} \Delta_{\alpha,n} > 0,$
-\end{itemize}
+If furthermore the following condition \ref{liminf_condition} holds
 then 
 \begin{enumerate}
 \item[(III)] $\lim_{n\to\infty} P(\mathcal{M}_{CV}\textrm{ is in Category I})=0$,
-\item[(IV)]If $\mathcal{M}_\ast$ is not of size $p$, then $\lim_{n\to\infty}P(\mathcal{M}_{CV}=\mathcal{M}_\ast) \neq 1$
+\item[(IV)]If $\mathcal{M}_\ast$ is not of size $p$ and if $E[(\varepsilon^2-\sigma^2)^2]\in\mathbb{R}_{>0}$, then \\\mbox{$\lim_{n\to\infty}P(\mathcal{M}_{CV}=\mathcal{M}_\ast) \neq 1$}
 \end{enumerate}
 where $\mathcal{M}_{CV}$ denotes the model selected by using $CV(1)$.
 \end{thm}
@@ -49,7 +46,7 @@ A heuristic explanation for this incorrectness is delivered by statement $(II)$.
 
 The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the assumptotic invertibility of this matrix. If the $x_i$ are stochastic, it is fulfilled for example if the $x_i$ are iid and if the matrix $\mathrm{E}[x_ix_i']$ is invertible.\\
 
-Under assumption $(i)$ one can show that assumption $(ii)$ is equivalent to 
+One can show that $(ii)$ is equivalent to 
 %HIERZU hätte ich gerne einen kurzen nachweis
 $\lim \max n^{-1}\lVert x_i\rVert^2=0$. That is, the observations are allowed to grow but not too fast. This condition is for example satisfied if the $x_i$ are bounded.
 
