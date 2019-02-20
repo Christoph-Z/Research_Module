@@ -47,7 +47,7 @@ CV <- function(n,y,X,Method = "CV1"){
 }
 
 
-N.grid <-seq(20,100,1)
+N.grid <-seq(1,50,1)
 
 CV1_d2 <- c()
 for (i in 1:length(N.grid)) {
@@ -80,4 +80,97 @@ ggplot(d,aes(x=Samplesize)) +
 
 
 
+CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, BICV = NULL ){  #n_v = #leaved out data points
+  #n_v          Number of leaved out data points
+  #y,X          Data for Regression
+  #Alpha        Set of possible Modelvaritaions for which the CV should be calculated 
+  #             (By Default use all possible Models)
+  #MonteCarlo   Number of Subsets of {1,...,n} which is randomly drawn for a Monte Carlo CV
+  #             (By Default do K-Fold CV)
+  #Replacement  Replacement for Monte Carlo (Default False)
+  #
+  ##BICV        Incidence Matrix for a BICV
+  
+  ##Change some Variable names to keep the code shorter
+  A <- Alpha
+  b <- MonteCarlo
+  
+  ##Number of Possible Regressors
+  p <- length(X[1,])                          
+  
+  ##Set of possible Models
+  if(is.null(A)){
+    
+    #Creats the set {1,...,p} from which we want to generate the Powerset
+    Index <- seq(1,p,1)    
+    
+    #Denotes the number of Possible Models out of {1,...,p}
+    col.A <- 2^p-1
+    #Denote A as Powerset of {1,...,p}
+    A <- matrix(0L,nrow = p, ncol = col.A)      
+    k <- choose(p,1)
+    l <- 1
+    for (i in 1:p) {
+      #combn spits out all combinations of i elements in Index 
+      A[1:i,l:k] <- combn(Index,i)             
+      k <-k + choose(p,i+1)
+      l <- l + choose(p,i)
+    }
+  }
+  
+  
+  ##Number of Observations
+  n <- length(y)
+  
+  
+  ##Combinations of Sample partions for fitting the model
+  
+  ##For the Mone Carlo CV with b subsets of {1,...,n}
+  if(!is.null(b)){
+    train <- matrix(ncol = b, nrow = n-n_v)
+    for (i in 1:b) {
+      train[,i] <- sample(seq(1,n,1),n-n_v,replace = Replacement)
+    }
+  }else if(!is.null(BICV)){
+    #Convert the Incedence matrix of BIBD in our Notation
+    train <- BICV * seq(1,n,1)
+  }else{
+    ##For the general case with all subsets of {1,...,n} 
+    train <- combn(seq(1,n,1),n-n_v)
+  }
+  
+  
+  #Compute Prediction Errors for all sets in A
+  MeanPred.Error <- c()
+  for (i in 1:length(A[1,])) {
+    Pred.Error <- c()
+    for (j in 1:length(train[1,])) {
+      #To make the Code a bit shorter
+      train.j <- train[,j]                 
+      X.train <- X[train.j,A[,i]]    
+      #Prediction Error for a given alpha and a given subset
+      Pred.Error[j] <- norm(as.matrix(y[-train.j]-X[-train.j,A[,i]]%*%solve(t(X.train)%*%X.train)%*%t(X.train)%*%y[train.j]),"2")^2
+      
+    }
+    MeanPred.Error[i] <- 1/length(train[1,])*sum(Pred.Error)
+  }
+  TheChosenOne <- which.min(MeanPred.Error)
+  return(A[,TheChosenOne])
+}
+
+
+
+MCCV1_d2 <- c()
+for (i in 1:length(N.grid)) {
+  MCCV1_d2[i] <- CV(N.grid[i]-floor(N.grid[i]^{3/4}),y[1:N.grid[i]],X[1:N.grid[i],1:2], MonteCarlo = 5*N.grid[i])
+}
+
+MCCV1_d3 <- c()
+for (i in 1:length(N.grid)) {
+  MCCV1_d3[i] <- CV(N.grid[i]-floor(N.grid[i]^{3/4}),y[1:N.grid[i]],X[1:N.grid[i],1:3],MonteCarlo = 5*N.grid[i])
+}
+
+
+
+d <- data.frame("Samplesize"=N.grid,"ESPE1_2"=ESPE_CVn.v(2,N.grid),"ESPE1_3"=ESPE_CVn.v(3,N.grid),"ASPE1_2"=MCCV1_d2,"ASPE1_3"=MCCV1_d3)
 
