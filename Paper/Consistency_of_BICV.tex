@@ -53,14 +53,21 @@ Then the following holds
 \end{enumerate}
 where $\mathcal{M}_{BICV}$ denotes the model selected by using $BICV(n_v)$.
 \end{thm}
-~\\~
 The most important difference between $CV(1)$ and the $BICV(n_\nu)$ is the choice of $n_\nu$. Assumption (\ref{growth_rates_nv_BICV}) implies that $n_\nu$ and $n$ grow with the same rate to infinity. Otherwise we end up asymptotically in the same case as in $CV(1)$.\\
+
+Note, that $\hat{\Gamma}_{\alpha,n}^{BICV}\geq\Gamma_{\alpha,n}+o_p(1)$ for any $\mathcal{M}_\alpha\in$ Category I and that $\hat{\Gamma}_{\alpha,n}^{BICV}=\sigma^2+o_p(1)$ for any $\mathcal{M}_\alpha\in$ Category II. Together with Lemma \ref{Equation2.3-2.4} and (\ref{liminf_condition}), it follows that the $BICV(n_\nu)$ asymptotically picks models from Category II.\\
 
 In general the validation sample $n_\nu$ should be selected relatively large in comparison to the construction data. Because if $n-n_\nu$ is large, then 
 \begin{align*}
 \hat{\Gamma}^{BICV}_{\alpha,n}=\sigma^2+\frac{1}{n-n_\nu}~d_\alpha\sigma^2+o_p\left(\frac{1}{n-n_\nu}\right)
 \end{align*}
-is flat such that it is difficult to find the minimum $\alpha$. But also we have to make sure that $n_\nu$ is not to large, since we need $n-n_\nu\to\infty$ such that the last term of above equation vanishes.
+is flat such that it is difficult to find the minimum $\alpha$. But also we have to make sure that $n_\nu$ is not too large, since we need $n-n_\nu\to\infty$ to ensure the consistency of the OLS estimate.\\
+
+The problem of flat functions is that  there is too much weight on the stochastic remainder terms such that \textit{Cross-Validation} can not correctly identify the minimum. As we can see in figure bla the error estimates are crossing each other. Every time they cross, the \textit{Cross-Validation} chooses the wrong model. Hence of the differences in scale, see figure bla+1, this problem does not occur that often for the $BICV(n_\nu)$.\\
+
+We need condition $\frac{n_v}{n}\to 1$ for the choice of $n_\nu$, because if this condition does not hold, $BICV(n_v)$ cannot distinguish in between the models in Category II and thus this method would be inconsistent (This is the main problem of CV(1) that occurs). For a more detailed explanation see \cite{shao}. We choose in our simulation $n_\nu=n-\lfloor n^{3/4}\rfloor$, which satisfy the above condition.\\
+
+Another condition is (\ref{gram_matrix_condition_BICV}), which we need to ensure that the 
 
 %IRgendwie einen übergang und eine eiene Beschreibung schaffen(keine eigenen Worte, nur notizen hier benutzt und versucht zu sortieren)
 %\textbf{NOTIZEN/Überlegungen}\\
