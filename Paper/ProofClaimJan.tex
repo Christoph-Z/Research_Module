@@ -1,0 +1,96 @@
+\documentclass[Research_Module_ES.tex]{subfiles}
+\begin{document}
+The following Theorem can be found in the work of \cite{michel1976nonuniform}
+\begin{thm}[\cite{michel1976nonuniform}]\label{Michel76Thm3}
+Let $x_1,x_2,x_3,\ldots$ be iid random variables s.t $E[x]=0$, $E[x^2]=1$ and $E[|x|^{2+\tau}]<\infty$, for some $\tau>0$. Then there exists a constant $C_\tau$ (depending on $\tau$) such that for all $n\in \mathbb{N}$ and $t\in\mathbb{R}$,
+\[
+	\left| P\left( \frac{1}{\sqrt{n}}\sum_{i=1}^{n}x_i\leq t \right) -\Phi(t) \right| \leq \frac{C_\tau}{n^{\frac{1}{2}~ \min\{\tau,1\}} (1+|t|^{2+\tau|}) }
+\] 
+
+\end{thm}	
+	
+\begin{claim}
+Let $x_1,\ldots,x_n$ be iid $\mathbb{R}^p$-valued random vectors, such that $E[(x^\prime_i x_i)^{2+\tau}]<\infty$ for some $\tau>7/3$, then for 
+\[
+	b=O(n)\quad\textrm{and}\quad n-n_\nu=\lfloor n^{\frac{3}{4}}\rfloor
+\]
+it holds almost surely, that
+\[
+\lim_{n\to\infty} \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =0. \label{gram_matrix_condition_BICV}
+\]
+\end{claim}
+\begin{proof}
+ The idea is to use the moment conditions to show that 
+ \begin{align}\label{Probabilitie}
+ P\left( \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)\to0
+ \end{align}
+Then we can enable the claimed almost sure convergence by using the Borel Cantelli Lemma.\\
+
+At first we use several union bounds to obtain
+\begin{align}\nonumber
+&P\left( \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)\\\nonumber
+=&P\left( \bigcup_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)\\\nonumber
+\leq&\sum_{s\in \mathcal{B}}P\left(\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)\\\nonumber
+\leq&\sum_{s\in \mathcal{B}}P\left(\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i'-E[x_i x_i^\prime]\biggr\rVert+\biggl\lVert \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)\\
+\leq&\sum_{s\in \mathcal{B}}P\left(\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i'-E[x_i x_i^\prime]\biggr\rVert>\frac{\varepsilon}{2}\right)+P\left(\biggl\lVert \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\frac{\varepsilon}{2}\right)\label{Viereck}
+\end{align}
+Next we are using the maximum norm and another minimum bound to get
+\begin{align}\nonumber
+&P\left(\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i'-E[x_i x_i^\prime]\biggr\rVert>\frac{\varepsilon}{2}\right)\\\nonumber
+=&P\left(\max_{\substack{1\leq k \leq p \\1\leq l\leq p}}\left| \frac{1}{n_v}\sum_{i\in s}x_{ik}x_{il}-E[x_{ik} x_{il}]\right|>\frac{\varepsilon}{2}\right)\\\nonumber
+\leq& \sum_{k=1}^{p}\sum_{l=1}^{p}P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}>\underbrace{\frac{\varepsilon}{2}~ \frac{1}{\sqrt{E[(x_{ik}x_{il})^2]}}}_{=:t_n}\right)\\
+\begin{split}\label{dreieck}
+\leq&\sum_{k=1}^{p}\sum_{l=1}^{p}\left[ 1-P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq t_n \right) \right.\\
+&\quad\left. + P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n \right) \right]
+\end{split}
+\end{align}
+Note that
+\begin{align*}
+ &1-P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq t_n \right) + P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n \right) \\
+ \leq&1-\Phi(-t_n)+\Phi(t_n)+\left| \Phi(t_n)-P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n\right) \right|\\
+ &\quad+ \left|P\left(\frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}} \leq t_n\right) -\Phi(t_n)\right|
+\end{align*}
+We thus obtain, together with Theorem \ref{Michel76Thm3}, that
+\begin{align*}
+&P\left(\left| \frac{1}{n_v}\sum_{i\in s}x_{ik}x_{il}-E[x_{ik} x_{il}] \right|>\frac{\varepsilon}{2}\right)\\
+\leq&1-\Phi(-t_n)+\Phi(t_n)+\frac{2C_\tau}{n^{\frac{1}{2}~ \min\{\tau,1\}} (1+|t|^{2+\tau}) }
+\end{align*}
+where 
+\begin{align*}
+1-\Phi(-t_n)=\Phi(t_n)\leq\exp\left(-\frac{t_n^2}{2}\right)=O\left(n_v^{-\left(1+\frac{\tau+1}{2}\right)}\right)
+\end{align*}
+and
+\begin{align*}
+\frac{2C_\tau}{n^{\frac{1}{2}~ \min\{\tau,1\}} (1+|t|^{2+\tau}) }&=\frac{1}{n_v^{-\left(1+\frac{\tau+1}{2}\right)}}~\frac{2C_\tau}{n_v^{-\left( 1+\frac{\tau+1}{2} \right)} ~\left(1+\left|  \frac{\varepsilon}{2\sqrt{E[x_{ik}x_{il}]}} \right|^{2+\tau}\right)  }\\
+&=O\left(  n_v^{-\left( 1+\frac{\tau+1}{2}  \right)} \right)
+\end{align*}
+Hence
+\begin{align*}
+&P\left(\left| \frac{1}{n_v}\sum_{i\in s}x_{ik}x_{il}-E[x_{ik} x_{il}] \right|>\frac{\varepsilon}{2}\right)=O\left(n_v^{-\left(1+\frac{\tau+1}{2}\right)}\right)
+\end{align*}
+Analogously one can show that
+\begin{align*}
+P\left(\left| \frac{1}{n-n_v}\sum_{i\in s^c}x_{ik}x_{il}\right|>\frac{\varepsilon}{2}\right)=O\left((n-n_v)^{-\left(1+\frac{\tau+1}{2}\right)}\right)
+\end{align*}
+Together with (\ref{dreieck}) and (\ref{Viereck}) and 
+\[
+	O\left(n_v^{-\left(1+\frac{\tau+1}{2}\right)}\right)=O\left((n-n_v)^{-\left(1+\frac{\tau+1}{2}\right)}\right)
+\]
+we obtain that
+\[
+	P\left( \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)=O\left(b~(n-n_v)^{-\left(1+\frac{\tau+1}{2}\right)}\right)
+\]
+Since by assumption $b=O(n)$ and $\tau>7/3$, we get 
+\[
+	b~(n-n_v)^{-\left(1+\frac{\tau+1}{2}\right)}=O\left(n~n^{-\frac{3}{4}\left(1+\frac{\tau+1}{2}\right)}\right)=O\left(n^{-(1+\delta)}\right)
+\]
+for some $\delta>0$. Hence,
+\[
+	\sum_{n=1}^{\infty}P\left( \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)<\infty
+\]
+and thus by Borel-Cantelli Lemma
+\[
+	P\left(\lim_{n\to\infty} \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =0\right)=1
+\]
+\end{proof}
+\end{document}
