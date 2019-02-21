@@ -13,18 +13,18 @@ where $i=1,\ldots,n$ with $n$ being the total number of observations. The error 
 \]
 where $\beta_1,\beta_2$ are unequal to zero. So the model with the best predictive ability has to be chosen out of five possible regressors $\{x_1,\ldots,x_5\}$. \\
 \\
-For the different simulations we consider the four model selection methods: CV(1), MCCV($n_\nu$) and since they are popular in praxis AIC, BIC as benchmark. Also note that $n_v=n-\lfloor n^{3/4}\rfloor$.
+For the different simulations we consider the four model selection methods: \textit{CV(1), MCCV}($n_\nu$) and since they are popular in praxis \textit{AIC}, \textit{BIC} as benchmark. Also note that choose $n_v=n-\lfloor n^{3/4}\rfloor$ as in \cite{shao}.
 
 \subsection{Ability of distinguishing between Category I and II }
 In the first simulation we want to take a closer look at the probability given in Theorem \ref{THM_Consistency of $CV(1)$} (III). We saw that for $n\to\infty$ the different \textit{Cross-Validation} methods are perfectly able to distinguish between Category I and II, hence the probability of choosing a model from Category I equals zero. But how good will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
 \\
-Figure \ref{Simulation1} shows how the probability of choosing a Category II model behaves for different sample sizes. To calculate these probabilities, we repeated the procedure of model selection 2000 times for each sample size and plotted the relative frequencies.\footnote{Note that for each of the 200 iterations a completely new sample was generated.}
+Figure \ref{Simulation1} shows how the probability of choosing a Category II model behaves for different sample sizes. To calculate these probabilities, we repeated the procedure of model selection 2000 times for each sample size and plotted the relative frequencies.
 
-As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all four methods. Moreover, all methods perform quite similar in distinguishing between the two models, only the MCCV seems to be slightly worse than the other ones. The purpose of this is the smaller trainings set of MCCV, which is chosen with $\lfloor n^{3/4}\rfloor$. Therefore MCCV only predicts $\Gamma_{\alpha,n-n_v}$, this is a less accurate estimate than $\Gamma_{\alpha,n}$, which is calculated by the other methods. 
+As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all four methods. Moreover all methods perform quite similar in distinguishing between the two models. 
 \begin{figure}[!h]
 	\label{Simulation1}
 	\centering
-	\includegraphics[width=1\textwidth]{Simulation1.png}\\
+	\includegraphics[width=1\textwidth]{Simulation1_XDeterministic.png}\\
 \caption{Probability of Choosing Cat II Models}
 \end{figure}
 \subsection{Ability of distinguishing  between Category II Models}
@@ -33,7 +33,8 @@ In chapter \ref{Simulation1} we showed that all four methods of model selection 
 For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption, we choose a large sample size of $n=500$, hence, as already mentioned, the probability of choosing a Category II model is close to one for large sample sizes.\\
 \\
 Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all four methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one then the true model by $M_\ast+1$.\\
-As we can see, both AIC and CV(1) perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that AIC and CV(1) are asymptotically equivalent} and tend to pick to large models. BIC and MCCV  perform better, both pick the true model with a probability close to one and they choose to large models in only a few cases. Within our 2000 simulations there was no single case where BIC and MCCV choose models with a dimensionality larger than $M_\ast+1$.
+
+As we can see, both \textit{AIC} and \textit{CV(1)} perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that \textit{AIC} and \textit{CV(1)} are asymptotically equivalent} and tend to pick to large models. \textit{BIC} and \textit{MCCV}  perform better, both pick the true model with a probability close to one (see \cite{schwarz1978estimating})and they choose to large models in only a few cases. Within our 2000 iteration there was no single case where \textit{BIC} and \textit{MCCV} choose models with a dimensionality larger than $M_\ast+1$.
 \begin{figure}[!h]
 	\label{Simulation2}
 	\centering
@@ -41,11 +42,11 @@ As we can see, both AIC and CV(1) perform almost equivalent\footnote{These simil
 	\caption{Probability of Choosing diffrent Models form Cat II}
 \end{figure}
 \subsection{R Code Efficiency}
-Beside asymptotic analyses, the performance of the small sample properties is an important aspect of statistical research. An often used approach to analyse such small sample properties are simulation studies, like we did in the previous chapters.\\
+Besides asymptotic analyses, the performance of the small sample properties is an important aspect of statistical research. An often used approach to analyse such small sample properties are simulation studies, like we did in the previous chapters.\\
 \\
-Due to inefficiencies of our R code we had to spend weeks of computing time. Therefore one import part of our work was to find ways in order to speed up our R code and reduce it's computational complexity.\\
+Due to inefficiencies of our R code we had to spend weeks of computing time. Therefore one important part of our work was to find ways in order to speed up our R code and reduce its computational complexity.\\
 \\
-The most time consuming aspect of our simulations is the process of model selection. As an example consider our CV-algorithm for the case of $n_\nu$=1\footnote{See Appendix II: Cross-Validation Function}: Table \ref{CValt} shows the amount of time used by different R functions within our algorithm.\\
+The most time consuming aspect of our simulations is the process of model selection. As an example consider our \textit{CV}-algorithm for the case of $n_\nu$=1\footnote{See Appendix II: \textit{Cross-Validation} Function}: Table \ref{CValt} shows the amount of time used by different R functions within our algorithm.
 \begin{table}[!h]
 	\label{CValt}
 	\centering
@@ -83,7 +84,7 @@ The most time consuming aspect of our simulations is the process of model select
 		\scriptsize sampling.time : 2.08
 	\end{tabular}
 \end{table}
-The most time consuming aspects are {\itshape solved.default,\%*\%} and {\itshape t} . All these functions are used for the calculation of the OLS estimators of the different models in $\mathcal{A}$.
+The most time consuming aspects are {\itshape solved.default,\%*\%} and {\itshape t}. All these functions are used for the calculation of the OLS estimators of the different models in $\mathcal{A}$.
 \begin{align*}
 \hat{\beta_\alpha}=X_\alpha(X^\prime_\alpha X_\alpha)^{-1}X_\alpha^\prime y
 \end{align*}
@@ -93,8 +94,8 @@ Another point in order to save computing power is using an algebraic reformulati
 \[
 	\hat{\Gamma}_{\alpha,n}=\frac{1}{n}\sum_i[(1-p_{ii\alpha})^{-1}(y_i-x^\prime_{\alpha i}\hat{\beta_\alpha})]^2
 \]
-where $\omega_{i\alpha}$ is the $i$th diagonal element of the projection matrix $P_\alpha$.\\
-This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix II: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm.\\
+where $p_{i\alpha}$ is the $i$-th diagonal element of the projection matrix $P_\alpha$.\\
+This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix II: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm. Note that this algebraic reformulation does not speed up the other $CV(n_\nu)$ procedures.\\
 \\
 \begin{table}[!h]
 	\caption{CV Algorithm Second Version Profiling }
@@ -136,7 +137,7 @@ The second approach, to speed R up,  was to look at the basic commands we used a
 	}
 	\end{lstlisting}
 \end{table}
-We see that {\itshape sample} checks additional conditions beside it's main purpose, since we do not need this, we can simplify it by using {\itshape x[sample.int(length(x), size)}.\\
+We see that {\itshape sample} checks additional conditions besides its main purpose, since we do not need this, we can simplify it by using {\itshape x[sample.int(length(x), size)}.\\
 \\
-One further example is the matrix vector multiplication. R for example would compute $P=X(X^\prime X)^{-1}X^\prime y$ by first solving $X(X^\prime X)^{-1}$, then multiplying the outcome with $X^\prime$ and finally multiplying with $y$. This is inefficient due to the dimensionality of the out coming intermediate results, a more efficient way of computing is $P=X[ (X^\prime X)^{-1}(X^\prime y)]$.
+One further example is the matrix vector multiplication. R computes $P=X(X^\prime X)^{-1}X^\prime y$ by first solving $X(X^\prime X)^{-1}$, then multiplying the outcome with $X^\prime$ and finally multiplying with $y$. This is inefficient due to the dimensionality of the outcoming intermediate results, a more efficient way of computing is $P=X[ (X^\prime X)^{-1}(X^\prime y)]$.
 \end{document}
