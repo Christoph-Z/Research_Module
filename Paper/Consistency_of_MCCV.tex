@@ -3,41 +3,28 @@
 \subsection{The Monte Carlo CV($n_\nu$)}
 
 %SHao vllt. irgendwo zitieren?
-The \textit{Monte Carlo CV($n_\nu$)}, written in short notation as \textit{MCCV($n_\nu$)} is another variant of the \textit{CV($n_\nu$)} method and heavily related to the $BICV(n_v)$. It only distinguish to $BICV(n_v)$ by the way how it chooses his set of partitions. Indeed it does not choose them by a combinatorical procedure as described in the section before, this process is subjected to a random choice. Therefore it draws his subset of all possible partitions for a given $n_\nu$, which is denoted by $\mathcal{R}$, randomly with or without a replacement. $\mathcal{R}$ is the a collection of subsets such that $|\mathcal{R}|\equiv b$. This reminds to the $BICV(n_v)$, but without selecting $\mathcal{R}$ according to the \textit{balance conditions} . Therefore the \textit{MCCV($n_\nu$)} can be used as an alternative, if the collection of partitions $\mathcal{B}$ with its certain properties that have to be fullfilled is not provided. The \textit{MCCV($n_\nu$)} method does model selection by 
+The \textit{Monte Carlo CV($n_\nu$)}, denoted by \textit{MCCV($n_\nu$)}, is another variant of the \textit{CV($n_\nu$)} method and heavily related to the $BICV(n_v)$. It only distinguish to $BICV(n_v)$ by the way how it chooses its set of partitions. Indeed it does not choose them by a combinatorial procedure as described in the section before, this process is subjected to a random choice. Therefore it draws its subset of all possible partitions for a given $n_\nu$, which is denoted by $\mathcal{R}$, randomly with or without a replacement. $\mathcal{R}$ is the a collection of subsets such that $|\mathcal{R}|\equiv b$. This reminds to the $BICV(n_v)$, but without selecting $\mathcal{R}$ according to the \textit{balance conditions}. Therefore the \textit{MCCV($n_\nu$)} can be used as an alternative, if the collection of partitions $\mathcal{B}$ with its certain properties that have to be fulfilled is not provided. The \textit{MCCV($n_\nu$)} method does model selection by 
 \begin{align*}
 MCCV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{MCCV}
 \end{align*}
-where $\hat{\Gamma}_{\alpha,n}^{MCCV}$ is the estimator of $\Gamma_{\alpha,n-n_\nu}$. While the estimator is reffering again to Claim \ref{estimator CV(n_v)} and constructed similar to $\hat{\Gamma}_{\alpha,n}^{BICV}$ with the only difference that it uses $\mathcal{R}$ instead of $\mathcal{B}$. Thus no we get the following form
+where $\hat{\Gamma}_{\alpha,n}^{MCCV}$ is the estimator. While the estimator is referring again to Definition \ref{estimator CV(n_v)} and constructed similar to $\hat{\Gamma}_{\alpha,n}^{BICV}$ with the only difference that it uses $\mathcal{R}$ instead of $\mathcal{B}$. Thus we get the following form
 \begin{align*}
 \hat{\Gamma}_{\alpha,n}^{MCCV}=|\mathcal{R}|^{-1}n_\nu^{-1}\sum_{s\in\mathcal{R}}\parallel y_s-\hat{y}_{\alpha,s^c}\parallel^2
 \end{align*}
-Now we consider the following Lemma\footnote{Proof of Lemma \ref{Lemma_MCCV} is given in Appendix \RM{1}}.
-\begin{lemma}
-	\label{Lemma_MCCV}
-Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}\subseteq\mathcal{R}^\ast$. Then for any functions $a,c:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
-\begin{enumerate}
-\item $\mathrm{E}_\mathcal{R} \bigl[ b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr] = \binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s)$
-\item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$
-\item $V_\mathcal{R}\bigl(a(s)+c(s)\bigr) \le 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(c(s)\bigr)\bigr]$
-\item $\mathcal{R}^\ast$ fulfills the \textit{balance conditions} of definition \ref{balance_property}.
-\end{enumerate}
-\end{lemma}
-Such that under the usage of this Lemma \ref{Lemma_MCCV} with the fact that $\mathcal{R}^\ast$ is a balanced incomplete block design, we can proof the following  Theorem\footnote{Proof of Theorem \ref{THM_Consistency_MCCV} is given in Appendix \RM{1}}. 
-
-
-\begin{thm}[Consistency of $MCCV(n_v)$]
+Similar as for the $BICV(n_\nu)$ we can proof the following Theorem\footnote{Proof of Theorem \ref{THM_Consistency_MCCV} is given in Appendix \RM{1}}. 
+\begin{thm}[Asymptotic Properties of $MCCV(n_v)$]
 \label{THM_Consistency_MCCV}
 Under the conditions of Theorem \ref{THM_Consistency of $CV(1)$} and
 \begin{align*}
 \max_{s\in \mathcal{R}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =o_P(1)
 \end{align*}
 where $\mathcal{R}$ contains $b$ subsets selected randomly with $b$ satisfying
-\begin{align*}
-\frac{n^2}{b(n-n_v)^2}\to 0.
-\end{align*}
+\begin{align}
+\frac{n^2}{b(n-n_v)^2}\to 0.\quad\textrm{and}\quad b\ge n.\label{MCCV_b_condition}
+\end{align}
 Suppose furthermore that $n_v$ is selected such that
 \begin{align}
-\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.\label{growth_rates_nv_MCCV}
+\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty\label{growth_rates_nv_MCCV}
 \end{align}
 Then the following holds
 \begin{enumerate}[(I)]
@@ -47,24 +34,5 @@ Then the following holds
 \end{enumerate}
 where $\mathcal{M}_{MCCV}$ denotes the model selected by using $MCCV(n_v)$.
 \end{thm}
-
-~\\\\~
-\textbf{Überlegungen/Notizen}\\
-- wie be BICV wahl von $n_\nu$ unter den oben genannten bedingungen ( sowie $n_\nu$ large and $(n-n\nu)$ small)\\
-- zusätzlich, wenn $b$ die bedingung \begin{align*}
-\frac{n^2}{b(n-n_v)^2}\to 0.
-\end{align*}
-erfüllt, dann auch hier MCCV besser als CV(1) weil consistent, je kleiner $(n-n_v)$ , desto mehr splits werden gebraucht, d.h. desto größer muss $b$ sein\\
-- conditions
-\begin{align*}
-\frac{n_v}{n}\to 1 \quad \textrm{and} \quad n-n_v \to \infty.
-\end{align*}
- und die obige bedingung 
- \begin{align*}
- \frac{n^2}{b(n-n_v)^2}\to 0.
- \end{align*}
- implizieren, dass $b\to \infty$ as $n\to\infty$
-
-
-
+Condition (\ref{MCCV_b_condition}) ensures that $\mathcal{R}$ converges to a \textit{Balanced Incomplete Block Design}, such that the problem of $MCCV(n_\nu)$ reduces to the problem of $BICV(n_\nu)$. Hence, it consistently estimates the optimal model. 
 \end{document}
