@@ -827,6 +827,18 @@ For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
 	and therefore $\lim_{n\to\infty}P(\mathcal{M}_{BICV}\neq \mathcal{M}_\alpha) = 0$.
 \end{proof}
 
+For the proof of the asymptotic properties of $MCCV(n_\nu)$ we need the following Lemma:  
+
+\begin{lemma}
+	\label{Lemma_MCCV}
+	Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}\subseteq\mathcal{R}^\ast$. Then for any functions $a,c:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
+	\begin{enumerate}
+		\item $\mathrm{E}_\mathcal{R} \bigl[ b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr] = \binom{n}{n_v}^{-1}\sum_{s\in\mathcal{R}^\ast}a(s)$
+		\item $V_\mathcal{R} \bigl( b^{-1}\sum_{s\in \mathcal{R}}a(s)\bigr) \le b^{-1} \mathrm{E}_\mathcal{R} \bigl[a(s)^2\bigr]$
+		\item $V_\mathcal{R}\bigl(a(s)+c(s)\bigr) \le 2\bigl[V_\mathcal{R}\bigl(a(s)\bigr)+V_\mathcal{R}\bigl(c(s)\bigr)\bigr]$
+		\item $\mathcal{R}^\ast$ fulfills the \textit{balance conditions} of definition \ref{balance_property}.
+	\end{enumerate}
+\end{lemma}
 
 \begin{proof}[Proof of Lemma \ref{Lemma_MCCV}]~\\
 	(1.) Denote by $s_i$ the $i^{th}$ selected subset in $\mathcal{R}$. Then the probability that subset $s \in \mathcal{R}^\ast$ is selected at the $i$th selection step, i.e. $s_i=s$, is given by
