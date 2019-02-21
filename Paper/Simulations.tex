@@ -139,5 +139,5 @@ The second approach, to speed R up,  was to look at the basic commands we used a
 \end{table}
 We see that {\itshape sample} checks additional conditions besides its main purpose, since we do not need this, we can simplify it by using {\itshape x[sample.int(length(x), size)}.\\
 \\
-One further example is the matrix vector multiplication. R computes $P=X(X^\prime X)^{-1}X^\prime y$ by first solving $X(X^\prime X)^{-1}$, then multiplying the outcome with $X^\prime$ and finally multiplying with $y$. This is inefficient due to the dimensionality of the outcoming intermediate results, a more efficient way of computing is $P=X[ (X^\prime X)^{-1}(X^\prime y)]$.
+One further example is the matrix vector multiplication. R computes $P=X(X^\prime X)^{-1}X^\prime y$ by first solving $X(X^\prime X)^{-1}$, then multiplying the outcome with $X^\prime$ and finally multiplying with $y$. This is inefficient due to the dimensionality of the out-coming intermediate results, a more efficient way of computing is $P=X[ (X^\prime X)^{-1}(X^\prime y)]$.
 \end{document}
