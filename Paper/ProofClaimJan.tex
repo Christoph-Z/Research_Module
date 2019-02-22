@@ -21,9 +21,9 @@ it holds almost surely, that
 \end{claim}
 \begin{proof}
  The idea is to use the moment conditions to show that 
- \begin{align}\label{Probabilitie}
+ \begin{align*}
  P\left( \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)\to0
- \end{align}
+ \end{align*}
 Then we can enable the claimed almost sure convergence by using the Borel Cantelli Lemma.\\
 
 At first we use several union bounds to obtain
@@ -38,17 +38,17 @@ Next we are using the maximum norm and another minimum bound to get
 \begin{align}\nonumber
 &P\left(\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i'-E[x_i x_i^\prime]\biggr\rVert>\frac{\varepsilon}{2}\right)\\\nonumber
 =&P\left(\max_{\substack{1\leq k \leq p \\1\leq l\leq p}}\left| \frac{1}{n_v}\sum_{i\in s}x_{ik}x_{il}-E[x_{ik} x_{il}]\right|>\frac{\varepsilon}{2}\right)\\\nonumber
-\leq& \sum_{k=1}^{p}\sum_{l=1}^{p}P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}>\underbrace{\frac{\varepsilon}{2}~ \frac{1}{\sqrt{E[(x_{ik}x_{il})^2]}}}_{=:t_n}\right)\\
+\leq& \sum_{k=1}^{p}\sum_{l=1}^{p}P\left( \frac{\left|\frac{1}{\sqrt{n_v}}\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}>\underbrace{\frac{\varepsilon}{2}~ \frac{\sqrt{n_v}}{\sqrt{E[(x_{ik}x_{il})^2]}}}_{=:t_n}\right)\\
 \begin{split}\label{dreieck}
-\leq&\sum_{k=1}^{p}\sum_{l=1}^{p}\left[ 1-P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq t_n \right) \right.\\
-&\quad\left. + P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n \right) \right]
+\leq&\sum_{k=1}^{p}\sum_{l=1}^{p}\left[ 1-P\left( \frac{\left|\frac{1}{\sqrt{n_v}}\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq t_n \right) \right.\\
+&\quad\left. + P\left( \frac{\left|\frac{1}{\sqrt{n_v}}\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n \right) \right]
 \end{split}
 \end{align}
 Note that
 \begin{align*}
- &1-P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq t_n \right) + P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n \right) \\
- \leq&1-\Phi(-t_n)+\Phi(t_n)+\left| \Phi(t_n)-P\left( \frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n\right) \right|\\
- &\quad+ \left|P\left(\frac{\left|\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}} \leq t_n\right) -\Phi(t_n)\right|
+ &1-P\left( \frac{\left|\frac{1}{\sqrt{n_v}}\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq t_n \right) + P\left( \frac{\left|\frac{1}{\sqrt{n_v}}\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n \right) \\
+ \leq&1-\Phi(-t_n)+\Phi(t_n)+\left| \Phi(t_n)-P\left( \frac{\left|\frac{1}{\sqrt{n_v}}\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}}\leq -t_n\right) \right|\\
+ &\quad+ \left|P\left(\frac{\left|\frac{1}{\sqrt{n_v}}\sum_{i\in s}\left(x_{ik}x_{il}-E[x_{ik}x_{il}]\right)\right|}{\sqrt{E[(x_{ik}x_{il})^2]}} \leq t_n\right) -\Phi(t_n)\right|
 \end{align*}
 We thus obtain, together with Theorem \ref{Michel76Thm3}, that
 \begin{align*}
