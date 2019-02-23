@@ -194,7 +194,12 @@
 
 
 \begin{proof}[Proof of Theorem \ref{THM_Consistency of $CV(1)$}]~\\
-	\textbf{Proof of $(I)$:} A first order Taylor expansion of $(1-x)^{-2}$ in $x$ around $0$ yields 
+	\textbf{Proof of $(I)$:} First note that we can rewrite $\hat{\Gamma}_{\alpha,n}^{CV(1)}$  by Lemma \ref{Equation3.1} as 
+	\begin{align*}
+	\hat{\Gamma}_{\alpha,n}^{CV(1)} &= \frac{1}{n}\sum_{i=1}^n (1- p_{ii\alpha})^{-2}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2.
+	\end{align*}
+	To linearize this expression in $p_{ii\alpha}$, we perform a Taylor expansion of $(1-p_{ii\alpha})^{-2}$.
+	More precisely, a first order Taylor expansion of $(1-x)^{-2}$ in $x$ around $0$ yields 
 	\begin{align}
 	(1- x)^{-2} = 1+ 2 x + o(x^2) \quad \textrm{as} \quad x\to 0 .\label{proof_CV(1)_1}
 	\end{align}
@@ -228,20 +233,39 @@
 	P\biggl(\biggl|\frac{1}{n}\varepsilon'P_\alpha\varepsilon\biggr|>\delta\biggr) \le \frac{\mathrm{E}\bigl[|\varepsilon'P_\alpha\varepsilon|\bigr]}{n\delta}=\frac{\mathrm{E}\bigl[\lVert P_\alpha\varepsilon\rVert^2\bigr]}{n\delta}=\frac{d_\alpha \sigma^2}{n\delta} \to 0 \quad \textrm{as} \quad n\to \infty
 	\end{align*}
 	by the Markov inequality and hence $\frac{1}{n}\varepsilon'P_\alpha\varepsilon = o_P(1)$.\\
-	Finally by the Cebysev inequality it holds for any positve $\delta$ that
+	Finally, by the Cebysev inequality it holds for any positve $\delta$ that
 	%HIER die Notation in Zeile zwei erklären, am besten mit Fußnote,
 	%LETZTe Zeile hier Erinnerung an Submultiplikativität und Verträglichkeite
 	\begin{align*}
 	P\biggl(&\biggl|\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha\biggr|>\delta\biggr) \le \frac{4\mathrm{E}\bigl[(\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha)^2\bigr]}{n^2\delta^2}\\
-	&=\frac{4}{n^2\delta^2}\sum_{i,j}\mathrm{E}\bigl[\varepsilon_i[(I_n-P_\alpha)X_\alpha\beta_\alpha]_i\varepsilon_j[(I_n-P_\alpha)X_\alpha\beta_\alpha]_j\bigr]\\
-	&=\frac{4}{n^2\delta^2}\sum_{i=1}^n\mathrm{E}\bigl[\varepsilon_i^2\bigr][(I_n-P_\alpha)X_\alpha\beta_\alpha]_i^2 \quad \textrm{by independence of the $\varepsilon_i$}\\
-	&=\frac{4\sigma^2}{n^2\delta^2}\lVert(I_n-P_\alpha)X_\alpha\beta_\alpha\rVert^2 \\
-	&\le \frac{4\sigma^2}{n^2\delta^2} \underbrace{\lVert I_n-P_\alpha \rVert^2}_{=1} \underbrace{\max_{z\in \mathbb{R}^{d_\alpha}\backslash 0}\frac{z'X'_\alpha X_\alpha z}{z'z}}_{=O(n)} \lVert \beta_\alpha \rVert^2
-	=O(n^{-1})
+	&=\frac{4}{n^2\delta^2}\sum_{i,j}\mathrm{E}\bigl[\varepsilon_i[(I_n-P_\alpha)X_\alpha\beta_\alpha]_i\varepsilon_j[(I_n-P_\alpha)X_\alpha\beta_\alpha]_j\bigr]
+	\end{align*}
+	where $[(I_n-P_\alpha)X_\alpha\beta_\alpha]_i$ denotes the $i$th element of the vector $(I_n-P_\alpha)X_\alpha\beta_\alpha$. By using the independence of th $\varepsilon_i$, this can be further simplified to
+	\begin{align}
+	&\frac{4}{n^2\delta^2}\sum_{i,j}\mathrm{E}\bigl[\varepsilon_i[(I_n-P_\alpha)X_\alpha\beta_\alpha]_i\varepsilon_j[(I_n-P_\alpha)X_\alpha\beta_\alpha]_j\bigr]\nonumber\\
+	= &\frac{4}{n^2\delta^2}\sum_{i=1}^n\mathrm{E}\bigl[\varepsilon_i^2\bigr][(I_n-P_\alpha)X_\alpha\beta_\alpha]_i^2 \nonumber\\
+	= &\frac{4\sigma^2}{n^2\delta^2}\lVert(I_n-P_\alpha)X_\alpha\beta_\alpha\rVert^2. \label{proof_CV_1}
+	\end{align}
+	Next, we use that the spectral norm is sub-multiplicative and subordinate to the Euclidean norm to achieve the bound
+	\begin{align}
+	\lVert(I_n-P_\alpha)X_\alpha\beta_\alpha\rVert^2
+	\le \underbrace{\lVert I_n-P_\alpha \rVert^2}_{=1} \underbrace{\max_{z\in \mathbb{R}^{d_\alpha}\setminus 0}\frac{z'X'_\alpha X_\alpha z}{z'z}}_{=O(n)\textrm{, by condition $(i)$}} \lVert \beta_\alpha \rVert^2,\label{proof_CV_2}
+	\end{align}	 
+	where we used that $(I_n-P_\alpha)$ is a projection matrix and hence $\lVert I_n-P_\alpha \rVert^2 = 1$.
+	Inserting (\ref{proof_CV_2}) into (\ref{proof_CV_1}) yields
+	\begin{align*}
+	P\biggl(&\biggl|\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha\biggr|>\delta\biggr) = O(n^{-1}),
 	\end{align*}
 	implying $\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha=o_P(1)$. 
-	In the last inequality we used condition $(i)$ and that $(I_n-P_\alpha)$ is a projection matrix and hence $\lVert I_n-P_\alpha \rVert^2 = 1$.\\
-	Combining $\frac{\varepsilon'\varepsilon}{n} = \sigma^2 + o_P(1)$, $\frac{1}{n}\varepsilon'P_\alpha\varepsilon = o_P(1)$ and $\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha=o_P(1)$ with $(\ast)$ yields $\hat{\Gamma}_{\alpha,n}^{CV} = \sigma^2 + \Delta_{\alpha,n} + o_P(1)$ which is asymptotically equivalent to $\Gamma_{\alpha,n}$.This proves the first assertion.\\
+	%In the last inequality we used condition $(i)$ and that $(I_n-P_\alpha)$ is a projection matrix and hence $\lVert I_n-P_\alpha \rVert^2 = 1$.\\
+	
+	Finally, combining 
+	\begin{itemize}
+	\item $\frac{\varepsilon'\varepsilon}{n} = \sigma^2 + o_P(1)$
+	\item $\frac{1}{n}\varepsilon'P_\alpha\varepsilon = o_P(1)$
+	\item $\frac{2}{n}\varepsilon'(I_n-P_\alpha)X_\alpha\beta_\alpha=o_P(1)$
+	\end{itemize}
+	with (\ref{proof_CV(1)_2}) yields $\hat{\Gamma}_{\alpha,n}^{CV} = \sigma^2 + \Delta_{\alpha,n} + o_P(1)$ which is asymptotically equivalent to $\Gamma_{\alpha,n}$.This proves the first assertion.\\
 	
 	\textbf{Proof of $(II)$:} To show the second statement, assume that $\mathcal{M}_\alpha$ is in Category II.
 	Using the linearization in (\ref{proof_CV(1)_1}) we get
@@ -456,7 +480,7 @@ P\bigl(2(d_\alpha-d\ast)\sigma^2 < \varepsilon'(P_\alpha-P-\ast)\varepsilon\bigr
 proving $(IV)$.
 \end{proof}
 
-\begin{claim}
+\begin{claim}\label{claim_CV(1)_conditions}
 	If $X'X=O(n)$ and $(X'X)^{-1}=O(n^{-1})$, then for any $\alpha \in \mathcal{A}$
 	\begin{align*}
 		\lim_{n\to \infty} \max_{1\le i \le p} p_{ii\alpha}=0  \quad \iff \quad 
@@ -468,13 +492,13 @@ proving $(IV)$.
 	\begin{align*}
 	\lim_{n\to\infty} \max_{1\le i\le n} p_{ii\alpha} &= \lim_{n\to\infty} \max_{1\le i\le n} x_{i,\alpha}'(X_\alpha'X_\alpha)^{-1} x_{i,\alpha} \\
 	&= \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} x_{i,\alpha}'\biggl(\frac{X_\alpha'X_\alpha}{n}\biggr)^{-1} x_{i,\alpha} \\
-	&\le \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\max_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\le C^\ast < \infty \textrm{ for sufficiently large $n$} }  \lVert x_{i,\alpha} \rVert ^2 \\
+	&\le \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\max_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\le C^\ast < \infty \textrm{ for $n$ sufficiently large, by $(X'X)^{-1}=O(n^{-1})$} }  \lVert x_{i,\alpha} \rVert ^2 \\
 	&\le C^\ast \lim_{n\to \infty} \max_{1\le i \le n} \frac{\lVert x_{i,\alpha}\rVert ^2}{n}
 	\end{align*}
 	and 
 	\begin{align*}
 	\lim_{n\to \infty} \max_{1\le i \le n} p_{ii\alpha} &=  \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} x_{i,\alpha}'\biggl(\frac{X_\alpha'X_\alpha}{n}\biggr)^{-1} x_{i,\alpha} \\
-	&\ge \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\min_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\ge C_\ast > 0 \textrm{ for $n$ sufficiently large}} \lVert x_{i,\alpha} \rVert ^2\\
+	&\ge \lim_{n\to\infty} \max_{1\le i\le n} \frac{1}{n} \underbrace{\min_{z\neq 0} \frac{z'\bigl(\frac{X_\alpha'X_\alpha}{n}\bigr)^{-1}z}{z'z}}_{\ge C_\ast > 0 \textrm{ for $n$ sufficiently large, by $X'X=O(n)$}} \lVert x_{i,\alpha} \rVert ^2\\
 	&\ge C_\ast \lim_{n\to\infty} \max_{1\le i\le n} \frac{\lVert x_{i,\alpha}\rVert^2}{n}.
 	\end{align*}
 	Hence, 
@@ -483,7 +507,14 @@ proving $(IV)$.
 	\end{align*}
 \end{proof}
 
-
+For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
+\begin{claim}~
+	\label{Claim_BICV}
+	\begin{enumerate}[(I)]
+		\item $\#\{s\in \mathcal{B}| i\in s\} = \frac{n_v}{n} b$ 
+		\item $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}=n_vb\frac{n_v-1}{n(n-1)}$
+	\end{enumerate}
+\end{claim}
 \begin{proof}[Proof of Claim \ref{Claim_BICV}]~\\
 	\textbf{Proof of $(I)$:}\\
 	$\mathcal{B}$ can be represented as a $n\times b$ matrix containing only zeros and ones. Then one interprets each column as a subset of $\{ 1,\dots,n\}$. Since these subsets have size $n_v$, it follows that $\sum_i^n \mathcal{B}_{i,j}=n_v$ for any $j= 1, \dots ,b$, where $\mathcal{B}_{i,j}$ denotes the $(i,j)$ element of $\mathcal{B}$. Hence
@@ -515,15 +546,6 @@ proving $(IV)$.
 	\iff \#\{s\in\mathcal{B}|(i,j)\in s, j>i\}&=n_vb\frac{n_v-1}{n(n-1)}.
 	\end{align*}
 \end{proof} 
-
-For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
-\begin{claim}~
-	\label{Claim_BICV}
-	\begin{enumerate}[(I)]
-		\item $\#\{s\in \mathcal{B}| i\in s\} = \frac{n_v}{n} b$ 
-		\item $\#\{s\in\mathcal{B}|(i,j)\in s, j>i\}=n_vb\frac{n_v-1}{n(n-1)}$
-	\end{enumerate}
-\end{claim}
 
 %THM proof of (III) fehlt noch
 \begin{proof}[Proof of Theorem \ref{THM_Consistency_BICV}]~\\
@@ -637,16 +659,16 @@ For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
 	P_{\alpha,s}= X_{\alpha,s}(X_{\alpha,s}'X_{\alpha,s})^{-1}X_{\alpha,s}'.
 	\end{align*}
 	Inserting the definition of $U_{\alpha,s}$ into (\ref{proof_BICV_2}), yields
-	\begin{align*}
-	\hat{\Gamma}_{\alpha,n}^{BICV}&=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}}_{=I_{n_v}}e_s +B_\alpha\\
-	&=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'e_s + \frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s+B_\alpha.
-	\end{align*}
+	\begin{align}
+	\hat{\Gamma}_{\alpha,n}^{BICV}&=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'\underbrace{(I_{n_v}-Q_{\alpha,s})^{-1}(I_{n_v}-Q_{\alpha,s})}_{=I_{n_v}}(I_{n_v}+c_n P_{\alpha,s})\underbrace{(I_{n_v}-Q_{\alpha,s})(I_{n_v}-Q_{\alpha,s})^{-1}}_{=I_{n_v}}e_s +B_\alpha\nonumber\\
+	&=\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'e_s + \frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s+B_\alpha.\label{motivation_APCV_1}
+	\end{align}
 	Furthermore, by using the balance property of $\mathcal{B}$ and claim \ref{Claim_BICV}, we can simplify the first sum to
-	\begin{align*}
+	\begin{align}
 	\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'e_s
 	= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\sum_{i\in s}e_i^2 
-	= \frac{1}{n_vb}\frac{n_v}{n}b \sum_{i=1}^ne_i^2 = \frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2.
-	\end{align*}
+	= \frac{1}{n_vb}\frac{n_v}{n}b \sum_{i=1}^ne_i^2 = \frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2.\label{motivation_APCV_2}
+	\end{align}
 	Finally, if we use the same calculations as in (\ref{proof_CV(1)_2}), we obtain the desired representation
 	\begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{\varepsilon'\varepsilon}{n}-\frac{\varepsilon'P_\alpha\varepsilon}{n}+\frac{c_n}{n_v b}\sum_{s\in \mathcal{B}}e_s'P_{\alpha,s}e_s+B_\alpha.

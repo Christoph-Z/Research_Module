@@ -6,25 +6,49 @@ The third variant of CV($n_\nu$) we want to mention is the so called \textit{Ana
 \begin{align*}
 APCV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{APCV}
 \end{align*}
-As the \textit{MCCV($n_\nu$)}, we can make a relation to the \textit{BICV($n_\nu$)}. Under the
-%SEite  489 in shao Gleichung (3.17) die unter der condition (3.16) erzeugt werde kann (und den bedingungen des examples ....)
-case of the example \cite{shao} has given in his part to the \textit{BICV($n_\nu$)}, where the condition that $\mathcal{B}$ can be chosen such that
+The \textit{APCV($n_\nu$)} is constructed as an approximation of the \textit{BICV($n_\nu$)}. In the proof of Theorem \ref{THM_Consistency_BICV} we derive the following asymptotic representation for the \textit{BICV($n_\nu$)} estimate
+\footnote{See equations (\ref{motivation_APCV_1}),(\ref{motivation_APCV_2}),(\ref{proof_BICV_4}) and (\ref{proof_BICV_6}).}
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{BICV}=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2 + B_\alpha,
+\end{align*}
+where $B_\alpha = o_P((n-n_\nu)^{-1})$. 
+%Note that the first part of this representation doesn't depend on $\mathcal{B}$.
+Motivated by this representation, $\hat{\Gamma}_{\alpha,n}^{APCV}$ is chosen to be
+\begin{align*}
+\hat{\Gamma}_{\alpha,n}^{APCV}=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2,
+\end{align*}
+i.e. we omit the remainer term $B_\alpha$.
+Note that the computation of $\hat{\Gamma}_{\alpha,n}^{APCV}$ does not rely on partitioning and therefore the \textit{APCV($n_\nu$)} requires less computations in comparison to \textit{BICV($n_\nu$)} and \textit{MCCV($n_\nu$)}.
+
+Moreover, \cite{shao} shows that $B_\alpha$ vanishes whenever the following condition holds
 \begin{align}
 \label{Bedingung_BICV_example}
-	n_\nu^{-1}\sum_{i\in s}x_i x_i^\prime=(n-n_\nu)^{-1}\sum_{i\in s^c}x_i x_i^\prime~~~\forall s\in\mathcal{B}
+	\frac{1}{n_\nu}\sum_{i\in s}x_i x_i^\prime=\frac{1}{n-n_\nu}\sum_{i\in s^c}x_i x_i^\prime\quad \forall s\in\mathcal{B}
 \end{align}
-holds, we can derive a special expression for the estimator of $\hat{\Gamma}_{\alpha,n}^{BICV}$. This special representation for $\hat{\Gamma}_{\alpha,n}^{BICV}$ under this certain condition is chosen to be the estimator $\hat{\Gamma}_{\alpha,n}^{APCV}$ and denoted by
+and hence $\hat{\Gamma}_{\alpha,n}^{APCV}=\hat{\Gamma}_{\alpha,n}^{BICV}$ if and only if condition (\ref{Bedingung_BICV_example}) is satisfied.
+%As the \textit{MCCV($n_\nu$)}, we can make a relation to the \textit{BICV($n_\nu$)}. Under the
+%SEite  489 in shao Gleichung (3.17) die unter der condition (3.16) erzeugt werde kann (und den bedingungen des examples ....)
+%case of the example \cite{shao} has given in his part to the \textit{BICV($n_\nu$)}, where the condition that $\mathcal{B}$ can be chosen such that
+%\begin{align}
+%\label{Bedingung_BICV_example}
+%	n_\nu^{-1}\sum_{i\in s}x_i x_i^\prime=(n-n_\nu)^{-1}\sum_{i\in s^c}x_i x_i^\prime~~~\forall s\in\mathcal{B}
+%\end{align}
+%holds, we can derive a special expression for the estimator of $\hat{\Gamma}_{\alpha,n}^{BICV}$. This special representation for $\hat{\Gamma}_{\alpha,n}^{BICV}$ under this certain condition is chosen to be the estimator $\hat{\Gamma}_{\alpha,n}^{APCV}$ and denoted by
 %NAchweis wie er drauf kommt einfügen, falls noch zeit ist
-\begin{align*}
-\hat{\Gamma}_{\alpha,n}^{APCV}=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2
-\end{align*} 
-Thus only under (\ref{Bedingung_BICV_example}) we have that 
-$\hat{\Gamma}_{\alpha,n}^{APCV}=\hat{\Gamma}_{\alpha,n}^{BICV}$.\\\\
-We can show that the following Corollary holds.\footnote{Proof of Corollary \ref{Consistency_APCV} is given in Appendix \RM{1}}
-\begin{coro}[Asymptotic Properties of APCV($n_v$)]
+%\begin{align*}
+%\hat{\Gamma}_{\alpha,n}^{APCV}=\frac{1}{n}\lVert y-X_\alpha\hat{\beta}_\alpha\rVert^2 + \frac{2n-n_v}{(n-n_v)(n-1)}\sum_{i=1}^np_{i,i,\alpha}e_i^2
+%\end{align*} 
+%Thus only under (\ref{Bedingung_BICV_example}) we have that 
+%$\hat{\Gamma}_{\alpha,n}^{APCV}=\hat{\Gamma}_{\alpha,n}^{BICV}$.\\\\
+%We can show that the following Corollary holds.\footnote{Proof of Corollary \ref{Consistency_APCV} is given in Appendix \RM{1}}
+
+Since $B_\alpha=o_P((n-n_\nu)^{-1})$, we expect that the \textit{APCV($n_\nu$)} inherits the asymptotic properties of \textit{BICV($n_\nu$)} and indeed, the following corollary proves this to be right.\footnote{Proof of Corollary \ref{Consistency_APCV} is given in Appendix \RM{1}}
+\begin{coro}[Asymptotic Properties of \textit{APCV($n_v$)}]
 \label{Consistency_APCV}
 Under the conditions of Theorem \ref{THM_Consistency_BICV}, the statements $(I)-(III)$ hold for the Analytic Approximate $CV(n_v)$.
 \end{coro}
-
-In comparison to \textit{BICV($n_\nu$)} and \textit{MCCV($n_\nu$)}, the \textit{APCV($n_\nu$)} requires less computations, since no partitioning is necessary. Another important point is, that \textit{APCV($n_\nu$)} depends on the linear setting in contrast to the other procedures. Therefore it is not as easy to exend to other scenarios. Note that \textit{APCV($n_\nu$)} does not perform as well as the \textit{MCCV($n_\nu$)} in the simulation of \cite{shao}.
+%In comparison to \textit{BICV($n_\nu$)} and \textit{MCCV($n_\nu$)}, the \textit{APCV($n_\nu$)} requires less computations, since no partitioning is necessary. 
+%Another important point is, that \textit{APCV($n_\nu$)} depends on the linear setting in contrast to the other procedures. Therefore it is not as easy to exend to other scenarios.
+The derivation of \textit{APCV($n_\nu$)} depends on the linear setting in contrast to the other procedures. Therefore it is not as easy to exend to other scenarios.
+Furthermore note that \textit{APCV($n_\nu$)} does not perform as well as the \textit{MCCV($n_\nu$)} in the simulation of \cite{shao}.
 \end{document}
