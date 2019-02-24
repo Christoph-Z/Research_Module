@@ -52,14 +52,16 @@ is flat such that it is difficult to find the minimum $\alpha$. But also we have
 
 The problem of flat functions is that  there is too much weight on the stochastic remainder terms such that \textit{Cross-Validation} can not correctly identify the minimum. Figure \ref{ProofSketchCV1} and \ref{ProofSektchCVn_v} show the \textit{Expected Squared Prediction Error} (dotted line) against their empirical counter part (solid lines) of two different Category II Models.\footnote{For more details, see simulation code Appendix II} As we can see in figure \ref{ProofSketchCV1} the error estimates are crossing each other. Every time they cross, the \textit{Cross-Validation} chooses the wrong model. Hence of the differences in scale, see figure \ref{ProofSektchCVn_v}, this problem does not occur that often for the $BICV(n_\nu)$.\\
 \begin{figure}[!h]
+	\label{ProofSketchCV1}
 	\centering
 	\includegraphics[width=0.8\textwidth]{ProofSketchN1.png}\\
-	\caption{Estimated Squared Prediction Error $CV(1)$}\label{ProofSketchCV1}
+	\caption{Estimated Squared Prediction Error $CV(1)$}
 \end{figure}
 \begin{figure}[!h]
+	\label{ProofSektchCVn_v}
 	\centering
 	\includegraphics[width=0.8\textwidth]{ProofSketchNV.png}\\
-	\caption{Estimated Squared Prediction Error $CV(n_\nu)$}\label{ProofSektchCVn_v}
+	\caption{Estimated Squared Prediction Error $CV(n_\nu)$}
 \end{figure}
 \\
 We need condition $\frac{n_v}{n}\to 1$ for the choice of $n_\nu$, because if this condition does not hold, $BICV(n_v)$ cannot distinguish in between the models in Category II and thus this method would be inconsistent (this is the main problem of CV(1) that occurs). For a more detailed explanation see \cite{shao}. We choose in our simulation $n_\nu=n-\lfloor n^{3/4}\rfloor$, which satisfy the above condition.\\
