@@ -31,9 +31,9 @@ In chapter \ref{Simulation1} we showed that all four methods of model selection 
 \\
 For the next simulation we only consider models in Category II\footnote{To be more precisely: We only allow Category II models as choice for the model selection problem.}. To rectify this assumption, we choose a large sample size of $n=500$, hence, as already mentioned, the probability of choosing a Category II model is close to one for large sample sizes.\\
 \\
-Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all four methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one then the true model by $M_\ast+1$.\\
+Figure \ref{Simulation2} shows the probabilities of choosing models of a certain dimensionality for all four methods\footnote{Therefore we repeated the model selection 2000 times for different samples and counted how often models with certain dimensionality were chosen.}. Since we only look at models from Category II we know that the model with the smallest dimensionality has to be the true model $M_\ast$. In this sense we denote a model with a dimensionality higher by one than the true model by $M_\ast+1$.\\
 
-As we can see, both \textit{AIC} and \textit{CV(1)} perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that \textit{AIC} and \textit{CV(1)} are asymptotically equivalent} and tend to pick to large models. \textit{BIC} and \textit{MCCV}  perform better, both pick the true model with a probability close to one (see \cite{schwarz1978estimating})and they choose to large models in only a few cases. Within our 2000 iteration there was no single case where \textit{BIC} and \textit{MCCV} choose models with a dimensionality larger than $M_\ast+1$.
+As we can see, both \textit{AIC} and \textit{CV(1)} perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that \textit{AIC} and \textit{CV(1)} are asymptotically equivalent} and tend to pick too large models. \textit{BIC} and \textit{MCCV}  perform better, both pick the true model with a probability close to one (see \cite{schwarz1978estimating}) and they choose too large models in only a few cases. Within our 2000 iterations there was no single case where \textit{BIC} and \textit{MCCV} choose models with a dimensionality larger than $M_\ast+1$.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\textwidth]{Simulation2.png}\\
@@ -85,15 +85,14 @@ The most time consuming aspects are {\itshape solved.default,\%*\%} and {\itshap
 \begin{align*}
 \hat{\beta_\alpha}=X_\alpha(X^\prime_\alpha X_\alpha)^{-1}X_\alpha^\prime y
 \end{align*}
-Note that we repeat all model selections several times for any fixed $n$ in all simulations. Since in our simulation design the regressors are fixed, some parts of the OLS estimate doesn't change in the different simulation steps and hence could be pulled out of the CV function to reduce redundant computations. In each new simulation step we only draw new error terms and hence only the $y$ values differ. Thus we can give the matrix inverses and the set of possible models $\mathcal{A}$ directly to the function, instead of recomputing it over and over.
+Note that we repeat all model selections several times for any fixed $n$ in all simulations. Since in our simulation design the regressors are fixed, some parts of the OLS estimate doesn't change in the different simulation steps and hence could be pulled out of the \textit{CV} function to reduce redundant computations. In each new simulation step we only draw new error terms and hence only the $y$ values differ. Thus we can give the matrix inverses and the set of possible models $\mathcal{A}$ directly to the function, instead of recomputing it over and over.
 \\
-Another point in order to save computing power is using an algebraic reformulation of the average squared prediction error as in \cite{shao}.
+Another point in order to save computing power is using an algebraic reformulation of the \textit{Average Squared Prediction Error} estimate as in \cite{shao}.
 \[
 	\hat{\Gamma}_{\alpha,n}=\frac{1}{n}\sum_i[(1-p_{ii\alpha})^{-1}(y_i-x^\prime_{\alpha i}\hat{\beta_\alpha})]^2
 \]
 where $p_{i\alpha}$ is the $i$-th diagonal element of the projection matrix $P_\alpha$.\\
-This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix II: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm. Note that this algebraic reformulation does not speed up the other $CV(n_\nu)$ procedures.\\
-\\
+This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix II: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm. Note that this algebraic reformulation does not speed up the other $CV(n_\nu)$ procedures.
 \begin{table}[!h]
 	\caption{CV Algorithm Second Version Profiling }
 	\label{CVneu}
@@ -111,8 +110,8 @@ This yields an improvement of speed by a factor of 104 for the new CV-algorithm\
 		\\
 		\scriptsize sampling.time : 0.02
 	\end{tabular}
-\end{table}
-The second approach, to speed R up,  was to look at the basic commands we used and to make them less flexible. To do so we used the command {\itshape package :: function}. This command shows the code behind predefined R commands, for example the {\itshape sample()} command \footnote{{\itshape sample(x,size)} draws randomly {\itshape size} elements from the set {\itshape x} }, see table \ref{sample}.
+\end{table}\\
+The second approach, to speed R up,  was to look at the basic commands we used and to make them less flexible. To do so we used the command {\itshape package :: function}. This command shows the code behind predefined R commands, for example the {\itshape sample()} command \footnote{{\itshape sample(x,size)} draws randomly {\itshape size} elements from the set {\itshape x} }, see Table \ref{sample}.
 \begin{table}[h]
 	\caption{Source Code {\itshape sample()}}\label{sample}
 	\begin{lstlisting}
@@ -133,7 +132,7 @@ The second approach, to speed R up,  was to look at the basic commands we used a
 	}
 	\end{lstlisting}
 \end{table}
-We see that {\itshape sample} checks additional conditions besides its main purpose, since we do not need this, we can simplify it by using {\itshape x[sample.int(length(x), size)}.\\
+We see that {\itshape sample} checks additional conditions besides its main purpose, since we do not need this, we can simplify it by using {\itshape x[sample.int(length(x), size)]}.\\
 \\
 One further example is the matrix vector multiplication. R computes $P=X(X^\prime X)^{-1}X^\prime y$ by first solving $X(X^\prime X)^{-1}$, then multiplying the outcome with $X^\prime$ and finally multiplying with $y$. This is inefficient due to the dimensionality of the out-coming intermediate results, a more efficient way of computing is $P=X[ (X^\prime X)^{-1}(X^\prime y)]$.
 \end{document}
