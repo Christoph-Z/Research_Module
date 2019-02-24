@@ -1,8 +1,6 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 \subsection{The Monte Carlo CV($n_\nu$)}
-
-%SHao vllt. irgendwo zitieren?
 The \textit{Monte Carlo CV($n_\nu$)}, denoted by \textit{MCCV($n_\nu$)}, is another variant of the \textit{CV($n_\nu$)} method and heavily related to the $BICV(n_v)$. It only distinguish to $BICV(n_v)$ by the way how it chooses its set of partitions. Indeed it does not choose them by a combinatorial procedure as described in the section before, this process is subjected to a random choice. Therefore it draws its subset of all possible partitions for a given $n_\nu$, which is denoted by $\mathcal{R}$, randomly with or without a replacement. $\mathcal{R}$ is the a collection of subsets such that $|\mathcal{R}|\equiv b$. This reminds to the $BICV(n_v)$, but without selecting $\mathcal{R}$ according to the \textit{balance conditions}. Therefore the \textit{MCCV($n_\nu$)} can be used as an alternative, if the collection of partitions $\mathcal{B}$ with its certain properties that have to be fulfilled is not provided. The \textit{MCCV($n_\nu$)} method does model selection by 
 \begin{align*}
 MCCV(n_\nu)=\min_{\alpha\in\mathcal{A}}\hat{\Gamma}_{\alpha,n}^{MCCV}
