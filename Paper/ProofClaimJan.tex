@@ -1,16 +1,7 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
 %The following Theorem can be found in the work of \cite{michel1976nonuniform}
-In the following claim we will need Theorem 3 of \cite{michel1976nonuniform}
-\begin{thm}[\cite{michel1976nonuniform}]\label{Michel76Thm3}
-Let $x_1,x_2,x_3,\ldots$ be iid random variables s.t $E[x]=0$, $E[x^2]=1$ and $E[|x|^{2+\tau}]<\infty$, for some $\tau>0$. Then there exists a constant $C_\tau$ (depending on $\tau$) such that for all $n\in \mathbb{N}$ and $t\in\mathbb{R}$,
-\[
-	\left| P\left( \frac{1}{\sqrt{n}}\sum_{i=1}^{n}x_i\leq t \right) -\Phi(t) \right| \leq \frac{C_\tau}{n^{\frac{1}{2}~ \min\{\tau,1\}} (1+|t|^{2+\tau|}) }
-\] 
-where $\Phi (t)$ denotes the standard normal distribution function.
-\end{thm}	
-	
-\begin{claim}
+\begin{claim}\label{Lala}
 Let $x_1,\ldots,x_n$ be iid $\mathbb{R}^p$-valued random vectors, such that $E[(x^\prime_i x_i)^{2+\tau}]<\infty$ for some $\tau>7/3$, then for 
 \[
 	b=O(n)\quad\textrm{and}\quad n-n_\nu=\lfloor n^{\frac{3}{4}}\rfloor
@@ -20,7 +11,15 @@ it holds almost surely, that
 \lim_{n\to\infty} \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert =0. \label{gram_matrix_condition_BICV}
 \]
 \end{claim}
-\begin{proof}
+To proof this claim we will need Theorem 3 of \cite{michel1976nonuniform}
+\begin{thm}[\cite{michel1976nonuniform}]\label{Michel76Thm3}
+	Let $x_1,x_2,x_3,\ldots$ be iid random variables s.t $E[x]=0$, $E[x^2]=1$ and $E[|x|^{2+\tau}]<\infty$, for some $\tau>0$. Then there exists a constant $C_\tau$ (depending on $\tau$) such that for all $n\in \mathbb{N}$ and $t\in\mathbb{R}$,
+	\[
+	\left| P\left( \frac{1}{\sqrt{n}}\sum_{i=1}^{n}x_i\leq t \right) -\Phi(t) \right| \leq \frac{C_\tau}{n^{\frac{1}{2}~ \min\{\tau,1\}} (1+|t|^{2+\tau|}) }
+	\] 
+	where $\Phi (t)$ denotes the standard normal distribution function.
+\end{thm}	
+\begin{proof}[Proof of Claim \ref{Lala}]~\\~
  The idea is to use the moment conditions to show that 
  \begin{align*}
  P\left( \max_{s\in \mathcal{B}}\biggl\lVert \frac{1}{n_v}\sum_{i\in s}x_ix_i' - \frac{1}{n-n_v}\sum_{i\in s^c}x_ix_i'\biggr\rVert>\varepsilon\right)
