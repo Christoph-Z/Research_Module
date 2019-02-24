@@ -13,7 +13,7 @@ where $i=1,\ldots,n$ with $n$ being the total number of observations. The error 
 \]
 where $\beta_1,\beta_2$ are unequal to zero. So the model with the best predictive ability has to be chosen out of five possible regressors $\{x_1,\ldots,x_5\}$. \\
 \\
-For the different simulations we consider the four model selection methods: \textit{CV(1), MCCV}($n_\nu$) and since they are popular in praxis \textit{AIC}, \textit{BIC} as benchmark. Also note that choose $n_v=n-\lfloor n^{3/4}\rfloor$ as in \cite{shao}.
+For the different simulations we consider the four model selection methods: \textit{CV(1), MCCV}($n_\nu$) and since they are popular in praxis \textit{AIC}, \textit{BIC} as benchmark. Also note that we choose $n_v=n-\lfloor n^{3/4}\rfloor$ as in \cite{shao}.
 
 \subsection{Ability of distinguishing between Category I and II }
 In the first simulation we want to take a closer look at the probability given in Theorem \ref{THM_Consistency of $CV(1)$} (III). We saw that for $n\to\infty$ the different \textit{Cross-Validation} methods are perfectly able to distinguish between Category I and II, hence the probability of choosing a model from Category I equals zero. But how good will \textit{Cross-Validation} perform with only finite information and will all methods behave similar?\\
