@@ -23,6 +23,10 @@
 \usepackage{braket}
 \usepackage{bbm}
 
+\usepackage{chngcntr}
+\usepackage{apptools}
+\AtAppendix{\counterwithin{defi}{section}}
+
 %Vordefinierte Umgebungen
 \newtheorem{defi}{Definition}[section]
 \newtheorem{satz}[defi]{Satz}
@@ -132,7 +136,7 @@
 \pagenumbering{Roman} 		      % röm.ziffern	
 \setcounter{page}{1}			  % ab ziffer 1
 
-\addcontentsline{toc}{section}{Appendix \RM{1}}
+
 \subfile{Appendix}
 
 
