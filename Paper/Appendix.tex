@@ -1199,7 +1199,7 @@ For the proof of the asymptotic properties of $MCCV(n_\nu)$ we need the followin
 \section*{Appendix \RM{2}}
 \addcontentsline{toc}{subsection}{Simulation Chapter 4.2}
 \subsection*{Simulation Chapter 4.2}
-\begin{lstlisting}[title={Simulation Graphic Ilustration ESPE CV1 and CV($n_\nu$)}]
+\begin{lstlisting}[title={Simulation Graphic Ilustration Exspected Squared Prediction Error CV1 and CV($n_\nu$)}]
 library(ggplot2)
 
 n <- 100
@@ -1219,7 +1219,7 @@ sigma <- 1
 y <- X%*%beta+rnorm(n,0,sigma)
 
 ##--------------------------------------------------------------------
-##ESPE for CV(1) and CV(n_v) for Models in Category II
+##Exspected Squared Prediction Error for CV(1) and CV(n_v) for models in Category II
 
 ESPE_CV1 <- function(d,n){
 return((1+d/n)*sigma^2)
@@ -1229,7 +1229,7 @@ return(1+d/n^(3/4))
 }
 
 ##--------------------------------------------------------------------
-##ESPE for CV(1) and CV(n_v) for Models in Category II
+##Exspected Squared Prediction Error for CV(1) and CV(n_v) for models in Category II
 
 CV <- function(n,y,X,Method = "CV1"){
 if(Method =="CV1"){
@@ -1247,7 +1247,7 @@ train[,i] <- sample(seq(1,n,1),n-n_v,replace = FALSE)
 
 Pred.Error <- c()
 for (i in 1:length(train[1,])) {
-#To make the Code a bit shorter
+#To make the code a bit shorter
 train.i <- train[,i]                 
 X.train <- X[train.i,]    
 #Prediction Error for a given alpha and a given subset
@@ -1337,10 +1337,10 @@ Partion <- function(p.True,p){
 	##p.True denotes the number of true regressors
 	##For the CV we need to compute the set A of all possible models 
 	
-	##Creats the set {1,...,p}, from which we want to generate the powerset
+	##Creates the set {1,...,p}, from which we want to generate the powerset
 	Index <- seq(1,p,1)                        
 
-	##Denotes the number of possible models out of {1,...,p} Regressors 
+	##Denotes the number of possible models out of {1,...,p} regressors 
 	col.A <- 2^p-1                                           
 
 	##Denote A as powerset of {1,...,p}
@@ -1354,9 +1354,9 @@ Partion <- function(p.True,p){
 		l <- l + choose(p,i)
 	}
 
-	##We want to split A into two dijoint subsets, ie, the set of category I models and category II models. To compute the set of cat. I and cat. II we assume a certain strurcture of the Data. We need X to be s.t all "TRUE" regrossers are in the first column of the X matrix.
+	##We want to split A into two disjoint subsets, ie, the set of category I models and category II models. To compute the set of cat. I and cat. II we assume a certain structure of the Data. We need X to be s.t all "TRUE" regrossors are in the first column of the X matrix.
 	
-	##We may need this sets later for simulation study's
+	##We may need this sets later for simulation studies
 	coln <- c()
 	for (i in p.True:col.A) {
 		if(all(seq(1,p.True,1) %in% A[,i])){    
@@ -1375,9 +1375,9 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, 
 	##n_v		Number of leaved out data points
 	##y,X		Data for regression
 	##Alpha	  	Set of possible modelvariations for which the CV 	     should be calculated, by default use all possible 		    models
-	#MonteCarlo   	Number of subsets of {1,...,n} which is randomly 	     drawn for a Monte Carlo CV, by befault do K-Fold CV
+	#MonteCarlo   	Number of subsets of {1,...,n} which is randomly 	     drawn for a Monte Carlo CV, by default do K-Fold CV
 	#Replacement  	Replacement for Monte Carlo (default FALSE)
-	##BICV          Incidence Matrix for a BICV
+	##BICV          Indices Matrix for a BICV
 
 	##Change some variable names to keep the code shorter
 	A <- Alpha
@@ -1389,7 +1389,7 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, 
 	##Set of possible models
 	if(is.null(A)){
 
-		##Creats the set {1,...,p} from which we want to generate the Powerset
+		##Creates the set {1,...,p} from which we want to generate the Powerset
 		Index <- seq(1,p,1)    
 
 		##Denotes the number of possible models out of {1,...,p}
@@ -1412,9 +1412,9 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, 
 	n <- length(y)
 
 
-	##Combinations of sample partions for fitting the model
+	##Combinations of sample partitions for fitting the model
 
-	##For the Mone Carlo CV with b subsets of {1,...,n}
+	##For the Monte Carlo CV with b subsets of {1,...,n}
 	if(!is.null(b)){
 		train <- matrix(ncol = b, nrow = n-n_v)
 		for (i in 1:b) {
@@ -1452,7 +1452,7 @@ CV <- function(n_v, y, X, Alpha = NULL, MonteCarlo = NULL, Replacement = FALSE, 
 
 \begin{lstlisting}[title={Akaike and Schwarz Information Criterion}]
 InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
-	#Alpha		Set of possible modelversions for which the CV should 		 be calculated, by default use all possible models
+	#Alpha		Set of possible model versions for which the CV should 		be calculated, by default use all possible models
 	#Criterion    	Decides if we want to use the Akaike or Bayesian 	     information criterion
 
 	##Change some variable names to keep the code shorter
@@ -1461,13 +1461,13 @@ InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
 	##Number of observations
 	n <- length(y)
 
-	##Set of possible Models
+	##Set of possible models
 	if(is.null(A)){
 
-		##Number of Possible Regressors
+		##Number of possible regressors
 		p <- length(X[1,])
 
-		##Creats the set {1,...,p} from which we want to generate the powerset
+		##Creates the set {1,...,p} from which we want to generate the powerset
 		Index <- seq(1,p,1)    
 
 		##Denotes the number of possible models out of {1,...,p} 
@@ -1527,7 +1527,7 @@ InfoCrit <- function(y,X,Alpha = NULL, Criterion = "AIC"){
 \end{lstlisting}
 
 \begin{lstlisting}[title={Data Generating Process}]
-##Function that Generates Data
+##Function that Ggenerates data
 ##The only purpose of this function is to save some lines of code. Hence that the function is not very general
 
 DataGen <- function(n,p,p.True){
@@ -1549,7 +1549,7 @@ DataGen <- function(n,p,p.True){
 	beta.vec <- c(beta.pos[1:p.True],rep(0,p-p.True)) 
 	X<- X.pos[,1:p]
 
-	##Genereta dependent variables according to the above stateted model
+	##Generates dependent variables according to the above stateted model
 	y <- X%*%beta.vec + eps    #True Model
 	return(cbind(y,X))
 }
@@ -1660,12 +1660,12 @@ CV1 <- c()
 MCV <- c()
 BICV <- c()
 
-##Number of leaved out data points and number of samplepartitions
+##Number of leaved out data points and number of sample partitions
 n_v <- 394
 b <- 5*n
 
 for (i in 1:m) {
-	##Generating Data
+	##Generating data
 	Data <- DataGen(n,p,p.True)
 	y <- Data[,1]
 	X <- Data[,-1]
@@ -1717,7 +1717,7 @@ ggplot(d,aes(x=C,y=M,size=P,label=P)) +
 \subsection*{Code Efficiency}
 
 \begin{lstlisting}[title={Leave-one-Out Cross-Validation Function}]
-##Creats the set {1,...,p} from which we want to generate the powerset
+##Creates the set {1,...,p} from which we want to generate the powerset
 Index <- seq(1,p,1)    
 
 ##Denotes the number of possible models out of {1,...,p}
@@ -1742,21 +1742,21 @@ for(j in 1:col.A){
 }
 
 LOOCV <- function(y,B,C,D, Alpha = A){
-	##ttis functions computes the regressors chosen by LOOCV
+	##this functions computes the regressors chosen by LOOCV
 	##
 	##y            Data for dependent variable
 	##B            Data for Regressors
 	##C            Gram matrix of regressors
 	##D            Diagonal elements of the projection matrix
 	##
-	##Alpha     Set of possible modelvaritaions for which the CV should be calculated 
+	##Alpha     Set of possible model varitaions for which the CV should be calculated 
 	##             (By default use all possible models)  
 
-	p <- length(X[1,])#Number of Possible Regressors
-	n <- length(y)#Number of Observations
+	p <- length(X[1,])#Number of possible regressors
+	n <- length(y)#Number of observations
 	col.A <- length(A[1,])
 
-	##compute the OLS estimates for model alpha
+	##Compute the OLS estimates for model alpha
 	b <- matrix(0L, nrow = p, ncol = col.A)
 	for(j in 1:col.A){
 	b[A[A[,j]!=0,j],j]<- solve(C[A[A[,j]!=0,j],A[A[,j]!=0,j]])%*%t(B[,A[A[,j]!=0,j]])%*%y
@@ -1778,7 +1778,7 @@ LOOCV <- function(y,B,C,D, Alpha = A){
 \end{lstlisting}
 
 \begin{lstlisting}[title={Monte Carlo Cross-Validation Function (Speeded up Version)}]
-##Creats the set {1,...,p} from which we want to generate the powerset
+##Creates the set {1,...,p} from which we want to generate the powerset
 Index <- seq(1,p,1)    
 
 ##Denotes the number of possible models out of {1,...,p}
@@ -1802,9 +1802,9 @@ for(j in 1:col.A){
 	}
 }
 
-##b is the number of samplepartitions
+##b is the number of sample partitions
 
-##Combination of Samplesplits
+##Combination of sample splits
 train.MCCV <- matrix(ncol = b, nrow = n-n_v)
 for (i in 1:b) {
 	train[,i] <- sample(seq(1,n,1),n-n_v,replace = FALSE)
@@ -1823,8 +1823,8 @@ for (i in 1:length(A[1,])) {
 	}
 }
 
-MCCV.v2 <- function(n,n_v, y, X,I, A, b,train, Replacement = FALSE){  #n_v = #leaved out data points
-	##Compute prediction errors for all sets in A
+MCCV.v2 <- function(n,n_v, y, X,I, A, b,train, Replacement = FALSE){         #n_v = #leaved out data points
+    ##Compute prediction errors for all sets in A
 	MeanPred.Error <- c()
 	k <- 0
 	for (i in 1:length(A[1,])) {
@@ -1848,7 +1848,7 @@ MCCV.v2 <- function(n,n_v, y, X,I, A, b,train, Replacement = FALSE){  #n_v = #le
 \end{lstlisting}
 
 \begin{lstlisting}[title={Schwarz and Akaike Information Criterion (Speeded up Version)}]
-##Creats the set {1,...,p} from which we want to generate the powerset
+##Creates the set {1,...,p} from which we want to generate the powerset
 Index <- seq(1,p,1)    
 
 ##Denotes the number of possible models out of {1,...,p}
