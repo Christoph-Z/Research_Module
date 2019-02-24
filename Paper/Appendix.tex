@@ -16,7 +16,7 @@
 	1)&~ \frac{\partial}{\partial \beta}(\beta^\prime a)=a\\
 	2)&~\frac{\partial}{\partial \beta}(\beta^\prime A\beta)=2A\beta
 	\end{align*}
-	The first order conditions yields
+	The first order conditions yield
 	\begin{align*}
 	& \frac{\partial}{\partial b_\alpha}(y-X_\alpha b_\alpha)^\prime(y-X_\alpha b_\alpha)\stackrel{!}{=}0\\
 	\Leftrightarrow & \frac{\partial}{\partial b_\alpha}(y^\prime y-b_\alpha^\prime X_\alpha^\prime y-y^\prime X_\alpha b_\alpha+b_\alpha^\prime X_\alpha^\prime X_\alpha b_\alpha)=0\\
@@ -119,7 +119,7 @@
 
 
 \begin{proof}[Proof of Lemma \ref{Equation2.5}]~\\
-	Let $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\alpha\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$. It follows for the \textit{unconditional expected squared prediction errors} with Lemma \ref{Equation2.3-2.4}:
+	Let $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\gamma\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$. It follows for the \textit{unconditional expected squared prediction errors} with Lemma \ref{Equation2.3-2.4}:
 	\begin{align*}
 	\begin{tabular}{ll}
 	$\Gamma_{\alpha,n}$&$=\sigma^2+n^{-1}d_\alpha\sigma^2+\Delta_{\alpha,n}~~~~~$ with $\Delta_{\alpha,n}>0$\\
@@ -284,11 +284,11 @@
 	To establish this result we first show that $\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2= \sum_{i=1}^n p_{ii\alpha}\varepsilon_i^2 + o_P(1)$ and then we argue that $\sum_{i=1}^n p_{ii\alpha}\varepsilon_i^2=d_\alpha\sigma^2+o_P(1)$.\\
 	
 	(1.) One can rewrite 
-	\begin{align*}
+	\begin{align}
 	\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2 &= (y-X_\alpha\hat{\beta}_\alpha)'\mathrm{diag}(P_\alpha)(y-X_\alpha\hat{\beta}_\alpha) 
-	= \varepsilon'(I_n-P_\alpha)\mathrm{diag}(P_\alpha)(I_n-P_\alpha)\varepsilon\\
-	&= \varepsilon'\mathrm{diag}(P_\alpha)\varepsilon-2\varepsilon'\mathrm{diag}(P_\alpha)P_\alpha\varepsilon+\varepsilon'P_\alpha\mathrm{diag}(P_\alpha)P_\alpha \varepsilon. \quad (\Delta)
-	\end{align*}
+	= \varepsilon'(I_n-P_\alpha)\mathrm{diag}(P_\alpha)(I_n-P_\alpha)\varepsilon\nonumber\\
+	&= \varepsilon'\mathrm{diag}(P_\alpha)\varepsilon-2\varepsilon'\mathrm{diag}(P_\alpha)P_\alpha\varepsilon+\varepsilon'P_\alpha\mathrm{diag}(P_\alpha)P_\alpha \varepsilon. \label{schawarma_king}
+	\end{align}
 	$\varepsilon'\mathrm{diag}(P_\alpha)P_\alpha\varepsilon$ vanishes in probability as
 	\begin{align*}
 	\varepsilon'\mathrm{diag}(P_\alpha)P_\alpha\varepsilon= \sum_{i=1}^n\sum_{j=1}^np_{ii\alpha}p_{ij\alpha}\varepsilon_i\varepsilon_j
@@ -311,7 +311,7 @@
 	%ANGeben warum das untere hält, wegen idempotenz und symmetrie von P_\alpha
 	$\sum_{j}p_{ij\alpha}^2=p_{ii\alpha}$, due to idempotency and symmetry.\\
 	
-	The last part in $(\Delta)$ is asymptotically negligible as well since
+	The last part in (\ref{schawarma_king}) is asymptotically negligible as well since
 	\begin{align*}
 	\varepsilon'P_\alpha\mathrm{diag}(P_\alpha)P_\alpha \varepsilon = \sum_i\sum_j\sum_k p_{ii\alpha}p_{ij\alpha}p_{ik\alpha}\varepsilon_j\varepsilon_k\\
 	=\sum_i p_{ii\alpha}^3 \varepsilon_i^2 +2\sum_i\sum_{j\neq i}p_{ii\alpha}^2p_{ij\alpha}\varepsilon_i\varepsilon_j + 
@@ -329,7 +329,7 @@
 	P\biggl(\biggl|\sum_i&\sum_{j\neq i}\sum_{k\neq i}p_{ii\alpha}p_{ij\alpha}p_{ik\alpha}\varepsilon_j\varepsilon_k\biggr|>\delta\biggr)\le\frac{1}{\delta^2}\sum_i\sum_{j\neq i}\sum_{k\neq i}p_{ii\alpha}^2p_{ij\alpha}^2p_{ik\alpha}^2\mathrm{E}\bigl[\varepsilon_j^2\varepsilon_k^2\bigr]\\
 	&\le \frac{\sigma^4}{\delta^2} \sum_i p_{ii\alpha}^4 \le \frac{d_\alpha\sigma^4}{\delta^2}\biggl(\max_{1\le i\le n}p_{ii\alpha}\biggr)^3 \to 0.
 	\end{align*}
-	Hence we have shown that $(\Delta)$ is 
+	Hence we have shown that (\ref{schawarma_king}) is 
 	\begin{align*}
 	\sum_{i=1}^n p_{ii\alpha}(y_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2 = \varepsilon'\mathrm{diag}(P_\alpha)\varepsilon + o_P(1).
 	\end{align*}
@@ -482,7 +482,7 @@ proving $(IV)$.
 \begin{claim}\label{claim_CV(1)_conditions_2}
 	If $X'X=O(n)$ and $(X'X)^{-1}=O(n^{-1})$, then $\liminf_{n\to \infty} \Delta_{\alpha,n} >0$.
 \end{claim}
-\begin{proof}
+\begin{proof}[Proof of Claim \ref{claim_CV(1)_conditions_2}:]~\\~
 Since $(I-P_\alpha)$ is an orthogonal projection onto $\mathrm{span}(X_\alpha)^\bot$, we can bound
 \begin{align*}
 \Delta_{\alpha,n} 
@@ -523,7 +523,7 @@ proving the claim.
 		 \lim_{n\to \infty} n^{-1}\max_{1\le i \le n} \lVert x_{\alpha,i}\rVert ^2 = 0.
 	\end{align*}
 \end{claim}
-\begin{proof}
+\begin{proof}[Proof of Claim \ref{claim_CV(1)_conditions}:]~\\~
 	For arbitrary $\alpha \in \mathcal{A}$ holds
 	\begin{align*}
 	\lim_{n\to\infty} \max_{1\le i\le n} p_{ii\alpha} &= \lim_{n\to\infty} \max_{1\le i\le n} x_{i,\alpha}'(X_\alpha'X_\alpha)^{-1} x_{i,\alpha} \\
@@ -663,7 +663,7 @@ For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
 	\begin{align*}
 	\hat{\Gamma}_{\alpha,n}^{BICV} = \frac{\varepsilon'\varepsilon}{n}-\frac{\varepsilon'P_\alpha\varepsilon}{n}+\frac{d_\alpha\sigma^2}{n-n_v}+o_P\left(\frac{1}{n-n_v}\right) \quad \forall \alpha\in \textrm{Cat. $II$},
 	\end{align*}
-	which is already quite close to the statement. It only differs in the $\varepsilon'P_\alpha\varepsilon$ term. But this term converges to zero, even if we multiply it with $n-n_v$. This can be seen by using the Markov inequality and the growth rate requirements in condition \ref{growth_rates_nv_BICV} as follows
+	which is already quite close to the statement. It only differs in the $\varepsilon'P_\alpha\varepsilon$ term. But this term converges to zero, even if we multiply it with $n-n_v$. This can be seen by using the Markov inequality and the growth rate requirements in condition (\ref{growth_rates_nv_BICV}) as follows
 	\begin{align*}
 	P\left(\left\lvert \frac{n-n_v}{n}\varepsilon'P_\alpha\varepsilon\right\rvert > \delta\right)\le \frac{n-n_v}{n}\frac{1}{\delta}\mathrm{E}[\varepsilon'P_\alpha\varepsilon]=\frac{n-n_v}{n}\frac{d_\alpha\sigma^2}{\delta}\to 0,\quad\forall \delta >0
 	\end{align*}
@@ -759,7 +759,7 @@ For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
 	&=\left[1+o\left(\frac{n-n_v}{n}\right)\right]\frac{n}{n_v}\frac{c_n}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s. \label{proof_BICV_4}
 	\end{align}
 	
-	Nex, we clarify what we mean by $\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s$ being proportional to $\sum_{i=1}^np_{ii\alpha}e_i^2$. To do so, spell out the sum and simplify in the following way:
+	Next, we clarify what we mean by $\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s$ being proportional to $\sum_{i=1}^np_{ii\alpha}e_i^2$. To do so, spell out the sum and simplify in the following way:
 	\begin{align}
 	\frac{1}{n_vb}\sum_{s\in \mathcal{B}}e_s'Q_{\alpha,s}e_s
 	&= \frac{1}{n_vb}\sum_{s\in \mathcal{B}}\sum_{i\in s}\sum_{j\in s}p_{ij\alpha}e_ie_j\nonumber\\
@@ -1113,7 +1113,7 @@ For the proof of the asymptotic properties of $MCCV(n_\nu)$ we need the followin
 	&= t_n \bigl[O_P(n^{-0.5})O(n)O_P(n^{-0.5})\bigr]^2=O_P(t_n).
 	\end{align*}
 	
-	Finally by using the third result in the Lemma above, we obtain
+	Finally by using the third result in Lemma \ref{Lemma_MCCV}, we obtain
 	\begin{align*}
 	V_\mathcal{R}\bigl[B_{\alpha1}-A_{\alpha2}+A_{\alpha3}\bigr] \le 2\bigl(V_\mathcal{R}\bigl[B_{\alpha1}\bigr]+V_\mathcal{R}\bigl[A_{\alpha2}\bigr]+V_\mathcal{R}\bigl[A_{\alpha3}\bigr]\bigr) = O_P(t_n)=o_P(1)
 	\end{align*}
