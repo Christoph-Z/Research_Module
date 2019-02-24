@@ -7,7 +7,7 @@ After the evaluation of the asymptotic properties of the different \textit{Cross
 \label{SimulationModel}
 y_i=\beta_1+x_{2i}\beta_2+x_{3i}\beta_3+x_{4i}\beta_4+x_{5i}\beta_5+\varepsilon_i
 \end{equation}
-where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid with $\varepsilon_1\sim N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix II}. Moreover, we assume that
+where $i=1,\ldots,n$ with $n$ being the total number of observations. The error terms $\varepsilon_i$ are iid with $\varepsilon_1\sim N(0,1)$,  $x_{ki}$ is the i'th value of the k'th regression variable and all $x_{ki}$, $k=1,\ldots5$, are generated from different normal distributions\footnote{See Appendix B.2}. Moreover, we assume that
 \[
 	\beta=(\beta_1,\beta_2,0,0,0)^\prime
 \]
@@ -44,7 +44,7 @@ Besides asymptotic analyses, the performance of the small sample properties is a
 \\
 Due to inefficiencies of our R code we had to spend weeks of computing time. Therefore one important part of our work was to find ways in order to speed up our R code and reduce its computational complexity.\\
 \\
-The most time consuming aspect of our simulations is the process of model selection. As an example consider our \textit{CV}-algorithm for the case of $n_\nu$=1\footnote{See Appendix II: \textit{Cross-Validation} Function}: Table \ref{CValt} shows the amount of time used by different R functions within our algorithm.
+The most time consuming aspect of our simulations is the process of model selection. As an example consider our \textit{CV}-algorithm for the case of $n_\nu$=1\footnote{See Appendix B.3: \textit{Cross-Validation} Function}: Table \ref{CValt} shows the amount of time used by different R functions within our algorithm.
 \begin{table}[!h]
 	\centering
 	\caption{CV Algorithm First Version Profiling }\label{CValt}
@@ -92,7 +92,7 @@ Another point in order to save computing power is using an algebraic reformulati
 	\hat{\Gamma}_{\alpha,n}=\frac{1}{n}\sum_i[(1-p_{ii\alpha})^{-1}(y_i-x^\prime_{\alpha i}\hat{\beta_\alpha})]^2
 \]
 where $p_{i\alpha}$ is the $i$-th diagonal element of the projection matrix $P_\alpha$.\\
-This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix II: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm. Note that this algebraic reformulation does not speed up the other $CV(n_\nu)$ procedures.
+This yields an improvement of speed by a factor of 104 for the new CV-algorithm\footnote{See Appendix B.3: Leave-one-Out Cross-Validation}. Table \ref{CVneu} shows the time profiling of these new algorithm. Note that this algebraic reformulation does not speed up the other $CV(n_\nu)$ procedures.
 \begin{table}[!h]
 	\caption{CV Algorithm Second Version Profiling }
 	\label{CVneu}
