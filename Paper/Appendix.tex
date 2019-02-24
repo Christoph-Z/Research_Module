@@ -1,10 +1,11 @@
 \documentclass[Research_Module_ES.tex]{subfiles}
 \begin{document}
-\section*{Appendix \RM{1}}
+\appendix
+\section{Appendix}\label{AAppendix}
 
 %HIER kommen die Proofs rein, beim reinkopieren muss man auf den grünen doppelfpeil um das dokument einmal zu erstellen und anzuzeigen, damit das ausgeführt wird , danach ist es auch in der großen datei sichtbar, sonst nicht (die anzeige links zum appendix ist wohl deshalb rot, da das kapitel appendix keine nummer bekommt, also nicht wundern)
-\addcontentsline{toc}{subsection}{Proofs of Chapter 3}
-\subsection*{Proofs of Chapter 3}
+%\addcontentsline{toc}{subsection}{Proofs of Chapter 3}
+\subsection{Proofs of Chapter 3}
 \begin{proof}[Proof of the OLS estimator in equation (\ref{OLS})]~\\
 	The minimization problem of a least squares estimator is given by
 	\begin{align*}
@@ -139,8 +140,8 @@
 	Exactly when condition (\ref{liminf_condition}) for $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ holds.\\
 \end{proof}
 
-\addcontentsline{toc}{subsection}{Proofs of Chapter 4}
-\subsection*{Proofs of Chapter 4}
+
+\subsection{Proofs of Chapter 4}
 
 \begin{proof}[Proof of Lemma \ref{Equation3.1}]~\\
 	Given by construction, we have
@@ -190,8 +191,7 @@
 	\end{align*}
 	Which is exactly the decomposition of $\hat{\beta}_{\alpha}$ in   (\ref{beta_alpha_hat_decomposition}).\\
 \end{proof}
-\addcontentsline{toc}{subsection}{Proof Asymptotic Properties of $CV(1)$}
-\subsection*{Proof Asymptotic Properties of $CV(1)$}
+\subsection{Proof Asymptotic Properties of $CV(1)$}
 \begin{proof}[Proof of Theorem \ref{THM_Consistency of $CV(1)$}]~\\
 	\textbf{Proof of $(I)$:} First note that we can rewrite $\hat{\Gamma}_{\alpha,n}^{CV(1)}$  by Lemma \ref{Equation3.1} as 
 	\begin{align*}
@@ -542,8 +542,7 @@ proving the claim.
 	\lim_{n\to \infty} \max_{1\le i \le n} p_{ii\alpha} = 0 \iff \lim_{n\to\infty} \max_{1\le i\le n} \frac{\lVert x_{i,\alpha}\rVert^2}{n} = 0.
 	\end{align*}
 \end{proof}
-\addcontentsline{toc}{subsection}{Proof Asymptotic Properties of $BICV(n_\nu)$}
-\subsection*{Proof Asymptotic Properties of $BICV(n_\nu)$}
+\subsection{Proof Asymptotic Properties of $BICV(n_\nu)$}
 For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
 \begin{claim}~
 	\label{Claim_BICV}
@@ -887,8 +886,7 @@ For the proof of Theorem \ref{THM_Consistency_BICV}, we need the following Claim
 \end{proof}
 \subfile{ProofClaimJan}
 For the proof of the asymptotic properties of $MCCV(n_\nu)$ we need the following Lemma:  
-\addcontentsline{toc}{subsection}{Proof Asymptotic Properties of $MCCV(n_\nu)$}
-\subsection*{Proof Asymptotic Properties of $MCCV(n_\nu)$}
+\subsection{Proof Asymptotic Properties of $MCCV(n_\nu)$}
 \begin{lemma}
 	\label{Lemma_MCCV}
 	Denote by $\mathcal{R}^\ast:= \{s\subseteq\{1,\dots,n\}|\# s=n_v\}$ and let $\mathrm{E}_\mathcal{R}$ and $V_\mathcal{R}$ denote the expectation and variance with respect to the random selection of $\mathcal{R}\subseteq\mathcal{R}^\ast$. Then for any functions $a,c:\mathcal{R}^\ast\to \mathbb{R}$ it holds that
@@ -1179,8 +1177,7 @@ For the proof of the asymptotic properties of $MCCV(n_\nu)$ we need the followin
 	\frac{1}{n_vb}\sum_{s\in \mathcal{R}}\varepsilon_s'\varepsilon_s =\frac{\varepsilon'\varepsilon}{n} +o_P\biggl(\frac{1}{n_v}\biggr). 
 	\end{align*}
 \end{proof}
-\addcontentsline{toc}{subsection}{Proof Asymptotic Properties of $APCV(n_\nu)$}
-\subsection*{Proof Asymptotic Properties of $APCV(n_\nu)$}
+\subsection{Proof Asymptotic Properties of $APCV(n_\nu)$}
 \begin{proof}[Proof of Corollary \ref{Consistency_APCV}]~\\
 	The first statement follows by letting 
 	\begin{align*}
@@ -1194,11 +1191,8 @@ For the proof of the asymptotic properties of $MCCV(n_\nu)$ we need the followin
 	\end{align*}
 	The proof of the third statement remains unchanged. \\
 \end{proof}
-
-\addcontentsline{toc}{section}{Appendix \RM{2}}
-\section*{Appendix \RM{2}}
-\addcontentsline{toc}{subsection}{Simulation Chapter 4.2}
-\subsection*{Simulation Chapter 4.2}
+\section{Appendix}\label{BAppendix}
+\subsection{Simulation Chapter 4.2}
 \begin{lstlisting}[title={Simulation Graphic Ilustration Exspected Squared Prediction Error CV1 and CV($n_\nu$)}]
 library(ggplot2)
 
@@ -1326,8 +1320,7 @@ theme(plot.title = element_text(margin = margin(t = 0, r = 0 , b = 20, l = 0))) 
 theme(legend.title=element_blank(),legend.text = element_text(size = 13)) +
 theme(legend.position = c(0.85,0.8))
 \end{lstlisting}
-\addcontentsline{toc}{subsection}{Simulation}
-\subsection*{Simulation}
+\subsection{Simulation}
 %Programmcode-Umgebung im Anhang%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Überschrift ohne Nummer 
@@ -1713,8 +1706,7 @@ ggplot(d,aes(x=C,y=M,size=P,label=P)) +
 
 \end{lstlisting}
 
-\addcontentsline{toc}{subsection}{Code Efficiency}
-\subsection*{Code Efficiency}
+\subsection{Code Efficiency}
 
 \begin{lstlisting}[title={Leave-one-Out Cross-Validation Function}]
 ##Creates the set {1,...,p} from which we want to generate the powerset
