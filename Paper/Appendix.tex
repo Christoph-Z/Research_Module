@@ -480,6 +480,43 @@ P\bigl(2(d_\alpha-d\ast)\sigma^2 < \varepsilon'(P_\alpha-P-\ast)\varepsilon\bigr
 proving $(IV)$.
 \end{proof}
 
+\begin{claim}\label{claim_CV(1)_conditions_2}
+	If $X'X=O(n)$ and $(X'X)^{-1}=O(n^{-1})$, then $\liminf_{n\to \infty} \Delta_{\alpha,n} >0$.
+\end{claim}
+\begin{proof}
+Since $(I-P_\alpha)$ is an orthogonal projection onto $\mathrm{span}(X_\alpha)^\bot$, we can bound
+\begin{align*}
+\Delta_{\alpha,n} 
+&= \frac{1}{n}\beta'X'(I-P_\alpha)X\beta\\
+&= \frac{1}{n}\beta'X_{\alpha^c}'(I-P_\alpha)X_{\alpha^c}\beta\\
+&\ge \frac{1}{n}\min_{z\in Z}\frac{z'X_{\alpha^c}'(I-P_\alpha)X_{\alpha^c}z}{z'z}\lVert\beta \rVert^2\\
+&= \min_{z\in Z}\frac{z'(\frac{1}{n}X_{\alpha^c}'X_{\alpha^c})z}{z'z}\lVert\beta \rVert^2,
+\end{align*}
+where $Z=\{y\in \mathbb{R}^{p-d_\alpha}|X_{\alpha^c}y\in \mathrm{span}(X_\alpha)^\bot\}\setminus \{0\}$. Since $Z\subseteq \mathbb{R}^{p-d_\alpha}\setminus \{0\}$, we can further bound
+\begin{align*}
+\min_{z\in Z}\frac{z'(\frac{1}{n}X_{\alpha^c}'X_{\alpha^c})z}{z'z} 
+\ge \min_{z\in \mathbb{R}^{p-d_\alpha}\setminus \{0\} }\frac{z'(\frac{1}{n}X_{\alpha^c}'X_{\alpha^c})z}{z'z}
+= \lambda_{\min}\left(\frac{X_{\alpha^c}'X_{\alpha^c}}{n}\right)
+\ge \lambda_{\min}\left(\frac{X'X}{n}\right),
+\end{align*}
+where $\lambda_{\min}(A)$ denotes the smallest eigenvalue of the matrix $A$.
+
+Next, we will show that $(X'X)^{-1}=O(n^{-1})$ implies that these smallest eigenvalues are asymptotically bounded away from zero. Therefore, by using the spectral norm to rewrite $(X'X)^{-1}=O(n^{-1})$ yields 
+\begin{align*}
+\limsup_{n\to \infty} \max_{z\in \mathbb{R}^p\setminus \{0\}} \frac{z'(\frac{1}{n}X'X)^{-1}z}{z'z}=C <\infty.
+\end{align*}
+Since furthermore 
+\begin{align*}
+\max_{z\in \mathbb{R}^p\setminus \{0\}} \frac{z'(\frac{1}{n}X'X)^{-1}z}{z'z} = \frac{1}{\lambda_{\min}(\frac{1}{n}X'X)},
+\end{align*}
+we conclude
+\begin{align*}
+\limsup_{n\to\infty} \frac{1}{\lambda_{\min}(\frac{1}{n}X'X)} &= \frac{1}{\liminf_{n\to\infty}\lambda_{\min}(\frac{1}{n}X'X)}=C\\
+\iff \quad \liminf_{n\to\infty}\lambda_{\min}\left(\frac{X'X}{n}\right) &= \frac{1}{C} > 0
+\end{align*}
+proving the claim.
+\end{proof}
+
 \begin{claim}\label{claim_CV(1)_conditions}
 	If $X'X=O(n)$ and $(X'X)^{-1}=O(n^{-1})$, then for any $\alpha \in \mathcal{A}$
 	\begin{align*}
