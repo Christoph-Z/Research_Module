@@ -46,7 +46,7 @@ Written in matrix notation we get that
 \end{align}
 where $\beta_\alpha\in\mathbb{R}^{d_\alpha}$ is the true parameter vector indexed by $\alpha$. For the suitable matrix we have $X_\alpha=[x_{1,\alpha},...,x_{n,\alpha}]^\prime \in\mathbb{R}^{n\times d_\alpha}$
 which has full rank, furthermore $y=(y_1,...,y_n)^\prime\in\mathbb{R}^n$ and $\varepsilon=(\varepsilon_1,...,\varepsilon_n)^\prime\in\mathbb{R}^n$. Thus the unique 
-ordinary least squares estimator under $\mathcal{M}_\alpha$ is given by\footnote{Proof of equation (\ref{OLS}) is given in Appendix \RM{1}}
+ordinary least squares estimator under $\mathcal{M}_\alpha$ is given by\footnote{Proof of equation (\ref{OLS}) is given in Appendix A.1}
 \begin{align}
 	\hat{\beta}_\alpha=(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime y
 	\label{OLS}
@@ -59,11 +59,11 @@ For a given explanatory variable $x_i$, we denote $z_i$ as the \textit{future va
 \begin{align}
 ASPE(\mathcal{M}_\alpha)=\frac{1}{n}\sum_{i=1}^{n}(z_i-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2 \label{ASPE}
 \end{align}
-Then we can use the $ASPE(\mathcal{M}_\alpha)$ for calculating the \textit{Conditional Expected Squared Prediction Error} under $\mathcal{M}_\alpha$, which is given by\footnote{Proof of $CESPE(\mathcal{M}_\alpha)$ is given in Appendix \RM{1}}
+Then we can use the $ASPE(\mathcal{M}_\alpha)$ for calculating the \textit{Conditional Expected Squared Prediction Error} under $\mathcal{M}_\alpha$, which is given by\footnote{Proof of $CESPE(\mathcal{M}_\alpha)$ is given in Appendix A.1}
 \begin{align*}
 CESPE(\mathcal{M}_\alpha)=\sigma^2+\frac{1}{n}\sum_{i=1}^{n}(x_i^\prime\beta-x_{i,\alpha}^\prime\hat{\beta}_\alpha)^2
 \end{align*}
-Thus we achieve, with the help of the formula above, the overall \textit{(Unconditional) Expected Squared Prediction Error}\footnote{Unconditional on Y}, that is given by\footnote{Proof of $\Gamma_{\alpha,n}$ is given in Appendix \RM{1}} 
+Thus we achieve, with the help of the formula above, the overall \textit{(Unconditional) Expected Squared Prediction Error}\footnote{Unconditional on Y}, that is given by\footnote{Proof of $\Gamma_{\alpha,n}$ is given in Appendix A.1} 
 \begin{align}
 \Gamma_{\alpha,n}=\sigma^2+n^{-1}d_\alpha\sigma^2+\vartriangle_{\alpha,n} 
 \end{align}
@@ -76,7 +76,7 @@ $P_\alpha$&$=X_\alpha(X_\alpha^\prime X_\alpha)^{-1}X_\alpha^\prime$
 \end{align*} 
 where $P_\alpha$ is the corresponding hat matrix under model $\mathcal{M}_\alpha$.\\
 
- The first term in $\Gamma_{\alpha,n}$ which is given by $\sigma^2$ is the error term variance. The second term, $n^{-1}d_\alpha\sigma^2$, can be interpreted as the prediction error due to model dimensionality and the last term, $\Delta_{\alpha,n}$, can be interpreted as prediction error due to omitted important regressors. The interpretation of $\Delta_{\alpha,n}$ is supported by Lemma \ref{Equation2.3-2.4}\footnote{Proof of Lemma \ref{Equation2.3-2.4} is given in Appendix \RM{1}}.
+ The first term in $\Gamma_{\alpha,n}$ which is given by $\sigma^2$ is the error term variance. The second term, $n^{-1}d_\alpha\sigma^2$, can be interpreted as the prediction error due to model dimensionality and the last term, $\Delta_{\alpha,n}$, can be interpreted as prediction error due to omitted important regressors. The interpretation of $\Delta_{\alpha,n}$ is supported by Lemma \ref{Equation2.3-2.4}\footnote{Proof of Lemma \ref{Equation2.3-2.4} is given in Appendix A.1}.
 \begin{lemma}
 	\label{Equation2.3-2.4}
 	For any fixed $n$, it holds true that:
@@ -85,7 +85,7 @@ where $P_\alpha$ is the corresponding hat matrix under model $\mathcal{M}_\alpha
 		&&\Delta_{\alpha,n}=0 &&\text{,if } \mathcal{M}_\alpha\in\text{Category II}&&
 	\end{align*}
 \end{lemma}
-Since the second term in $\Gamma_{\alpha,n}$ vanishes as $n\to\infty$, $\Gamma_{\alpha,n}$ is asymptotically characterized by $\Delta_{\alpha,n}$, which we show in Lemma \ref{Equation2.5}\footnote{Proof of Lemma \ref{Equation2.5} is given in Appendix \RM{1}}. 
+Since the second term in $\Gamma_{\alpha,n}$ vanishes as $n\to\infty$, $\Gamma_{\alpha,n}$ is asymptotically characterized by $\Delta_{\alpha,n}$, which we show in Lemma \ref{Equation2.5}\footnote{Proof of Lemma \ref{Equation2.5} is given in Appendix A.1}. 
 \begin{lemma}
 	\label{Equation2.5}
 	For any $\mathcal{M}_\alpha\in\text{Category}~\RM{1}$ and $\mathcal{M}_\gamma\in\text{Category}~\RM{2}$ with $d_\alpha=d_\gamma$ it holds that:
