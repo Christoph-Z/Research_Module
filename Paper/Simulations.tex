@@ -22,10 +22,9 @@ Figure \ref{Simulation1} shows how the probability of choosing a Category II mod
 
 As we can see in Figure \ref{Simulation1}, the probabilities of choosing a Category II model is converging to 1 for all four methods. Moreover all methods perform quite similar in distinguishing between the two models. 
 \begin{figure}[!h]
-	\label{Simulation1}
 	\centering
 	\includegraphics[width=1\textwidth]{Simulation1_XDeterministic.png}\\
-\caption{Probability of Choosing Cat II Models}
+\caption{Probability of Choosing Cat II Models}\label{Simulation1}
 \end{figure}
 \subsection{Ability of distinguishing  between Category II Models}
 In chapter \ref{Simulation1} we showed that all four methods of model selection are quite good in distinguishing between models from Category I and II, hence they all picked Category II models with large probabilities. \\
@@ -36,10 +35,9 @@ Figure \ref{Simulation2} shows the probabilities of choosing models of a certain
 
 As we can see, both \textit{AIC} and \textit{CV(1)} perform almost equivalent\footnote{These similar performance is not unexpected since \cite{stone1977asymptotic} showed that \textit{AIC} and \textit{CV(1)} are asymptotically equivalent} and tend to pick to large models. \textit{BIC} and \textit{MCCV}  perform better, both pick the true model with a probability close to one (see \cite{schwarz1978estimating})and they choose to large models in only a few cases. Within our 2000 iteration there was no single case where \textit{BIC} and \textit{MCCV} choose models with a dimensionality larger than $M_\ast+1$.
 \begin{figure}[!h]
-	\label{Simulation2}
 	\centering
 	\includegraphics[width=1\textwidth]{Simulation2.png}\\
-	\caption{Probability of Choosing diffrent Models form Cat II}
+	\caption{Probability of Choosing diffrent Models form Cat II}\label{Simulation2}
 \end{figure}
 \subsection{R Code Efficiency}
 Besides asymptotic analyses, the performance of the small sample properties is an important aspect of statistical research. An often used approach to analyse such small sample properties are simulation studies, like we did in the previous chapters.\\
@@ -48,9 +46,8 @@ Due to inefficiencies of our R code we had to spend weeks of computing time. The
 \\
 The most time consuming aspect of our simulations is the process of model selection. As an example consider our \textit{CV}-algorithm for the case of $n_\nu$=1\footnote{See Appendix II: \textit{Cross-Validation} Function}: Table \ref{CValt} shows the amount of time used by different R functions within our algorithm.
 \begin{table}[!h]
-	\label{CValt}
 	\centering
-	\caption{CV Algorithm First Version Profiling }
+	\caption{CV Algorithm First Version Profiling }\label{CValt}
 	\begin{tabular}{lccccc}
 		\toprule
 		\midrule
@@ -117,8 +114,7 @@ This yields an improvement of speed by a factor of 104 for the new CV-algorithm\
 \end{table}
 The second approach, to speed R up,  was to look at the basic commands we used and to make them less flexible. To do so we used the command {\itshape package :: function}. This command shows the code behind predefined R commands, for example the {\itshape sample()} command \footnote{{\itshape sample(x,size)} draws randomly {\itshape size} elements from the set {\itshape x} }, see table \ref{sample}.
 \begin{table}[h]
-	\label{sample}
-	\caption{Source Code {\itshape sample()}}
+	\caption{Source Code {\itshape sample()}}\label{sample}
 	\begin{lstlisting}
 	> base::sample
 	function (x, size, replace = FALSE, prob = NULL) 
