@@ -12,7 +12,7 @@ $\binom{n}{n_\nu}$ possible ways of splitting the data into subsets $s$ with $n_
 
 For the construction of the estimator $\hat{\Gamma}_{\alpha,n}^{CV}$, we first have to calculate the \textit{Average Squared Prediction Error of Split $s$} under $\mathcal{M}_\alpha$. For this,   $\mathcal{M}_\alpha$ uses the construction data $\{(y_i,x_i), i\in s^c\}$. We recall the definition of $ASPE(\mathcal{M}_\alpha)$ from (\ref{ASPE}). Thus for split $s$ we have a vector $y_s\in\mathbb{R}^{n_\nu}$ of future values out of validation set. The vector of the fitted value components under $\mathcal{M}_\alpha$ is $\hat{y}_{\alpha,s^c}$ and uses the construction data. We have to average the squared prediction error by $|s|=n_\nu$.\\
 
-We can reformulate the $ASPE$, as follows \footnote{Proof of Lemma \ref{Equation3.1} is given in Apendix \RM{1}}.
+We can reformulate the $ASPE$, as follows \footnote{Proof of Lemma \ref{Equation3.1} is given in Apendix A.2}.
 \begin{lemma}
 	\label{Equation3.1}
 	The Average Squared Prediction Error of Split $s$ is given by
