@@ -7,7 +7,7 @@ deleted observation.
 
 $CV(1)$ is the computationally simplest \textit{Cross-Validation} estimator as only $n$ terms have to be estimated, whereas in other $CV(n_v)$ estimators one has to compute $\binom{n}{n_v}$ terms.\\
 
-We capture the asymptotic properties of $CV(1)$ in the following theorem based on \cite{shao}\footnote{Proof of Theorem \ref{THM_Consistency of $CV(1)$} is given in Appendix \RM{1}}.
+We capture the asymptotic properties of $CV(1)$ in the following theorem based on \cite{shao}\footnote{Proof of Theorem \ref{THM_Consistency of $CV(1)$} is given in Appendix A.3}.
 
 \begin{thm}[Asymptotic Properties of $CV(1)$]
 Under the conditions 
@@ -42,9 +42,9 @@ This idea is made precise by the statement $(IV)$ that there exists some positiv
 
 A heuristic explanation for this incorrectness is delivered by statement $(II)$. The model defining terms are $\frac{1}{n}d_\alpha\sigma^2$ and the difference $\frac{1}{n}d_\alpha\sigma^2 - \frac{1}{n}\varepsilon'P_\alpha\varepsilon$. This difference has mean zero and is of the same order of magnitude as the first term. This gives an explanation why $CV(1)$ tends to select too large models.\\
 
-The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the asymptotic invertibility of this matrix. If for example the $x_i$ are iid and if the matrix $\mathrm{E}[x_ix_i']$ is invertible, then assumption $(i)$ is fulfilled. Furthermore we show in the appendix that $(i)$ is a sufficient condition for condition (\ref{liminf_condition})\footnote{See Claim \ref{claim_CV(1)_conditions_2} in Appendix \RM{1}}\\
+The assumption $(i)$ isn't that restrictive. It bounds the eigenvalues of $\frac{1}{n}X'X$ from above and below and therefore assures the asymptotic invertibility of this matrix. If for example the $x_i$ are iid and if the matrix $\mathrm{E}[x_ix_i']$ is invertible, then assumption $(i)$ is fulfilled. Furthermore we show in the appendix that $(i)$ is a sufficient condition for condition (\ref{liminf_condition})\footnote{See Claim \ref{claim_CV(1)_conditions_2} in Appendix A.3}\\
 
-One can show that $(ii)$ is equivalent to\footnote{See Claim \ref{claim_CV(1)_conditions} in Appendix \RM{1}} 
+One can show that $(ii)$ is equivalent to\footnote{See Claim \ref{claim_CV(1)_conditions} in Appendix A.3} 
 %HIERZU hätte ich gerne einen kurzen nachweis
 $\lim \max n^{-1}\lVert x_i\rVert^2=0$. That is, the observations are allowed to grow but not too fast. This condition is for example satisfied if the $x_i$ are bounded.
 \end{document}

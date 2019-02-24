@@ -21,7 +21,7 @@ Let $\mathcal{B}$ be a collection of $b$ subsets of $\{ 1,\dots,n\}$ that have s
 \end{enumerate}
 \end{defi}
 The idea behind using \textit{BIBD}'s is to reduce the computational complexity of \textit{Cross-Validation}, hence $\mathcal{B}$ includes only a subset of the feasible partitions in $\mathcal{R}^\ast$. To avoid creating a bias, Definition \ref{balance_property} ensures that $\mathcal{B}$ has the same moment conditions as $\mathcal{R}^\ast$.
-By choosing $b=O(n)$ we can show that $BICV(n_v)$ is asymptotically correct by the following theorem.\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix \RM{1}}
+By choosing $b=O(n)$ we can show that $BICV(n_v)$ is asymptotically correct by the following theorem.\footnote{Proof of Theorem \ref{THM_Consistency_BICV} is given in Appendix A.4}
 \begin{thm}[Asymptotic Properties of $BICV(n_v)$]
 	\label{THM_Consistency_BICV}
 Under the conditions of Theorem \ref{THM_Consistency of $CV(1)$} and
@@ -50,7 +50,7 @@ In general the validation sample $n_\nu$ should be selected relatively large in 
 \end{align*}
 is flat such that it is difficult to find the minimum $\alpha$. But also we have to make sure that $n_\nu$ is not too large, since we need $n-n_\nu\to\infty$ to ensure the consistency of the OLS estimate.\\
 
-The problem of flat functions is that  there is too much weight on the stochastic remainder terms such that \textit{Cross-Validation} can not correctly identify the minimum. Figure \ref{ProofSketchCV1} and \ref{ProofSektchCVn_v} show the \textit{Expected Squared Prediction Error} (dotted line) against their empirical counter part (solid lines) of two different Category II Models.\footnote{For more details, see simulation code Appendix II} As we can see in figure \ref{ProofSketchCV1} the error estimates are crossing each other. Every time they cross, the \textit{Cross-Validation} chooses the wrong model. Hence of the differences in scale, see figure \ref{ProofSektchCVn_v}, this problem does not occur that often for the $BICV(n_\nu)$.\\
+The problem of flat functions is that  there is too much weight on the stochastic remainder terms such that \textit{Cross-Validation} can not correctly identify the minimum. Figure \ref{ProofSketchCV1} and \ref{ProofSektchCVn_v} show the \textit{Expected Squared Prediction Error} (dotted line) against their empirical counter part (solid lines) of two different Category II Models.\footnote{For more details, see simulation code Appendix B.1} As we can see in figure \ref{ProofSketchCV1} the error estimates are crossing each other. Every time they cross, the \textit{Cross-Validation} chooses the wrong model. Hence of the differences in scale, see figure \ref{ProofSektchCVn_v}, this problem does not occur that often for the $BICV(n_\nu)$.\\
 \begin{figure}[!h]
 	\label{ProofSketchCV1}
 	\centering
@@ -66,7 +66,7 @@ The problem of flat functions is that  there is too much weight on the stochasti
 \\
 We need condition $\frac{n_v}{n}\to 1$ for the choice of $n_\nu$, because if this condition does not hold, $BICV(n_v)$ cannot distinguish in between the models in Category II and thus this method would be inconsistent (this is the main problem of CV(1) that occurs). For a more detailed explanation see \cite{shao}. We choose in our simulation $n_\nu=n-\lfloor n^{3/4}\rfloor$, which satisfy the above condition.\\
 
-Note that condition (\ref{gram_matrix_condition_BICV}) is satisfied if the $x_i$ are iid random vectors, such that $E[(x_i^\prime x_i)^{2+\tau}]<\infty$ for some $\tau>7/3$.\footnote{See Claim \ref{Lala} in Appendix I}
+Note that condition (\ref{gram_matrix_condition_BICV}) is satisfied if the $x_i$ are iid random vectors, such that $E[(x_i^\prime x_i)^{2+\tau}]<\infty$ for some $\tau>7/3$.\footnote{See Claim \ref{Lala} in Appendix A.4}
 
 %IRgendwie einen übergang und eine eiene Beschreibung schaffen(keine eigenen Worte, nur notizen hier benutzt und versucht zu sortieren)
 %\textbf{NOTIZEN/Überlegungen}\\
